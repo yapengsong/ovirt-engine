@@ -8,9 +8,18 @@
 
 	<ui:style>
 		.loginForm {
-	        padding-top: 40px;
-			background-color: #FFFFFF;
+	                padding-top: 40px;
+			background-color: #FFF;
 			height: 100%;
+		}
+
+
+		.loginBackground {
+			background-color: #000;
+                        filter:alpha(opacity=60); 
+                        -moz-opacity:0.6; 
+                        opacity:0.6;
+                        border-radius:15px;
 		}
 
 		.loginFormTable {
@@ -19,10 +28,10 @@
 
 		.formWidget {
 			color: #333333;
-			font-size: 13px;
+			font-size: 18px;
 			padding: 0 5px;
 			font-family: Verdana,sans-serif;
-			line-height: 30px;
+			line-height: 36px;
 			text-align: left;
 		}
 
@@ -61,23 +70,28 @@
 
 		.localeBox option{
 			text-align:right;
+                        background:white;         
 		}
 
 		.localePanel {
 			float: right;
 			overflow: hidden;
+                        background:white;
 			background: url(images/triangle_down_gray.gif) no-repeat right white;
 			margin-right:25px;
 			margin-left:270px;
 			margin-top:10px;
+                        filter:alpha(opacity=60); 
+                        -moz-opacity:0.6; 
+                        opacity:0.6;
 		}
 
 		.localeSelect {
 			padding-right: 15px;
 			text-align: right;
-			color:gray;
-			font-size: 11px;
-			width: 130px;
+			color:#00b4ed;
+			font-size: 13px;
+			width: 100px;
 		}
 		
 		.headerLabelStyle {
@@ -109,7 +123,7 @@
         }
 	</ui:style>
 
-	<d:SimplePopupPanel ui:field="popup" width="480px">
+	<d:SimplePopupPanel ui:field="popup" width="480px" addStyleNames="{style.loginBackground}">
 		<d:header>
 			<g:HorizontalPanel styleName="{loginPopupStyle.loginPopupHeader}">
 				<g:Image styleName="obrand_loginPopupHeaderLogoImage" url="clear.cache.gif" />
@@ -124,7 +138,7 @@
 			<g:HTMLPanel addStyleNames="{style.loginForm}">
 				<table class="{style.loginFormTable}">
 					<tr>
-                        <td>
+                                                <td>
 						     <g:Label ui:field="userNameLabel" addStyleNames="{style.formWidget}" />
 						     <g:Label ui:field="passwordLabel" addStyleNames="{style.formWidget}" />
 						     <g:Label ui:field="domainLabel" addStyleNames="{style.formWidget}" />
@@ -136,8 +150,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td />
-						<td height="20">
+                                                <td />
+						<td height="25">
 							<g:HTMLPanel addStyleNames="{style.buttonBar}">
 								<w:UiCommandButton ui:field="loginButton" addStyleNames="{style.button}" />
 								<div style="clear: both;" />

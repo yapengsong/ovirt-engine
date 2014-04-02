@@ -9,7 +9,7 @@
 	<ui:style type="org.ovirt.engine.ui.userportal.section.login.view.LoginPopupView.Style">
 		.loginForm {
 			padding-top: 40px;
-			background-color: #FFFFFF;
+			background-color: #FFF;
 			height: 100%;
 		}
 
@@ -17,9 +17,17 @@
 			margin: auto;
 		}
 
+                .loginBackground {
+                        background-color: #000;
+                        filter:alpha(opacity=60);
+                        -moz-opacity:0.6;
+                        opacity:0.6;
+                        border-radius:15px;
+                }
+
 		.formWidget {
 			color: #333333;
-			font-size: 13px;
+			font-size: 18px;
 			padding: 0 5px;
 			font-family: Verdana,sans-serif;
 			line-height: 30px;
@@ -64,6 +72,7 @@
 
 		.localeBox option{
 			text-align:right;
+                        background:white;
 		}
 
 		.localePanel {
@@ -73,13 +82,16 @@
 			margin-right:25px;
 			margin-left:270px;
 			margin-top:10px;
+                        filter:alpha(opacity=60);
+                        -moz-opacity:0.6;
+                        opacity:0.6;
 		}
 
 		.localeSelect {
 			padding-right: 15px;
 			text-align: right;
-			color:gray;
-			font-size: 11px;
+			color:#00b4ed;
+			font-size: 13px;
 			width: 130px;
 		}
 
@@ -133,7 +145,7 @@
 
 	</ui:style>
 
-	<d:SimplePopupPanel ui:field="popup" width="480px">
+	<d:SimplePopupPanel ui:field="popup" width="480px" addStyleNames="{style.loginBackground}">
 		<d:header>
 			<g:HorizontalPanel styleName="{loginPopupStyle.loginPopupHeader}">
 				<g:Image styleName="obrand_loginPopupHeaderLogoImage" url="clear.cache.gif" />
@@ -161,11 +173,13 @@
 					</tr>
 					<tr>
 						<td colspan="2">
+                                                    <font color="#00b4ed">
 							<e:EntityModelCheckBoxEditor ui:field="connectAutomatically" />
+                                                    </font>
 						</td>
 					</tr>
 					<tr>
-						<td height="20" colspan="2">
+						<td height="30" colspan="2">
 							<g:HTMLPanel addStyleNames="{style.buttonBar}">
 								<w:UiCommandButton ui:field="loginButton" addStyleNames="{style.button}" />
 								<div style="clear: both;" />

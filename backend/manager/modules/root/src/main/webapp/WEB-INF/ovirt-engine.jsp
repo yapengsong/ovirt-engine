@@ -19,21 +19,14 @@
                 <fmt:message key="obrand.welcome.header.main" />
             </div>
         </div>
-        <div class="obrand_right">
-        </div>
+           <a href="http://www.ovirt.org/Console_Client_Resources" target="_blank">
+            <div class="obrand_right">
+            </div>
+           </a>
         <div class="obrand_center">
         </div>
     </div>
     <div class="obrand_main">
-        <div class="obrand_welcome"><fmt:message key="obrand.welcome.welcome.text" /></div>
-        <div class="obrand_welcome">
-             <script type="text/JavaScript">
-            <!--
-            document.write('<fmt:message key="obrand.welcome.version"><fmt:param value="${requestScope[\'version\']}" /> </fmt:message>')
-            //-->
-            </script>
-        </div>
-
         <noscript id="warningMessage" class="obrand_warningMessage">
             <b><fmt:message key="obrand.welcome.browser.javascript1" /></b>
             <fmt:message key="obrand.welcome.browser.javascript2" />
