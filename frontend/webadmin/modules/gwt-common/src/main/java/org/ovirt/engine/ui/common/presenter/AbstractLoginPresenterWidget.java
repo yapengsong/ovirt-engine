@@ -2,6 +2,8 @@ package org.ovirt.engine.ui.common.presenter;
 
 import java.util.logging.Logger;
 
+import org.gwtbootstrap3.client.ui.Input;
+import org.gwtbootstrap3.client.ui.ListBox;
 import org.ovirt.engine.ui.common.system.ClientStorage;
 import org.ovirt.engine.ui.common.system.LockInteractionManager;
 import org.ovirt.engine.ui.common.uicommon.model.DeferredModelCommandInvoker;
@@ -51,6 +53,12 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
         HasKeyPressHandlers getLoginForm();
 
         String getMotdAnchorHtml(String url);
+
+        Input getUserNameEditor();
+
+        Input getPasswordEditor();
+
+        ListBox getProfileEditor();
     }
 
     private static final Logger logger = Logger.getLogger(AbstractLoginPresenterWidget.class.getName());
@@ -106,6 +114,7 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
         registerHandler(getView().getLoginButton().addClickHandler(new ClickHandler() {
             @Override
             public void onClick(ClickEvent event) {
+                updateUserInfo(loginModel);
                 modelCommandInvoker.invokeDefaultCommand();
             }
         }));
@@ -114,6 +123,7 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
             @Override
             public void onKeyPress(KeyPressEvent event) {
                 if (event.getNativeEvent().getKeyCode() == KeyCodes.KEY_ENTER) {
+                    updateUserInfo(loginModel);
                     modelCommandInvoker.invokeDefaultCommand();
                 }
             }
@@ -142,6 +152,22 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
                 }
             }
         });
+
+        loginModel.getProfile().getItemsChangedEvent().addListener(new IEventListener() {
+            @Override
+            public void eventRaised(Event ev, Object sender, EventArgs args) {
+                getView().getProfileEditor().clear();
+                for (String item : loginModel.getProfile().getItems()) {
+                    getView().getProfileEditor().addItem(item);
+                }
+                loginModel.getProfile().setSelectedItem(loginModel.getProfile().getItems().iterator().next());
+            }
+        });
+    }
+
+    protected void updateUserInfo(T loginModel) {
+        loginModel.getUserName().setEntity(getView().getUserNameEditor().getFormValue());
+        loginModel.getPassword().setEntity(getView().getPasswordEditor().getFormValue());
     }
 
     /**
