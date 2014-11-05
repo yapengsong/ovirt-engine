@@ -7,6 +7,11 @@
 <html>
 <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="EayunOS Homepage">
+    <meta name="author" content="EayunOS Team">
     <obrand:favicon />
     <title><fmt:message key="obrand.welcome.title" /></title>
     <obrand:stylesheets />
@@ -14,61 +19,45 @@
     <script src="splash.js" type="text/javascript"></script>
 </head>
 <body onload="pageLoaded()">
-    <div class="obrand_loginPageBackground">
-        <a href="<obrand:messages key="obrand.common.vendor_url"/>" class="obrand_loginPageLogoImageLink">
-             <span class="obrand_loginPageLogoImage"></span>
-        </a>
-        <div class="login-pf">
-            <div class="container">
-                <div class="row">
+    ${requestScope['sections'].toString()}
 
-                    <div class="col-sm-12">
-                        <div id="brand">
-                            <div class="obrand_loginFormLogoImage"></div>
-                        </div>
-                    </div>
-                    <noscript>
-                        <div class="well col-sm-11 well-sm" id="well-error">
-                            <span class="label label-default" id="well-error-label">
-                                <b><fmt:message key="obrand.welcome.browser.javascript1" /></b>
-                                <fmt:message key="obrand.welcome.browser.javascript2" />
-                            </span>
-                        </div>
-                        <div style="clear: both;"></div>
-                    </noscript>
+    <!-- Footer -->
+    <div class="footer">
+      <div class="container-footer">
+        <div class="row">
 
-                    <div class="col-sm-12 welcome-title-wrapper">
-                        <span class="welcome-title"><fmt:message key="obrand.welcome.welcome.text" /></span>
-                        <script type="text/JavaScript">
-                        <!--
-                        document.write('<span class="version-text"><fmt:message key="obrand.welcome.version"><fmt:param value="${requestScope[\'version\']}" /> </fmt:message></span>')
-                        //-->
-                        </script>
-                    </div>
-
-                    <div class="col-sm-12">
-                        ${requestScope['sections'].toString()}
-                    </div>
-
-                    <div style="clear: both;"></div>
-                    <div class="col-sm-12 locale-div">
-                        <select class="gwt-ListBox obrand_locale_list_box" onchange="localeSelected(this)" id="localeBox">
-                            <c:forEach items="${requestScope['localeKeys']}" var="localeKey">
-                                <c:choose>
-                                <c:when test="${requestScope['locale'].toString() == localeKey}">
-                                    <c:set var="selectedLocale" value="${localeKey}"/>
-                                    <option value="${localeKey}" selected="selected"><fmt:message key="${localeKey}" bundle="${lang}"/></option>
-                                </c:when>
-                                <c:otherwise>
-                                    <option value="${localeKey}"><fmt:message key="${localeKey}" bundle="${lang}"/></option>
-                                </c:otherwise>
-                                </c:choose>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
+          <div class="col-sm-9 logo-descr-container">
+            <div class="media">
+              <a class="pull-left media-logo" href="{obrand.common.vendor_url}">
+                <img src="theme-resource/eayun-logo.png" alt="Eayun Logo"></img>
+              </a>
+              <div class="media-body hidden-xs product-description">
+                <p class="description">开放式虛拟化管理者</p>
+                <p class="description">open virtualization manager</p>
+              </div>
             </div>
+          </div>
+
+          <div class="col-sm-3 language-menu-container">
+            <div class="btn-group dropup">
+              <select class="gwt-ListBox obrand_locale_list_box" onchange="localeSelected(this)" id="localeBox">
+                <c:forEach items="${requestScope['localeKeys']}" var="localeKey">
+                  <c:choose>
+                    <c:when test="${requestScope['locale'].toString() == localeKey}">
+                      <c:set var="selectedLocale" value="${localeKey}"/>
+                      <option value="${localeKey}" selected="selected"><fmt:message key="${localeKey}" bundle="${lang}"/></option>
+                    </c:when>
+                    <c:otherwise>
+                      <option value="${localeKey}"><fmt:message key="${localeKey}" bundle="${lang}"/></option>
+                    </c:otherwise>
+                  </c:choose>
+                </c:forEach>
+              </select>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+
 </body>
 </html>
