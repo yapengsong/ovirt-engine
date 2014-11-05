@@ -47,16 +47,12 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
 
         if (!intConf.isCurrentBrowserSupported()) {
             // Browser is not supported
-            informationMessage.setText(constants.browserNotSupported());
             informationMessagePanel.setVisible(true);
         }
     }
 
     private void localize(ApplicationConstants constants,
             ApplicationDynamicMessages dynamicMessages) {
-        userNameEditor.setLabel(constants.loginFormUserNameLabel());
-        passwordEditor.setLabel(constants.loginFormPasswordLabel());
-        profileEditor.setLabel(constants.loginFormProfileLabel());
         loginButton.setLabel(constants.loginButtonLabel());
     }
 

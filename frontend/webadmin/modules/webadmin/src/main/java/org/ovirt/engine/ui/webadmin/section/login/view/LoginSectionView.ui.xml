@@ -1,24 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
-<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:g="urn:import:com.google.gwt.user.client.ui"
+    xmlns:bm="urn:import:org.gwtbootstrap3.client.ui.base.modal">
 
     <ui:style>
-        @external obrand_loginPageLogoImage;
-            .obrand_loginPageLogoImage {
-        }
+        @external container-footer;
+		.container-footer {}
 
-        @external obrand_loginPageLogoImageLink;
-            .obrand_loginPageLogoImageLink {
-        }
+		@external footer;
+		.footer {}
 
-        @external obrand_loginPageBackground;
-            .obrand_loginPageBackground {
-        }
+		@external logo-descr-container;
+		.logo-descr-container{}
+
+		@external media-logo;
+		.logo-descr-container > .media > .media-logo{}
+
+		@external product-description;
+		.product-description {}
+
+		@external product-description;
+		@external description;
+		.product-description .description{}
     </ui:style>
 
     <g:HTMLPanel addStyleNames="obrand_loginPageBackground">
-        <g:Anchor ui:field="vendorUrl" styleName="obrand_loginPageLogoImageLink obrand_loginPageLogoImage" />
-        <g:SimplePanel ui:field="loginFormPanel" />
+        <bm:ModalDialog ui:field="loginFormPanel" />
+        <div class="footer">
+	        <div class="container-footer">
+	            <div class="row">
+                    <div class="col-sm-9 logo-descr-container">
+	                    <div class="media">
+	                        <a class="pull-left media-logo" href="http://eayun.cn/">
+	                            <img src="theme-resource/eayun-logo.png" alt="Eayun Logo"></img>
+	                        </a>
+	                        <div class="media-body hidden-xs product-description">
+	                            <p class="description">开放式虛拟化管理者</p>
+	                            <p class="description">open virtualization manager</p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
     </g:HTMLPanel>
 
 </ui:UiBinder>

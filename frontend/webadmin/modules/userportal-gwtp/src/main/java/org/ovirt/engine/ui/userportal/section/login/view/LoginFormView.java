@@ -114,9 +114,6 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
 
     void localize(ApplicationConstants constants,
             ApplicationDynamicMessages dynamicMessages) {
-        userNameEditor.setLabel(constants.loginFormUserNameLabel());
-        passwordEditor.setLabel(constants.loginFormPasswordLabel());
-        profileEditor.setLabel(constants.loginFormProfileLabel());
         connectAutomaticallyEditor.setLabel(constants.loginFormConnectAutomaticallyLabel());
         loginButton.setLabel(constants.loginButtonLabel());
         motdHeaderLabel.setText(constants.motdHeaderLabel());

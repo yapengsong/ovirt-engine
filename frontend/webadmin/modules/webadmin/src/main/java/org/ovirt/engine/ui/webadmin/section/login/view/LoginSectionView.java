@@ -1,5 +1,6 @@
 package org.ovirt.engine.ui.webadmin.section.login.view;
 
+import org.gwtbootstrap3.client.ui.base.modal.ModalDialog;
 import org.ovirt.engine.ui.common.view.AbstractView;
 import org.ovirt.engine.ui.webadmin.ApplicationDynamicMessages;
 import org.ovirt.engine.ui.webadmin.section.login.presenter.LoginSectionPresenter;
@@ -7,9 +8,7 @@ import org.ovirt.engine.ui.webadmin.section.login.presenter.LoginSectionPresente
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.IsWidget;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.inject.Inject;
 
@@ -20,15 +19,11 @@ public class LoginSectionView extends AbstractView implements LoginSectionPresen
     }
 
     @UiField
-    SimplePanel loginFormPanel;
-
-    @UiField
-    Anchor vendorUrl;
+    ModalDialog loginFormPanel;
 
     @Inject
     public LoginSectionView(ApplicationDynamicMessages dynamicMessages) {
         initWidget(ViewUiBinder.uiBinder.createAndBindUi(this));
-        vendorUrl.setHref(dynamicMessages.vendorUrl());
     }
 
     @Override
