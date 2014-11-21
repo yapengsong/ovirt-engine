@@ -168,6 +168,8 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
     protected void updateUserInfo(T loginModel) {
         loginModel.getUserName().setEntity(getView().getUserNameEditor().getFormValue());
         loginModel.getPassword().setEntity(getView().getPasswordEditor().getFormValue());
+        int selectedIndex = getView().getProfileEditor().getSelectedIndex();
+        loginModel.getProfile().setSelectedItem(getView().getProfileEditor().getValue(selectedIndex));
     }
 
     /**
