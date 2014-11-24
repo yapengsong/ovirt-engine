@@ -311,4 +311,10 @@ public interface IVdsServer {
     StatusOnlyReturnForXmlRpc setNumberOfCpus(String vmId, String numberOfCpus);
 
     StatusOnlyReturnForXmlRpc updateVmPolicy(Map info);
+
+    HostUsbListReturnForXmlRpc hostUsbList();
+
+    StatusOnlyReturnForXmlRpc hostUsbAttach(String vmId, String devName);
+
+    StatusOnlyReturnForXmlRpc hostUsbDetach(String vmId, String devName);
 }

@@ -294,4 +294,10 @@ public interface VdsServerConnector {
     public Map<String, Object> setNumberOfCpus(String vmId, String numberOfCpus);
 
     public Map<String, Object> updateVmPolicy(Map info);
+
+    public Map<String, Object> hostUsbList();
+
+    public Map<String, Object> hostUsbAttach(String vmId, String devName);
+
+    public Map<String, Object> hostUsbDetach(String vmId, String devName);
 }

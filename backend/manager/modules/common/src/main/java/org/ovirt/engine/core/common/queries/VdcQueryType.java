@@ -380,6 +380,10 @@ public enum VdcQueryType implements Serializable {
     GetCpuProfilesByClusterId(VdcQueryAuthType.User),
     GetCpuProfilesByCpuQosId,
 
+    // Host Usb
+    GetHostUSBsById,
+    GetVmHostUSBs,
+
     // Default type instead of having to null check
     Unknown(VdcQueryAuthType.User);
 

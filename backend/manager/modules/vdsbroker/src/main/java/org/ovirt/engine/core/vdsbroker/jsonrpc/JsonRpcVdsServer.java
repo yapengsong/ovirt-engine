@@ -29,6 +29,7 @@ import org.ovirt.engine.core.vdsbroker.irsbroker.StoragePoolInfoReturnForXmlRpc;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.AlignmentScanReturnForXmlRpc;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.DevicesVisibilityMapReturnForXmlRpc;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.FenceStatusReturnForXmlRpc;
+import org.ovirt.engine.core.vdsbroker.vdsbroker.HostUsbListReturnForXmlRpc;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.IQNListReturnForXmlRpc;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.IVdsServer;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.ImageSizeReturnForXmlRpc;
@@ -1478,6 +1479,37 @@ public class JsonRpcVdsServer implements IVdsServer {
         JsonRpcRequest request =
                 new RequestBuilder("Host.setHaMaintenanceMode").withParameter("mode", mode)
                         .withParameter("enabled", enabled)
+                        .build();
+        Map<String, Object> response =
+                new FutureMap(this.client, request);
+        return new StatusOnlyReturnForXmlRpc(response);
+    }
+
+    @Override
+    public HostUsbListReturnForXmlRpc hostUsbList() {
+        JsonRpcRequest request =
+                new RequestBuilder("Host.hostusbList").build();
+        Map<String, Object> response =
+                new FutureMap(this.client, request).withResponseKey("deviceList");
+        return new HostUsbListReturnForXmlRpc(response);
+    }
+
+    @Override
+    public StatusOnlyReturnForXmlRpc hostUsbAttach(String vmId, String devName) {
+        JsonRpcRequest request =
+                new RequestBuilder("VM.hostusbAttach").withParameter("vmID", vmId)
+                        .withParameter("devname", devName)
+                        .build();
+        Map<String, Object> response =
+                new FutureMap(this.client, request);
+        return new StatusOnlyReturnForXmlRpc(response);
+    }
+
+    @Override
+    public StatusOnlyReturnForXmlRpc hostUsbDetach(String vmId, String devName) {
+        JsonRpcRequest request =
+                new RequestBuilder("VM.hostusbDetach").withParameter("vmID", vmId)
+                        .withParameter("devname", devName)
                         .build();
         Map<String, Object> response =
                 new FutureMap(this.client, request);

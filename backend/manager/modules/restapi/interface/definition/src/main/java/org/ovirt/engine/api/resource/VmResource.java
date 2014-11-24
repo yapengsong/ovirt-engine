@@ -190,4 +190,7 @@ public interface VmResource extends UpdatableResource<VM>, AsynchronouslyCreated
     @Path("sessions")
     public VmSessionsResource getVmSessionsResource();
 
+    @Path("hostusbs")
+    public VmHostUSBsResource getHostUSBsResource();
+
 }

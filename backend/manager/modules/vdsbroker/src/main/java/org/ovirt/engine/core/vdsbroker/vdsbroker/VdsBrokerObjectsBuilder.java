@@ -25,6 +25,7 @@ import org.ovirt.engine.core.common.businessentities.CpuStatistics;
 import org.ovirt.engine.core.common.businessentities.DiskImageDynamic;
 import org.ovirt.engine.core.common.businessentities.DisplayType;
 import org.ovirt.engine.core.common.businessentities.Entities;
+import org.ovirt.engine.core.common.businessentities.HostUSBDevice;
 import org.ovirt.engine.core.common.businessentities.KdumpStatus;
 import org.ovirt.engine.core.common.businessentities.LUNs;
 import org.ovirt.engine.core.common.businessentities.NumaNodeStatistics;
@@ -1744,5 +1745,25 @@ public class VdsBrokerObjectsBuilder {
         return list;
     }
 
+    public static HostUSBDevice buildHostUSBDeviceData(String devname, Map<String, Object> xmlRpcStruct) {
+        HostUSBDevice hostUSBDevice = new HostUSBDevice();
+        hostUSBDevice.setDevname(devname);
+        if (xmlRpcStruct.get(VdsProperties.vm_guid) != null)
+            hostUSBDevice.setVmId(new Guid((String) xmlRpcStruct.get(VdsProperties.vm_guid)));
+        hostUSBDevice.setParent((String) xmlRpcStruct.get(VdsProperties.parent));
+        hostUSBDevice.setBus((String) xmlRpcStruct.get(VdsProperties.Bus));
+        hostUSBDevice.setDevice((String) xmlRpcStruct.get(VdsProperties.Device));
+        if (xmlRpcStruct.get(VdsProperties.productId) != null)
+            hostUSBDevice.setProductId((String) xmlRpcStruct.get(VdsProperties.productId));
+        if (xmlRpcStruct.get(VdsProperties.product) != null)
+            hostUSBDevice.setProduct((String) xmlRpcStruct.get(VdsProperties.product));
+        if (xmlRpcStruct.get(VdsProperties.vendorId) != null)
+            hostUSBDevice.setVendorId((String) xmlRpcStruct.get(VdsProperties.vendorId));
+        if (xmlRpcStruct.get(VdsProperties.vendor) != null)
+            hostUSBDevice.setVendor((String) xmlRpcStruct.get(VdsProperties.vendor));
+        return hostUSBDevice;
+    }
+
     private static final Log log = LogFactory.getLog(VdsBrokerObjectsBuilder.class);
+
 }

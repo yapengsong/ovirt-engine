@@ -25,6 +25,7 @@ import org.ovirt.engine.api.resource.HostNicsResource;
 import org.ovirt.engine.api.resource.HostNumaNodesResource;
 import org.ovirt.engine.api.resource.HostResource;
 import org.ovirt.engine.api.resource.HostStorageResource;
+import org.ovirt.engine.api.resource.HostUSBsResource;
 import org.ovirt.engine.api.resource.StatisticsResource;
 import org.ovirt.engine.api.restapi.model.AuthenticationMethod;
 import org.ovirt.engine.core.common.VdcObjectType;
@@ -410,5 +411,11 @@ public class BackendHostResource extends AbstractBackendActionableResource<Host,
     @Path("hooks")
     public BackendHostHooksResource getHooksResource() {
         return inject(new BackendHostHooksResource(id));
+    }
+
+    @Override
+    @Path("hostusbs")
+    public HostUSBsResource getHostUSBsResoure() {
+        return inject(new BackendHostUSBsResource(id));
     }
 }

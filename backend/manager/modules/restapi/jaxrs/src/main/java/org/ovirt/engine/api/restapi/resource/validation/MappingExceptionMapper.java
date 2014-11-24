@@ -18,7 +18,6 @@ public class MappingExceptionMapper implements ExceptionMapper<MappingException>
 
     @Override
     public Response toResponse(MappingException exception) {
-        LOGGER.error(exception);
 
         final Fault fault = new Fault();
         fault.setReason("Operation Failed");

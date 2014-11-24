@@ -413,4 +413,11 @@ public final class VdsProperties {
     public static final String vmJobBandwidth = "bandwidth";
     public static final String vmJobImageUUID = "imgUUID";
 
+    // Host USB
+    public static final String parent = "parent";
+    public static final String productId = "product_id";
+    public static final String product = "product";
+    public static final String vendorId = "vendor_id";
+    public static final String vendor = "vendor";
+
 }

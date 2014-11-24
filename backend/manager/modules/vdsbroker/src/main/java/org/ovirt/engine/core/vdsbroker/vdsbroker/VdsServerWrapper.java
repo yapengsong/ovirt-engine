@@ -1438,4 +1438,37 @@ public class VdsServerWrapper implements IVdsServer {
         StoragePoolInfoReturnForXmlRpc wrapper = new StoragePoolInfoReturnForXmlRpc(xmlRpcReturnValue);
         return wrapper;
     }
+
+    @Override
+    public HostUsbListReturnForXmlRpc hostUsbList() {
+        try {
+            Map<String, Object> xmlRpcReturnValue = vdsServer.hostUsbList();
+            HostUsbListReturnForXmlRpc wrapper = new HostUsbListReturnForXmlRpc(xmlRpcReturnValue);
+            return wrapper;
+        } catch (UndeclaredThrowableException ute) {
+            throw new XmlRpcRunTimeException(ute);
+        }
+    }
+
+    @Override
+    public StatusOnlyReturnForXmlRpc hostUsbAttach(String vmId, String devName) {
+        try {
+            Map<String, Object> xmlRpcReturnValue = vdsServer.hostUsbAttach(vmId, devName);
+            StatusOnlyReturnForXmlRpc wrapper = new StatusOnlyReturnForXmlRpc(xmlRpcReturnValue);
+            return wrapper;
+        } catch (UndeclaredThrowableException ute) {
+            throw new XmlRpcRunTimeException(ute);
+        }
+    }
+
+    @Override
+    public StatusOnlyReturnForXmlRpc hostUsbDetach(String vmId, String devName) {
+        try {
+            Map<String, Object> xmlRpcReturnValue = vdsServer.hostUsbDetach(vmId, devName);
+            StatusOnlyReturnForXmlRpc wrapper = new StatusOnlyReturnForXmlRpc(xmlRpcReturnValue);
+            return wrapper;
+        } catch (UndeclaredThrowableException ute) {
+            throw new XmlRpcRunTimeException(ute);
+        }
+    }
 }

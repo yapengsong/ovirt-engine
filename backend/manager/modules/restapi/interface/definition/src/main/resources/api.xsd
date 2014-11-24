@@ -1752,6 +1752,7 @@
           <xs:element name="reboot_after_installation" type="xs:boolean" minOccurs="0"/>
           <xs:element name="os" type="OperatingSystem" minOccurs="0" maxOccurs="1"/>
           <xs:element ref="hooks" minOccurs="0"/>
+          <xs:element ref="hostusbs" minOccurs="0"/>
           <xs:element name="libvirt_version" type="Version" minOccurs="0" maxOccurs="1"/>
 <!--           Optionally  specify the display address of this host explicitly -->
           <xs:element ref="display" minOccurs="0"/>
@@ -3129,6 +3130,7 @@
           <xs:element ref="serial_number" minOccurs="0" maxOccurs="1" />
           <xs:element name="next_run_configuration_exists" type="xs:boolean" minOccurs="0" maxOccurs="1"/>
           <xs:element name="numa_tune_mode" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element ref="hostusbs" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -3660,6 +3662,46 @@
               </xs:appinfo>
             </xs:annotation>
           </xs:element>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+
+  <!-- Host USBs -->
+
+  <xs:element name="hostusb" type="HostUSB"/>
+
+  <xs:element name="hostusbs" type="HostUSBs"/>
+
+  <xs:complexType name="HostUSB">
+    <xs:complexContent>
+      <xs:extension base="BaseResource">
+        <xs:sequence>
+          <xs:element name="devname" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="vmId" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="parent" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="bus" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="device" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="product_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="product" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="vendor_id" type="xs:string" minOccurs="0" maxOccurs="1"/>
+          <xs:element name="vendor" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="HostUSBs">
+    <xs:complexContent>
+      <xs:extension base="BaseResources">
+        <xs:sequence>
+          <xs:annotation>
+            <xs:appinfo>
+              <jaxb:property name="HostUSBs"/>
+            </xs:appinfo>
+          </xs:annotation>
+          <xs:element ref="hostusb" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

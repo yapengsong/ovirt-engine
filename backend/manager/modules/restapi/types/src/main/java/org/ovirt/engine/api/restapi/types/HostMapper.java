@@ -2,6 +2,7 @@ package org.ovirt.engine.api.restapi.types;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -21,6 +22,8 @@ import org.ovirt.engine.api.model.Host;
 import org.ovirt.engine.api.model.HostProtocol;
 import org.ovirt.engine.api.model.HostStatus;
 import org.ovirt.engine.api.model.HostType;
+import org.ovirt.engine.api.model.HostUSB;
+import org.ovirt.engine.api.model.HostUSBs;
 import org.ovirt.engine.api.model.HostedEngine;
 import org.ovirt.engine.api.model.IscsiDetails;
 import org.ovirt.engine.api.model.KdumpStatus;
@@ -45,6 +48,7 @@ import org.ovirt.engine.api.restapi.model.AuthenticationMethod;
 import org.ovirt.engine.api.restapi.utils.GuidUtils;
 import org.ovirt.engine.core.common.action.VdsOperationActionParameters;
 import org.ovirt.engine.core.common.businessentities.AutoNumaBalanceStatus;
+import org.ovirt.engine.core.common.businessentities.HostUSBDevice;
 import org.ovirt.engine.core.common.businessentities.VDS;
 import org.ovirt.engine.core.common.businessentities.VDSStatus;
 import org.ovirt.engine.core.common.businessentities.VDSType;
@@ -878,5 +882,31 @@ public class HostMapper {
             default:
                 return null;
         }
+    }
+
+    @Mapping(from = List.class, to = HostUSBs.class)
+    public static HostUSBs map(List<HostUSBDevice> hostUSBDevices, HostUSBs hostUSBs) {
+        if (hostUSBs == null) {
+            hostUSBs = new HostUSBs();
+        }
+        for (HostUSBDevice hostUSBDevice : hostUSBDevices) {
+            HostUSB hostUSB = new HostUSB();
+            hostUSB.setDevname(hostUSBDevice.getDevname());
+            if (hostUSBDevice.getVmId() != null)
+                hostUSB.setVmId(hostUSBDevice.getVmId().toString());
+            hostUSB.setParent(hostUSBDevice.getParent());
+            hostUSB.setBus(hostUSBDevice.getBus());
+            hostUSB.setDevice(hostUSBDevice.getDevice());
+            if (hostUSBDevice.getProductId() != null)
+                hostUSB.setProductId(hostUSBDevice.getProductId());
+            if (hostUSBDevice.getProduct() != null)
+                hostUSB.setProduct(hostUSBDevice.getProduct());
+            if (hostUSBDevice.getVendorId() != null)
+                hostUSB.setVendorId(hostUSBDevice.getVendorId());
+            if (hostUSBDevice.getVendor() != null)
+                hostUSB.setVendor(hostUSBDevice.getVendor());
+            hostUSBs.getHostUSBs().add(hostUSB);
+        }
+        return hostUSBs;
     }
 }

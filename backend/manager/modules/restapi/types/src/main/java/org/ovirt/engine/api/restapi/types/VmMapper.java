@@ -9,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.ovirt.engine.api.common.util.StatusUtils;
 import org.ovirt.engine.api.model.AuthorizedKey;
@@ -38,6 +39,8 @@ import org.ovirt.engine.api.model.GuestNicConfiguration;
 import org.ovirt.engine.api.model.GuestNicsConfiguration;
 import org.ovirt.engine.api.model.HighAvailability;
 import org.ovirt.engine.api.model.Host;
+import org.ovirt.engine.api.model.HostUSB;
+import org.ovirt.engine.api.model.HostUSBs;
 import org.ovirt.engine.api.model.IP;
 import org.ovirt.engine.api.model.IPs;
 import org.ovirt.engine.api.model.Initialization;
@@ -67,6 +70,7 @@ import org.ovirt.engine.api.restapi.utils.GuidUtils;
 import org.ovirt.engine.api.restapi.utils.UsbMapperUtils;
 import org.ovirt.engine.core.common.action.RunVmOnceParams;
 import org.ovirt.engine.core.common.businessentities.BootSequence;
+import org.ovirt.engine.core.common.businessentities.HostUSBDevice;
 import org.ovirt.engine.core.common.businessentities.MigrationSupport;
 import org.ovirt.engine.core.common.businessentities.OriginType;
 import org.ovirt.engine.core.common.businessentities.UsbPolicy;
@@ -1622,5 +1626,31 @@ public class VmMapper {
         default:
             return null;
         }
+    }
+
+    @Mapping(from = List.class, to = HostUSBs.class)
+    public static HostUSBs map(List<HostUSBDevice> hostUSBDevices, HostUSBs hostUSBs) {
+        if (hostUSBs == null) {
+            hostUSBs = new HostUSBs();
+        }
+        for (HostUSBDevice hostUSBDevice : hostUSBDevices) {
+            HostUSB hostUSB = new HostUSB();
+            hostUSB.setDevname(hostUSBDevice.getDevname());
+            if (hostUSBDevice.getVmId() != null)
+                hostUSB.setVmId(hostUSBDevice.getVmId().toString());
+            hostUSB.setParent(hostUSBDevice.getParent());
+            hostUSB.setBus(hostUSBDevice.getBus());
+            hostUSB.setDevice(hostUSBDevice.getDevice());
+            if (hostUSBDevice.getProductId() != null)
+                hostUSB.setProductId(hostUSBDevice.getProductId());
+            if (hostUSBDevice.getProduct() != null)
+                hostUSB.setProduct(hostUSBDevice.getProduct());
+            if (hostUSBDevice.getVendorId() != null)
+                hostUSB.setVendorId(hostUSBDevice.getVendorId());
+            if (hostUSBDevice.getVendor() != null)
+                hostUSB.setVendor(hostUSBDevice.getVendor());
+            hostUSBs.getHostUSBs().add(hostUSB);
+        }
+        return hostUSBs;
     }
 }

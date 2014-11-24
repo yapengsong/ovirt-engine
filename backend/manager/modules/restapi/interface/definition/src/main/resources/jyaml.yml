@@ -34,6 +34,8 @@ transfers:
   host: org.ovirt.engine.api.model.Host
   host_nic: org.ovirt.engine.api.model.HostNIC
   host_nics: org.ovirt.engine.api.model.HostNics
+  host_usb: org.ovirt.engine.api.model.HostUSB
+  host_usbs: org.ovirt.engine.api.model.HostUSBs
   hosts: org.ovirt.engine.api.model.Hosts
   host_storag: org.ovirt.engine.api.model.HostStorage
   ip: org.ovirt.engine.api.model.IP

@@ -36,6 +36,7 @@ import org.ovirt.engine.api.resource.SnapshotsResource;
 import org.ovirt.engine.api.resource.StatisticsResource;
 import org.ovirt.engine.api.resource.VmApplicationsResource;
 import org.ovirt.engine.api.resource.VmDisksResource;
+import org.ovirt.engine.api.resource.VmHostUSBsResource;
 import org.ovirt.engine.api.resource.VmNicsResource;
 import org.ovirt.engine.api.resource.VmNumaNodesResource;
 import org.ovirt.engine.api.resource.VmReportedDevicesResource;
@@ -631,5 +632,10 @@ public class BackendVmResource extends
     @Override
     public VmNumaNodesResource getVirtualNumaNodesResource() {
         return inject(new BackendVmNumaNodesResource(guid));
+    }
+
+    @Override
+    public VmHostUSBsResource getHostUSBsResource() {
+        return inject(new BackendVmHostUSBsResource(guid));
     }
 }

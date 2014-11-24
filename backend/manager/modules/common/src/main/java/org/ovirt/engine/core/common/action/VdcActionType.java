@@ -386,6 +386,10 @@ public enum VdcActionType {
     RemoveAuditLogById(2100, false, QuotaDependency.NONE),
     ClearAllDismissedAuditLogs(2101, false, QuotaDependency.NONE),
 
+    // Host USB
+    HostUSBAttach(2200, ActionGroup.VM_BASIC_OPERATIONS, QuotaDependency.NONE),
+    HostUSBDetach(2201, ActionGroup.VM_BASIC_OPERATIONS, QuotaDependency.NONE),
+
     SetDataOnSession(3000, false, QuotaDependency.NONE);
 
     private int intValue;
