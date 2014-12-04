@@ -123,7 +123,6 @@ import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabNetworkPre
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabPoolPresenter;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabProviderPresenter;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabQuotaPresenter;
-import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabReportsPresenter;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabStoragePresenter;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabTemplatePresenter;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.MainTabUserPresenter;
@@ -362,7 +361,6 @@ import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabNetworkView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabPoolView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabProviderView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabQuotaView;
-import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabReportsView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabStorageView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabTemplateView;
 import org.ovirt.engine.ui.webadmin.section.main.view.tab.MainTabUserView;
@@ -588,10 +586,6 @@ public class PresenterModule extends BasePresenterModule {
                 MainTabEventPresenter.ViewDef.class,
                 MainTabEventView.class,
                 MainTabEventPresenter.ProxyDef.class);
-        bindPresenter(MainTabReportsPresenter.class,
-                MainTabReportsPresenter.ViewDef.class,
-                MainTabReportsView.class,
-                MainTabReportsPresenter.ProxyDef.class);
         bindPresenter(MainTabQuotaPresenter.class,
                 MainTabQuotaPresenter.ViewDef.class,
                 MainTabQuotaView.class,
