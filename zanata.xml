@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config xmlns="http://zanata.org/namespace/config/">
+  <url>https://translate.zanata.org/zanata/</url>
+  <project>ovirt</project>
+  <project-version>ovirt-3.5</project-version>
+  <project-type>properties</project-type>
+
+  <locales>
+    <locale map-from="zh_CN">zh-Hans-CN</locale>
+  </locales>
+
+  <hooks>
+    <hook command="pull">
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.common.CommonApplicationConstants_zh_CN.properties frontend/webadmin/modules/gwt-common/src/main/resources/org/ovirt/engine/ui/common/CommonApplicationConstants_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.common.CommonApplicationMessages_zh_CN.properties frontend/webadmin/modules/gwt-common/src/main/resources/org/ovirt/engine/ui/common/CommonApplicationMessages_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.uicompat.UIConstants_zh_CN.properties frontend/webadmin/modules/uicompat/src/main/resources/org/ovirt/engine/ui/uicompat/UIConstants_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.uicompat.UIMessages_zh_CN.properties frontend/webadmin/modules/uicompat/src/main/resources/org/ovirt/engine/ui/uicompat/UIMessages_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.uicompat.SpiceRedKeys_zh_CN.properties frontend/webadmin/modules/uicompat/src/main/resources/org/ovirt/engine/ui/uicompat/SpiceRedKeys_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.userportal.ApplicationConstants_zh_CN.properties frontend/webadmin/modules/userportal-gwtp/src/main/resources/org/ovirt/engine/ui/userportal/ApplicationConstants_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.userportal.ApplicationMessages_zh_CN.properties frontend/webadmin/modules/userportal-gwtp/src/main/resources/org/ovirt/engine/ui/userportal/ApplicationMessages_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.webadmin.ApplicationConstants_zh_CN.properties frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/webadmin/ApplicationConstants_zh_CN.properties</after>
+        <after>mv frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/frontend/org.ovirt.engine.ui.webadmin.ApplicationMessages_zh_CN.properties frontend/webadmin/modules/webadmin/src/main/resources/org/ovirt/engine/ui/webadmin/ApplicationMessages_zh_CN.properties</after>
+    </hook>
+  </hooks>
+
+</config>
