@@ -843,7 +843,7 @@ install -d "%{buildroot}%{_sysconfdir}/firewalld/services"
 touch "%{buildroot}%{_sysconfdir}/firewalld/services/ovirt.xml"
 
 %post
-if [ ! -h %{_localstatedir}/log/eayunos ]
+if [ ! -h %{_localstatedir}/log/eayunos ]; then
     ln -s %{engine_log} %{_localstatedir}/log/eayunos
 fi
 
@@ -869,7 +869,7 @@ if [ "$1" -eq 0 ]; then
 	fi
 fi
 
-if [ -h %{_localstatedir}/log/eayunos ]
+if [ -h %{_localstatedir}/log/eayunos ]; then
     unlink %{_localstatedir}/log/eayunos
 fi
 
