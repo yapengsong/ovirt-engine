@@ -325,6 +325,16 @@ Requires(preun):	systemd
 Requires(postun):	systemd
 %endif
 
+%post
+if [ ! -h %{_localstatedir}/log/eayunos ]
+    ln -s %{engine_log} %{_localstatedir}/log/eayunos
+fi
+
+%postun
+if [ -h %{_localstatedir}/log/eayunos ]
+    unlink %{_localstatedir}/log/eayunos
+fi
+
 %pre backend
 %ovirt_create_user_engine
 

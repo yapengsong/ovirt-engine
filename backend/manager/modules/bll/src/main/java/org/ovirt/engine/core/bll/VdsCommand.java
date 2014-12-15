@@ -287,7 +287,7 @@ public abstract class VdsCommand<T extends VdsActionParameters> extends CommandB
     protected String getErrorMessage(String msg) {
         return !StringUtils.isEmpty(msg) ? msg : String.format(
             "Please refer to %1$s/engine.log and log logs under %1$s/host-deploy/ for further details.",
-            EngineLocalConfig.getInstance().getLogDir()
+            "/var/log/eayunos"
         );
     }
 
