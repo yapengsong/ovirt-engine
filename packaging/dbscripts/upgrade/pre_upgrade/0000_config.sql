@@ -124,7 +124,7 @@ select fn_db_add_config_value('EnableVdsLoadBalancing','true','general');
 select fn_db_add_config_value('EngineMode','Active','general');
 --Handling Use Default Credentials
 select fn_db_add_config_value('FailedJobCleanupTimeInMinutes','60','general');
-select fn_db_add_config_value('FenceAgentDefaultParams','ilo3:lanplus,power_wait=4;ilo4:lanplus,power_wait=4','general');
+select fn_db_add_config_value('FenceAgentDefaultParams','drac7:privlvl=OPERATOR,lanplus,delay=10;ilo3:lanplus,power_wait=4;ilo4:lanplus,power_wait=4','general');
 select fn_db_add_config_value('CustomFenceAgentDefaultParams','','general');
 select fn_db_add_config_value('FenceAgentDefaultParamsForPPC','ilo3:lanplus=1,cipher=1,privlvl=administrator,power_wait=4;ilo4:ilanplus=1,cipher=1,privlvl=administrator,power_wait=4;ipmilan:lanplus=1,cipher=1,privlvl=administrator,power_wait=4','general');
 select fn_db_add_config_value('CustomFenceAgentDefaultParamsForPPC','','general');
@@ -853,7 +853,7 @@ select fn_db_update_config_value('AutoRecoveryAllowedTypes','{\"storage domains\
 select fn_db_update_config_value('BootstrapMinimalVdsmVersion','4.9','general');
 select fn_db_update_config_value('DBEngine','Postgres','general');
 select fn_db_update_config_value('DefaultTimeZone','(GMT) GMT Standard Time','general');
-select fn_db_update_config_value('FenceAgentDefaultParams','ilo3:lanplus,power_wait=4;ilo4:lanplus,power_wait=4','general');
+select fn_db_update_config_value('FenceAgentDefaultParams','drac7:privlvl=OPERATOR,lanplus,delay=10;ilo3:lanplus,power_wait=4;ilo4:lanplus,power_wait=4','general');
 select fn_db_update_config_value('FenceAgentDefaultParamsForPPC','ilo3:lanplus=1,cipher=1,privlvl=administrator,power_wait=4,retry_on=2;ilo4:ilanplus=1,cipher=1,privlvl=administrator,power_wait=4,retry_on=2;ipmilan:lanplus=1,cipher=1,privlvl=administrator,power_wait=4,retry_on=2','general');
 select fn_db_update_config_value('FenceAgentMapping','drac7=ipmilan,ilo2=ilo,ilo3=ipmilan,ilo4=ipmilan','general');
 select fn_db_update_config_value('FenceStartStatusDelayBetweenRetriesInSec','10','general');
@@ -961,7 +961,7 @@ select fn_db_update_config_value('ClusterEmulatedMachines','rhel6.4.0,pc-1.0,pse
 select fn_db_update_config_value('SpiceDriverNameInGuest','{"windows": "RHEV-Spice", "linux" : "xorg-x11-drv-qxl" }','general');
 select fn_db_update_config_value('SupportedClusterLevels','3.0,3.1,3.2,3.3,3.4,3.5','general');
 select fn_db_update_config_value('SupportedStorageFormats','0,2,3','3.1,3.2,3.3,3.4,3.5');
-select fn_db_update_config_value('SupportedVDSMVersions','4.9,4.10,4.11,4.12,4.13,4.14,4.15','general');
+select fn_db_update_config_value('SupportedVDSMVersions','4.9,4.10,4.11,4.12,4.13,4.14,4.15,4.16','general');
 select fn_db_update_config_value('VdcVersion','3.5.0.0','general');
 select fn_db_update_config_value('ProductRPMVersion','3.5.0.0','general');
 select fn_db_update_config_value('VdsFenceOptionMapping','alom:secure=secure,port=ipport;apc:secure=secure,port=ipport,slot=port;bladecenter:secure=secure,port=ipport,slot=port;drac5:secure=secure,port=ipport;eps:slot=port;ilo:secure=ssl,port=ipport;ipmilan:;rsa:secure=secure,port=ipport;rsb:;wti:secure=secure,port=ipport,slot=port','3.0');
@@ -1017,6 +1017,11 @@ select fn_db_update_default_config_value('GuestToolsSetupIsoPrefix','RHEV-toolsS
 -- disable retries for more predictable HA timing:
 select fn_db_update_default_config_value('vdsConnectionTimeout', '180', '2', 'general', false);
 select fn_db_update_default_config_value('vdsRetries', '3', '0', 'general', false);
+
+-- Override existing configuration to TLSv1 if it is SSLv3
+select fn_db_update_default_config_value('VdsmSSLProtocol','SSLv3','TLSv1','general', false);
+select fn_db_update_default_config_value('ExternalCommunicationProtocol','SSLv3','TLSv1','general', false);
+
 
 ------------------------------------------------------------------------------------
 --              Cleanup deprecated configuration values section

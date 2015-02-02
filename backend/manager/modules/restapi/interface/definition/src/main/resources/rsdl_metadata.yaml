@@ -1508,6 +1508,20 @@ actions:
     headers:
       Content-Type: {value: application/xml|json, required: true}
       Correlation-Id: {value: 'any string', required: false}
+- name: /storagedomains/{storagedomain:id}/isattached|rel=isattached
+  description: Querying if the Storage Domain is already attached to a Data Center by the is_attached boolean field, which is part of the storage server. IMPORTANT, Executing this API will cause the Host to disconnect from the Storage Domain.
+  request:
+    body:
+      parameterType: Action
+      signatures:
+      - mandatoryArguments: {action.host.id: 'xs:string'}
+        optionalArguments: {}
+        description:
+    urlparams:
+      async: {context: matrix, type: 'xs:boolean', value: true|false, required: false}
+    headers:
+      Content-Type: {value: application/xml|json, required: true}
+      Correlation-Id: {value: 'any string', required: false}
 - name: /storagedomains/{storagedomain:id}|rel=update
   description: update the storage domain
   request:
@@ -1543,6 +1557,10 @@ actions:
             logical_unit.lun_mapping: 'xs:int', logical_unit.portal: 'xs:string', logical_unit.paths: 'xs:int', logical_unit.id: 'xs:string'}}
         optionalArguments: {storagedomain.name: 'xs:string', storagedomain.comment: 'xs:string', storagedomain.storage.override_luns: 'xs:boolean', storagedomain.storage_format: 'xs:string'}
         description: add a new storage domain to the system using a direct lun
+      - mandatoryArguments: {storagedomain.host.id|name: 'xs:string',
+          storagedomain.type: 'xs:string', storagedomain.storage.type: 'xs:string', storagedomain.import: 'xs:boolean'}
+        optionalArguments: {storagedomain.storage.address: 'xs:string', storagedomain.format: 'xs:boolean', storagedomain.comment: 'xs:string'}
+        description: Import an existing block storage domain to the system using the targets already connected to the host
       - mandatoryArguments: {storagedomain.host.id|name: 'xs:string',
           storagedomain.type: 'xs:string', storagedomain.storage.type: 'xs:string',
           storagedomain.format: 'xs:boolean',storagedomain.storage.address: 'xs:string',
@@ -2884,12 +2902,23 @@ actions:
       parameterType: Action
       signatures:
       - mandatoryArguments: {}
-        optionalArguments: {action.root_password: 'xs:string', action.image: 'xs:string'}
+        optionalArguments:
+          action.root_password: xs:string
+          action.image: xs:string
+          action.host.override_iptables: xs:boolean
         deprecated: true
         description: install vdsm and other packages required to get the host ready to be used in the engine providing the root password. This has been deprecated
       - mandatoryArguments: {}
-        optionalArguments: {action.ssh.port: 'xs:int', action.ssh.fingerprint: 'xs:string', action.ssh.authentication_method: 'xs:string',
-          action.ssh.user.user_name: 'xs:string', action.ssh.user.password: 'xs:string', action.image: 'xs:string', action.async: 'xs:boolean', action.grace_period.expiry: 'xs:long'}
+        optionalArguments:
+          action.ssh.port: xs:int
+          action.ssh.fingerprint: xs:string
+          action.ssh.authentication_method: xs:string
+          action.ssh.user.user_name: xs:string
+          action.ssh.user.password: xs:string
+          action.image: xs:string
+          action.async: xs:boolean
+          action.grace_period.expiry: xs:long
+          action.host.override_iptables: xs:boolean
         description: install vdsm and other packages required to get the host ready to be used in the engine providing thre ssh password
     urlparams: {}
     headers:
@@ -2917,6 +2946,18 @@ actions:
       - mandatoryArguments: {action.iscsi.address: 'xs:string', action.iscsi.target: 'xs:string'}
         optionalArguments: {action.async: 'xs:boolean', action.grace_period.expiry: 'xs:long'}
         description: login to the specified iscsi target at the specified address
+    urlparams: {}
+    headers:
+      Content-Type: {value: application/xml|json, required: true}
+      Correlation-Id: {value: 'any string', required: false}
+- name: /hosts/{host:id}/unregisteredstoragedomainsdiscover|rel=unregisteredstoragedomainsdiscover
+  description: Discover the Storage Domains which are candidiates to be imported to the setup
+  request:
+    body:
+      parameterType: Action
+      signatures:
+      - mandatoryArguments: {action.iscsi.address: 'xs:string', action.target: 'xs:string'}
+        description: Discover the Storage Domains which are candidiates to be imported to the setup
     urlparams: {}
     headers:
       Content-Type: {value: application/xml|json, required: true}

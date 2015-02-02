@@ -199,7 +199,10 @@ public class IrsProxyData {
     private static Set<Guid> getVdsConnectedToPool(Guid storagePoolId) {
         Set<Guid> vdsNotInMaintenance = new HashSet<>();
 
-        for (VDS vds : DbFacade.getInstance().getVdsDao().getAllForStoragePool(storagePoolId)) {
+        // Note - this method is used as it returns only hosts from VIRT supported clusters
+        // (we use the domain monitoring results only from those clusters hosts).
+        // every change to it should be inspected carefully.
+        for (VDS vds : DbFacade.getInstance().getVdsDao().getAllForStoragePoolAndStatus(storagePoolId, null)) {
             if (vds.getStatus() == VDSStatus.Up
                     || vds.getStatus() == VDSStatus.NonResponsive
                     || vds.getStatus() == VDSStatus.PreparingForMaintenance
@@ -421,19 +424,23 @@ public class IrsProxyData {
                 DbFacade.getInstance().getStorageDomainDynamicDao().update(data.getStorageDynamicData());
                 if (data.getAvailableDiskSize() != null && data.getUsedDiskSize() != null) {
                     double freePercent = data.getStorageDynamicData().getfreeDiskPercent();
-                    int freeDiskInGB = data.getStorageDynamicData().getfreeDiskInGB();
                     AuditLogType type = AuditLogType.UNASSIGNED;
-                    boolean spaceThresholdMet =
-                            freeDiskInGB <= Config.<Integer> getValue(ConfigValues.FreeSpaceCriticalLowInGB);
-                    boolean percentThresholdMet =
-                            freePercent <= Config.<Integer> getValue(ConfigValues.FreeSpaceLow);
-                    if (spaceThresholdMet && percentThresholdMet) {
-                        type = AuditLogType.IRS_DISK_SPACE_LOW_ERROR;
-                    } else {
-                        if (spaceThresholdMet || percentThresholdMet) {
-                            type = AuditLogType.IRS_DISK_SPACE_LOW;
+                    Integer freeDiskInGB = data.getStorageDynamicData().getAvailableDiskSize();
+                    if (freeDiskInGB != null) {
+                        boolean spaceThresholdMet =
+                                freeDiskInGB < Config.<Integer>getValue(ConfigValues.FreeSpaceCriticalLowInGB);
+                        boolean percentThresholdMet =
+                                freePercent < Config.<Integer>getValue(ConfigValues.FreeSpaceLow);
+
+                        if (spaceThresholdMet && percentThresholdMet) {
+                            type = AuditLogType.IRS_DISK_SPACE_LOW_ERROR;
+                        } else {
+                            if (spaceThresholdMet || percentThresholdMet) {
+                                type = AuditLogType.IRS_DISK_SPACE_LOW;
+                            }
                         }
                     }
+
                     if (type != AuditLogType.UNASSIGNED) {
                         AuditLogableBase logable = new AuditLogableBase();
                         logable.setStorageDomain(data);
@@ -1506,7 +1513,10 @@ public class IrsProxyData {
         // build a list of all the hosts in status UP in
         // Pool.
         List<Guid> vdssInPool = new ArrayList<Guid>();
-        List<VDS> allVds = DbFacade.getInstance().getVdsDao().getAllForStoragePool(_storagePoolId);
+        // Note - this method is used as it returns only hosts from VIRT supported clusters
+        // (we use the domain monitoring results only from those clusters hosts).
+        // every change to it should be inspected carefully.
+        List<VDS> allVds = DbFacade.getInstance().getVdsDao().getAllForStoragePoolAndStatus(_storagePoolId, null);
         Map<Guid, VDS> vdsMap = new HashMap<Guid, VDS>();
         for (VDS tempVDS : allVds) {
             vdsMap.put(tempVDS.getId(), tempVDS);

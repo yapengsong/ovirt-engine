@@ -161,13 +161,9 @@ public class LiveMigrateVmDisksCommand<T extends LiveMigrateVmDisksParameters> e
             if (diskImage != null) {
                 permissionList.add(new PermissionSubject(diskImage.getId(),
                         VdcObjectType.Disk,
-                        ActionGroup.CONFIGURE_DISK_STORAGE));
+                        ActionGroup.DISK_LIVE_STORAGE_MIGRATION));
             }
-            permissionList.add(new PermissionSubject(parameters.getTargetStorageDomainId(),
-                    VdcObjectType.Storage,
-                    ActionGroup.CREATE_DISK));
         }
-
         return permissionList;
     }
 
@@ -265,7 +261,7 @@ public class LiveMigrateVmDisksCommand<T extends LiveMigrateVmDisksParameters> e
             map.put(diskImage, diskImage.getStorageIds().get(0));
         }
         return validate(DiskProfileHelper.setAndValidateDiskProfiles(map,
-                getStoragePool().getcompatibility_version()));
+                getStoragePool().getcompatibility_version(), getCurrentUser()));
     }
 
     @Override
@@ -462,7 +458,8 @@ public class LiveMigrateVmDisksCommand<T extends LiveMigrateVmDisksParameters> e
             StorageDomain sourceDomain = getStorageDomainById(sourceDomainId, storagePoolId);
 
             StorageDomainValidator storageDomainValidator = createStorageDomainValidator(sourceDomain);
-            if (!validate(storageDomainValidator.hasSpaceForNewDisks(disksList))) {
+            List<DiskImage> dummyDisksList = ImagesHandler.getDisksDummiesForStorageAllocations(disksList);
+            if (!validate(storageDomainValidator.hasSpaceForNewDisks(dummyDisksList))) {
                 return false;
             }
         }

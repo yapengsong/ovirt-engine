@@ -305,7 +305,8 @@ public class AddVmCommand<T extends VmManagementParametersBase> extends VmManage
                 return false;
             }
         }
-        return isDedicatedVdsOnSameCluster(vmStaticFromParams);
+        return VmHandler.validateDedicatedVdsExistOnSameCluster(vmStaticFromParams,
+                getReturnValue().getCanDoActionMessages());
     }
 
     protected boolean shouldCheckSpaceInStorageDomains() {
@@ -380,9 +381,13 @@ public class AddVmCommand<T extends VmManagementParametersBase> extends VmManage
         return validate(storageDomainValidator.isDomainWithinThresholds());
     }
 
+    /**
+     * This validation is for thin provisioning, when done differently on other commands, this method should be overridden.
+     */
     protected boolean validateFreeSpace(StorageDomainValidator storageDomainValidator, List<DiskImage> disksList)
     {
-        return validate(storageDomainValidator.hasSpaceForNewDisks(disksList));
+        Collection<DiskImage> disks = ImagesHandler.getDisksDummiesForStorageAllocations(disksList);
+        return validate(storageDomainValidator.hasSpaceForNewDisks(disks));
     }
 
     protected boolean checkSingleQxlDisplay() {
@@ -642,7 +647,7 @@ public class AddVmCommand<T extends VmManagementParametersBase> extends VmManage
                 map.put(diskImage, diskImage.getStorageIds().get(0));
             }
             return validate(DiskProfileHelper.setAndValidateDiskProfiles(map,
-                    getStoragePool().getcompatibility_version()));
+                    getStoragePool().getcompatibility_version(), getCurrentUser()));
         }
         return true;
     }
@@ -740,7 +745,7 @@ public class AddVmCommand<T extends VmManagementParametersBase> extends VmManage
         ImagesHandler.fillImagesMapBasedOnTemplate(vmDisksSource,
                 getPoolDomains(),
                 diskInfoDestinationMap,
-                destStorages, false);
+                destStorages);
     }
 
     protected boolean validateIsImagesOnDomains() {
@@ -1243,17 +1248,20 @@ public class AddVmCommand<T extends VmManagementParametersBase> extends VmManage
     protected void addDiskPermissions() {
         List<Guid> newDiskImageIds = new ArrayList<>(srcDiskIdToTargetDiskIdMapping.values());
         Permissions[] permsArray = new Permissions[newDiskImageIds.size()];
-        Guid diskOperatorIdFromParams = getParameters().getDiskOperatorAuthzPrincipalDbId();
-        Guid diskOperatorId = diskOperatorIdFromParams != null ? diskOperatorIdFromParams : getCurrentUser().getId();
 
         for (int i = 0; i < newDiskImageIds.size(); i++) {
             permsArray[i] =
-                    new Permissions(diskOperatorId,
+                    new Permissions(getUserIdOfDiskOperator(),
                             PredefinedRoles.DISK_OPERATOR.getId(),
                             newDiskImageIds.get(i),
                             VdcObjectType.Disk);
         }
         MultiLevelAdministrationHandler.addPermission(permsArray);
+    }
+
+    private Guid getUserIdOfDiskOperator() {
+        Guid diskOperatorIdFromParams = getParameters().getDiskOperatorAuthzPrincipalDbId();
+        return diskOperatorIdFromParams != null ? diskOperatorIdFromParams : getCurrentUser().getId();
     }
 
     protected void addActiveSnapshot() {

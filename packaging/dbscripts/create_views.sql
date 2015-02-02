@@ -221,7 +221,41 @@ FROM
            null AS device_size
     FROM images_storage_domain_view
     INNER JOIN storage_for_image_view ON images_storage_domain_view.image_guid = storage_for_image_view.image_id
-    UNION
+    GROUP BY storage_for_image_view.storage_id,
+           storage_for_image_view.storage_path,
+           storage_for_image_view.storage_name,
+           storage_for_image_view.storage_type,
+           storage_pool_id,
+           image_guid, -- Image fields
+           creation_date,
+           actual_size,
+           read_rate,
+           write_rate,
+           read_latency_seconds,
+           write_latency_seconds,
+           flush_latency_seconds,
+           size,
+           it_guid,
+           imageStatus,
+           lastModified,
+           volume_type,
+           volume_format,
+           image_group_id,
+           description, -- Snapshot fields
+           ParentId,
+           app_list,
+           vm_snapshot_id,
+           active,
+           entity_type,
+           number_of_vms,
+           vm_names,
+           storage_for_image_view.quota_id,
+           storage_for_image_view.quota_name,
+           quota_enforcement_type,
+           ovf_store,
+           storage_for_image_view.disk_profile_id,
+           storage_for_image_view.disk_profile_name
+    UNION ALL
     SELECT 1 AS disk_storage_type,
            null AS storage_id, -- Storage domain fields
            null AS storage_path,
@@ -270,7 +304,6 @@ FROM
     LEFT JOIN vms_for_disk_view on vms_for_disk_view.device_id = dlm.disk_id
 ) AS storage_impl
 JOIN base_disks bd ON bd.disk_id = storage_impl.image_group_id;
-
 
 CREATE OR REPLACE VIEW all_disks
 AS
@@ -1666,6 +1699,20 @@ CREATE OR REPLACE VIEW user_network_permissions_view (entity_id, user_id)
 AS
 SELECT       DISTINCT entity_id, user_id
 FROM         user_network_permissions_view_base
+NATURAL JOIN user_flat_groups;
+
+-- Permissions on disk profiles
+-- The user has permissions on the disk profile directly
+CREATE OR REPLACE VIEW user_disk_profile_permissions_view_base (entity_id, granted_id)
+AS
+SELECT     object_id, ad_element_id
+FROM       internal_permissions_view
+WHERE      object_type_id = 29 AND role_type = 2;
+
+CREATE OR REPLACE VIEW user_disk_profile_permissions_view (entity_id, user_id)
+AS
+SELECT       DISTINCT entity_id, user_id
+FROM         user_disk_profile_permissions_view_base
 NATURAL JOIN user_flat_groups;
 
 CREATE OR REPLACE VIEW gluster_volumes_view

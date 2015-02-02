@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 
 import org.ovirt.engine.ui.common.utils.HttpUtils;
 import org.ovirt.engine.ui.frontend.Frontend;
+import org.ovirt.engine.ui.frontend.communication.EngineSessionRefreshedEvent;
+import org.ovirt.engine.ui.frontend.communication.EngineSessionRefreshedEvent.EngineSessionRefreshedHandler;
 import org.ovirt.engine.ui.frontend.communication.StorageCallback;
 import org.ovirt.engine.ui.frontend.utils.BaseContextPathData;
 
@@ -38,7 +40,7 @@ import com.google.inject.Inject;
  * <p>
  * Triggers {@link RestApiSessionAcquiredEvent} upon acquiring or reusing REST API session.
  */
-public class RestApiSessionManager {
+public class RestApiSessionManager implements EngineSessionRefreshedHandler {
 
     private static class RestApiRequestCallback implements RequestCallback {
 
@@ -69,8 +71,9 @@ public class RestApiSessionManager {
 
     private static final String SESSION_ID_HEADER = "JSESSIONID"; //$NON-NLS-1$
     private static final String SESSION_ID_KEY = "RestApiSessionId"; //$NON-NLS-1$
-    private static final String DEFAULT_SESSION_TIMEOUT = "30"; //$NON-NLS-1$
     private static final String ENGINE_AUTH_TOKEN_HEADER = "OVIRT-INTERNAL-ENGINE-AUTH-TOKEN"; //$NON-NLS-1$
+
+    private static final int DEFAULT_ENGINE_SESSION_TIMEOUT = 30;
 
     // Heartbeat (delay) between REST API keep-alive requests
     private static final int SESSION_HEARTBEAT_MS = 1000 * 60; // 1 minute
@@ -78,8 +81,10 @@ public class RestApiSessionManager {
     private final EventBus eventBus;
     private final String restApiBaseUrl;
 
-    private String restApiSessionTimeout = DEFAULT_SESSION_TIMEOUT;
+    private int restApiSessionTimeout;
     private String restApiSessionId;
+
+    private boolean refreshRestApiSession = false;
 
     @Inject
     public RestApiSessionManager(EventBus eventBus) {
@@ -89,10 +94,32 @@ public class RestApiSessionManager {
         // send authentication headers to URLs ending in api/, otherwise it will send them to URLs ending in /, and
         // this causes problems in other applications, for example in the reports application.
         this.restApiBaseUrl = BaseContextPathData.getInstance().getPath() + "api/"; //$NON-NLS-1$
+
+        setSessionTimeout(DEFAULT_ENGINE_SESSION_TIMEOUT);
+        eventBus.addHandler(EngineSessionRefreshedEvent.getType(), this);
     }
 
-    public void setSessionTimeout(String sessionTimeout) {
-        this.restApiSessionTimeout = sessionTimeout;
+    @Override
+    public void onEngineSessionRefreshed(EngineSessionRefreshedEvent event) {
+        if (restApiSessionId != null) {
+            refreshRestApiSession = true;
+        }
+    }
+
+    public void setSessionTimeout(String engineSessionTimeout) {
+        try {
+            setSessionTimeout(Integer.valueOf(engineSessionTimeout));
+        } catch (NumberFormatException ex) {
+            setSessionTimeout(DEFAULT_ENGINE_SESSION_TIMEOUT);
+        }
+    }
+
+    public void setSessionTimeout(int engineSessionTimeout) {
+        // Engine session expiration happens through periodic "cleanExpiredUsersSessions" job
+        // whose periodicity is same as Engine session timeout (UserSessionTimeOutInterval).
+        // Because of that, Engine sessions can stay active up to 2 * UserSessionTimeOutInterval
+        // so we adapt REST API session timeout accordingly.
+        restApiSessionTimeout = 2 * engineSessionTimeout;
     }
 
     /**
@@ -106,7 +133,7 @@ public class RestApiSessionManager {
         RequestBuilder builder = new RequestBuilder(RequestBuilder.GET, restApiBaseUrl);
 
         // Control REST API session timeout
-        builder.setHeader("Session-TTL", restApiSessionTimeout); //$NON-NLS-1$
+        builder.setHeader("Session-TTL", String.valueOf(restApiSessionTimeout)); //$NON-NLS-1$
 
         // Express additional preferences for serving this request
         String preferValue = "persistent-auth, csrf-protection"; //$NON-NLS-1$
@@ -140,18 +167,18 @@ public class RestApiSessionManager {
         Scheduler.get().scheduleFixedDelay(new RepeatingCommand() {
             @Override
             public boolean execute() {
-                String sessionId = getSessionId();
+                boolean sessionInUse = restApiSessionId != null;
 
-                if (sessionId != null) {
+                if (sessionInUse && refreshRestApiSession) {
                     // The browser takes care of sending JSESSIONID cookie for this request automatically
                     sendRequest(createRequest(null), new RestApiRequestCallback());
 
-                    // The session is still in use, proceed with the heartbeat
-                    return true;
-                } else {
-                    // The session has been released, cancel the heartbeat
-                    return false;
+                    // Reset the refresh flag
+                    refreshRestApiSession = false;
                 }
+
+                // Proceed with the heartbeat only when the session is still in use
+                return sessionInUse;
             }
         }, SESSION_HEARTBEAT_MS);
     }

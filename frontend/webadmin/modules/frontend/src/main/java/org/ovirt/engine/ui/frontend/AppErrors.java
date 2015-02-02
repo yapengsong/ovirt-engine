@@ -568,6 +568,9 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. VM is pinned to a specific host. The host's cluster must be the same as the selected VM cluster.")
     String ACTION_TYPE_FAILED_DEDICATED_VDS_NOT_IN_SAME_CLUSTER();
 
+    @DefaultStringValue("Cannot ${action} ${type}. VM is pinned to a specific host. The required host doesn't exist.")
+    String ACTION_TYPE_FAILED_DEDICATED_VDS_DOES_NOT_EXIST();
+
     @DefaultStringValue("Cannot ${action} ${type}. Disk configuration (${volumeFormat} ${volumeType}) is incompatible with the storage domain type.")
     String ACTION_TYPE_FAILED_DISK_CONFIGURATION_NOT_SUPPORTED();
 
@@ -591,6 +594,9 @@ public interface AppErrors extends ConstantsWithLookup {
 
     @DefaultStringValue("Cannot ${action} ${type}. The disk contains the hosted engine.")
     String ACTION_TYPE_FAILED_HOSTED_ENGINE_DISK();
+
+    @DefaultStringValue("Cannot ${action} ${type}. The storage selected contains the self hosted engine.")
+    String ACTION_TYPE_FAILED_HOSTED_ENGINE_STORAGE();
 
     @DefaultStringValue("Cannot ${action} ${type}. source and destination is the same.")
     String ACTION_TYPE_FAILED_MIGRATION_TO_SAME_HOST();
@@ -1479,6 +1485,9 @@ public interface AppErrors extends ConstantsWithLookup {
 
     @DefaultStringValue("Cannot attach Storage Domain.\n-Please attach Data Domain to the Data Center first.")
     String ERROR_CANNOT_ADD_STORAGE_POOL_WITHOUT_DATA_DOMAIN();
+
+    @DefaultStringValue("Cannot ${action} ${type}.\n The Storage Domain is already attached to a different Data Center and cannot be attcahed to an uninitialized Data Center.\n -Please attach a differenet Data Domain to the Data Center first.")
+    String ERROR_CANNOT_ADD_STORAGE_DOMAIN_WITH_ATTACHED_DATA_DOMAIN();
 
     @DefaultStringValue("Cannot remove Data Center which contains active/locked Storage Domains.\n-Please deactivate all domains and wait for tasks to finish before removing the Data Center.")
     String ERROR_CANNOT_REMOVE_POOL_WITH_ACTIVE_DOMAINS();
@@ -3146,6 +3155,9 @@ public interface AppErrors extends ConstantsWithLookup {
 
     @DefaultStringValue("Cannot ${action} ${type}. Cannot remove last Disk profile in Storage Domain.")
     String ACTION_TYPE_CANNOT_REMOVE_LAST_DISK_PROFILE_IN_STORAGE_DOMAIN();
+
+    @DefaultStringValue("Cannot ${action} ${type}. The user doesn't have permissions to attach Disk Profile to the Disk.")
+    String USER_NOT_AUTHORIZED_TO_ATTACH_DISK_PROFILE();
 
     @DefaultStringValue("Cannot ${action}. New disk size cannot be smaller than the current.")
     String ACTION_TYPE_FAILED_REQUESTED_DISK_SIZE_IS_TOO_SMALL();

@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.ovirt.engine</groupId>
   <artifactId>root</artifactId>
-  <version>3.5.1-SNAPSHOT</version>
+  <version>3.5.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>ovirt-root</name>
   <description>oVirt Engine Root Project</description>
@@ -76,7 +76,7 @@
     <org.ovirt.engine.api.ovirt-engine-extensions-api.version>0.0.0-SNAPSHOT</org.ovirt.engine.api.ovirt-engine-extensions-api.version>
     <slf4j.version>1.7.5</slf4j.version>
     <slf4j-jdk14.version>1.5.6</slf4j-jdk14.version>
-    <vdsm-jsonrpc-java.version>1.0.13</vdsm-jsonrpc-java.version>
+    <vdsm-jsonrpc-java.version>1.0.15</vdsm-jsonrpc-java.version>
     <gwt.version>2.5.1</gwt.version>
     <findbugs.version>2.5.2</findbugs.version>
     <mockito.version>1.9.0</mockito.version>
@@ -103,7 +103,7 @@
     <aopalliance.version>1.0</aopalliance.version>
     <snmp4j.version>2.2.2</snmp4j.version>
     <!-- OpenStack -->
-    <openstack-client.version>3.0.5</openstack-client.version>
+    <openstack-client.version>3.0.6</openstack-client.version>
 
     <!-- Plugins Versions -->
     <maven-surefire-plugin.version>2.7.2</maven-surefire-plugin.version>
@@ -113,7 +113,7 @@
     <!-- https://jira.codehaus.org/browse/MGWT-350 -->
     <gwt-maven-plugin.workingRefresh.version>2.4.0</gwt-maven-plugin.workingRefresh.version>
     <cdi.api.version>1.0-SP4</cdi.api.version>
-    <antlr.version>4.2.2</antlr.version>
+    <javacc.version>2.6</javacc.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -334,9 +334,9 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>org.antlr</groupId>
-        <artifactId>antlr4-runtime</artifactId>
-        <version>${antlr.version}</version>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javacc-maven-plugin</artifactId>
+        <version>${javacc.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

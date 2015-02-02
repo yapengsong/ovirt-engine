@@ -1,5 +1,6 @@
 package org.ovirt.engine.core.bll.storage;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -85,12 +86,19 @@ public abstract class StorageServerConnectionCommandBase<T extends StorageServer
             connections = getStorageConnDao().getAllForStorage(connectionField);
         }
         else {
-            connections = getStorageConnDao().getAllForConnection(connection);
+            StorageServerConnections sameConnection = findConnectionWithSameDetails(connection);
+            connections =
+                    sameConnection != null ? Arrays.asList(sameConnection)
+                            : Collections.<StorageServerConnections> emptyList();
         }
 
         boolean isDuplicateConnExists = (connections.size() > 1
                 || (connections.size() == 1 && !connections.get(0).getid().equalsIgnoreCase(connection.getid())));
         return isDuplicateConnExists;
+    }
+
+    protected StorageServerConnections findConnectionWithSameDetails(StorageServerConnections connection) {
+        return ISCSIStorageHelper.findConnectionWithSameDetails(connection);
     }
 
     protected boolean checkIsConnectionFieldEmpty(StorageServerConnections connection) {

@@ -1,6 +1,7 @@
 package org.ovirt.engine.core.bll;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.lang.StringUtils;
 import org.ovirt.engine.core.bll.context.CompensationContext;
@@ -51,6 +53,7 @@ import org.ovirt.engine.core.common.vdscommands.VdsAndPoolIDVDSParametersBase;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.core.compat.TransactionScopeOption;
 import org.ovirt.engine.core.dal.dbbroker.DbFacade;
+import org.ovirt.engine.core.utils.JsonHelper;
 import org.ovirt.engine.core.utils.collections.MultiValueMapUtils;
 import org.ovirt.engine.core.utils.log.Log;
 import org.ovirt.engine.core.utils.log.LogFactory;
@@ -61,6 +64,8 @@ import org.ovirt.engine.core.utils.transaction.TransactionSupport;
 
 public final class ImagesHandler {
     public static final String DISK = "_Disk";
+    public static final String DISK_ALIAS = "DiskAlias";
+    public static final String DISK_DESCRIPTION = "DiskDescription";
     public static final String DefaultDriveName = "1";
     private static final Log log = LogFactory.getLog(ImagesHandler.class);
 
@@ -71,27 +76,25 @@ public final class ImagesHandler {
      * @param template
      * @param diskInfoDestinationMap
      * @param destStorages
-     * @param notCheckSize - if we need to perform a size check for storage or not
      */
     public static void fillImagesMapBasedOnTemplate(VmTemplate template,
             Map<Guid, DiskImage> diskInfoDestinationMap,
-            Map<Guid, StorageDomain> destStorages, boolean notCheckSize) {
+            Map<Guid, StorageDomain> destStorages) {
         List<StorageDomain> domains =
                 DbFacade.getInstance()
                         .getStorageDomainDao()
                         .getAllForStoragePool(template.getStoragePoolId());
-        fillImagesMapBasedOnTemplate(template, domains, diskInfoDestinationMap, destStorages, notCheckSize);
+        fillImagesMapBasedOnTemplate(template, domains, diskInfoDestinationMap, destStorages);
     }
 
     public static void fillImagesMapBasedOnTemplate(VmTemplate template,
             List<StorageDomain> domains,
             Map<Guid, DiskImage> diskInfoDestinationMap,
-            Map<Guid, StorageDomain> destStorages, boolean notCheckSize) {
+            Map<Guid, StorageDomain> destStorages) {
         Map<Guid, StorageDomain> storageDomainsMap = new HashMap<Guid, StorageDomain>();
         for (StorageDomain storageDomain : domains) {
             StorageDomainValidator validator = new StorageDomainValidator(storageDomain);
-            if (validator.isDomainExistAndActive().isValid() && validator.domainIsValidDestination().isValid()
-                    && (notCheckSize || validator.isDomainWithinThresholds().isValid())) {
+            if (validator.isDomainExistAndActive().isValid() && validator.domainIsValidDestination().isValid()) {
                 storageDomainsMap.put(storageDomain.getId(), storageDomain);
             }
         }
@@ -839,4 +842,49 @@ public final class ImagesHandler {
         dummy.getSnapshots().addAll(ImagesHandler.getAllImageSnapshots(dummy.getImageId()));
         return dummy;
     }
+
+    /**
+     * Creates and returns a Json string containing the disk alias and the disk description. The disk alias and
+     * description are preserved in the disk meta data. If the meta data will be added with more fields
+     * UpdateVmDiskCommand should be changed accordingly.
+     */
+    public static String getJsonDiskDescription(String diskAlias, String diskDescription) throws IOException {
+        Map<String, Object> description = new TreeMap<>();
+        description.put(ImagesHandler.DISK_ALIAS, diskAlias);
+        description.put(ImagesHandler.DISK_DESCRIPTION, diskDescription != null ? diskDescription : "");
+        return JsonHelper.mapToJson(description, false);
+    }
+
+
+    /**
+     * This method is used for storage allocation validations, where the disks are the template's,
+     * which could have another volume type/format than the target disk volume type/format, which is not yet created.
+     * "Real" override for these values is done in CreateSnapshotCommand, when creating the new DiskImages.
+     */
+    public static List<DiskImage> getDisksDummiesForStorageAllocations(Collection<DiskImage> originalDisks) {
+        List<DiskImage> diskDummies = new ArrayList<>(originalDisks.size());
+        for (DiskImage diskImage : originalDisks) {
+            DiskImage clone = DiskImage.copyOf(diskImage);
+            clone.setVolumeType(VolumeType.Sparse);
+            clone.setvolumeFormat(VolumeFormat.COW);
+            diskDummies.add(clone);
+        }
+        return diskDummies;
+    }
+
+    public static List<DiskImage> getSnapshotsDummiesForStorageAllocations(Collection<DiskImage> originalDisks) {
+        List<DiskImage> diskDummies = new ArrayList<>();
+        for (DiskImage snapshot : originalDisks) {
+            DiskImage clone = DiskImage.copyOf(snapshot);
+            // Add the child snapshot into which the deleted snapshot is going to be merged to the
+            // DiskImage for StorageDomainValidator to handle
+            List<DiskImage> snapshots = DbFacade.getInstance().getDiskImageDao().getAllSnapshotsForParent(clone.getImageId());
+            clone.getSnapshots().clear();
+            clone.getSnapshots().add(clone); // Add the clone itself since snapshots should contain the entire chain.
+            clone.getSnapshots().addAll(snapshots);
+            diskDummies.add(clone);
+        }
+        return diskDummies;
+    }
+
 }

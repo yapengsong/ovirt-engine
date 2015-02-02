@@ -67,6 +67,14 @@ public class AuthenticationProfile {
         return mapper;
     }
 
+    public String getAuthnName() {
+        return authn.getContext().<String>get(Base.ContextKeys.INSTANCE_NAME);
+    }
+
+    public String getAuthzName() {
+        return authz.getContext().<String>get(Base.ContextKeys.INSTANCE_NAME);
+    }
+
     public int getNegotiationPriority() {
         return negotiationPriority;
     }

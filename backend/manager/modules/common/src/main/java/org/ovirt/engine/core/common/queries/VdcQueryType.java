@@ -163,7 +163,7 @@ public enum VdcQueryType implements Serializable {
     // Groups queries:
     GetAllDbGroups(VdcQueryAuthType.User),
     GetDbGroupById,
-    GetDbGroupsByUserId,
+    GetAuthzGroupsByUserId,
 
     // VM pools queries
     GetVmPoolById(VdcQueryAuthType.User),
@@ -273,6 +273,10 @@ public enum VdcQueryType implements Serializable {
     GetIscsiBondById,
     GetStorageServerConnectionByIscsiBondId,
     GetNetworksByIscsiBondId,
+    GetStorageDomainsWithAttachedStoragePoolGuid,
+    GetFileStorageDomainsWithAttachedStoragePoolGuid,
+    GetBlockStorageDomainsWithAttachedStoragePoolGuid,
+
 
     // Event Notification
     GetEventSubscribersBySubscriberIdGrouped,

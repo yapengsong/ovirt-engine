@@ -160,6 +160,8 @@ public class PermitMapper {
             return PermitType.EDIT_DISK_PROPERTIES;
         case CONFIGURE_DISK_STORAGE:
             return PermitType.CONFIGURE_DISK_STORAGE;
+        case DISK_LIVE_STORAGE_MIGRATION:
+            return PermitType.DISK_LIVE_STORAGE_MIGRATION;
         case DELETE_DISK:
             return PermitType.DELETE_DISK;
         case CONFIGURE_NETWORK_VNIC_PROFILE:
@@ -198,6 +200,8 @@ public class PermitMapper {
             return PermitType.CONFIGURE_STORAGE_DISK_PROFILE;
         case DELETE_STORAGE_DISK_PROFILE:
             return PermitType.DELETE_STORAGE_DISK_PROFILE;
+        case ATTACH_DISK_PROFILE:
+            return PermitType.ATTACH_DISK_PROFILE;
         default:
             return null;
         }
@@ -360,6 +364,8 @@ public class PermitMapper {
             return ActionGroup.CONFIGURE_STORAGE_DISK_PROFILE;
         case DELETE_STORAGE_DISK_PROFILE:
             return ActionGroup.DELETE_STORAGE_DISK_PROFILE;
+        case ATTACH_DISK_PROFILE:
+            return ActionGroup.ATTACH_DISK_PROFILE;
         default:
             return null;
         }

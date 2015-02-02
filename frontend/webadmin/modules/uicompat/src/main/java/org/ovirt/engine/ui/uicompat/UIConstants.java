@@ -222,6 +222,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Data Center is uninitialized, in order to initialize add a data domain")
     String dataCenterUninitializedAlert();
 
+    @DefaultStringValue("The selected Data Center compatibility version does not support importing a data domain with its entities (VM's and Templates). The domain will be imported without them.")
+    String dataCenterDoesntSupportImportDataDomainAlert();
+
     @DefaultStringValue("The selected domain already has an ISO domain and an export domains attached")
     String noStoragesToImport();
 
@@ -1314,6 +1317,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Allow to move Disk to another Storage Domain")
     String allowToMoveDiskToAnotherStorageDomainRoleTreeTooltip();
 
+    @DefaultStringValue("Allow to live migrate a Disk to another Storage Domain")
+    String allowToLiveMigrateDiskToAnotherStorageDomainRoleTreeTooltip();
+
     @DefaultStringValue("Allow to attach Disk to a VM")
     String allowToAttachDiskToVmRoleTreeTooltip();
 
@@ -1325,6 +1331,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Allow to access image domain")
     String allowAccessImageDomainRoleTreeTooltip();
+
+    @DefaultStringValue("Allow to attach Disk Profile to a Disk")
+    String allowToAttachDiskProfile();
 
     @DefaultStringValue("No")
     String noAlerts();
@@ -1520,6 +1529,15 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("VM Pool")
     String vmPoolRoleTree();
+
+    @DefaultStringValue("Disk Profile")
+    String attachDiskProfileRoleTree();
+
+    @DefaultStringValue("Note: Permissions containing these operations should be associated with Disk Profile or Storage Domain Object (or above)")
+    String notePermissionsContainingDiskProfileOperationsRoleTreeTooltip();
+
+    @DefaultStringValue("Allow to attach Disk Profile to a Disk")
+    String allowToAttachDiskProfileToDiskRoleTreeTooltip();
 
     // Error
     @DefaultStringValue("This Network does not exist in the Cluster")
@@ -2350,6 +2368,12 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("The following VMs are attached to the instance type")
     String vmsAttachedToInstanceTypeWarningMessage();
+
+    @DefaultStringValue("Are you sure?")
+    String storageDomainsAttachedToDataCenterWarningTitle();
+
+    @DefaultStringValue("Storage Domain(s) are already attached to a Data Center. Approving this operation might cause data corruption if both Data Centers are active.")
+    String storageDomainsAttachedToDataCenterWarningMessage();
 
     @DefaultStringValue("If period is specified, bytes per period must be specified as well.")
     String rngRateInvalid();
