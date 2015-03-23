@@ -70,6 +70,8 @@ public interface LocalizedEnums extends ConstantsWithLookup {
 
     String ActionGroup___EDIT_STORAGE_POOL_CONFIGURATION();
 
+    String ActionGroup___DISK_LIVE_STORAGE_MIGRATION();
+
     String ActionGroup___CREATE_STORAGE_DOMAIN();
 
     String ActionGroup___DELETE_STORAGE_DOMAIN();
