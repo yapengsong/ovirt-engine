@@ -309,10 +309,8 @@ public class DynamicMessages {
     public final String consoleClientResourcesUrl() {
         String url = getString(DynamicMessageKey.CONSOLE_CLIENT_RESOURCES_URL);
         boolean isAbsolute = UriUtils.extractScheme(url) != null;
-
-        return isAbsolute
-                 ? url
-                 : "/" + BaseContextPathData.getInstance().getRelativePath() + url; //$NON-NLS-1$
+        return isAbsolute ? url: "/" + url; //$NON-NLS-1$
+           //return url;
     }
 
     /**
