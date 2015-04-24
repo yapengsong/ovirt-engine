@@ -48,6 +48,7 @@ import org.ovirt.engine.ui.uicommonweb.models.SystemTreeItemModel;
 import org.ovirt.engine.ui.uicommonweb.models.storage.SanStorageModel;
 import org.ovirt.engine.ui.uicommonweb.validation.I18NNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyQuotaValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.SpecialAsciiI18NOrNoneValidation;
@@ -863,10 +864,11 @@ public abstract class AbstractDiskModel extends DiskModel
         getDescription().validateEntity(new IValidation[] { new SpecialAsciiI18NOrNoneValidation() });
 
         if (getVm() == null) {
-            getAlias().validateEntity(new IValidation[] { new NotEmptyValidation(), new I18NNameValidation() });
+            getAlias().validateEntity(new IValidation[] { new NotEmptyValidation(), new I18NNameValidation(),
+                    new LengthValidation(40) });
         }
         else {
-            getAlias().validateEntity(new IValidation[] { new I18NNameValidation() });
+            getAlias().validateEntity(new IValidation[] { new I18NNameValidation(), new LengthValidation(40) });
         }
 
         StoragePool dataCenter = getDataCenter().getSelectedItem();
