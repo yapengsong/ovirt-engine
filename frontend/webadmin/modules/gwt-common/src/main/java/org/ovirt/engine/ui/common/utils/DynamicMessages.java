@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Set;
 
-import org.ovirt.engine.ui.frontend.utils.BaseContextPathData;
-
 /**
  * Contains dynamic messages available to the application.
  * <p>
