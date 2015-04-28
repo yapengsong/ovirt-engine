@@ -74,6 +74,10 @@ public class NewPoolModelBehavior extends PoolModelBehaviorBase {
         }), dataCenter.getId());
 
         instanceTypeManager.updateAll();
+        if (getModel().getSelectedCluster() != null) {
+            updateCpuProfile(getModel().getSelectedCluster().getId(),
+                    getClusterCompatibilityVersion(), null);
+        }
     }
 
     @Override
