@@ -28,7 +28,7 @@ public class CpuProfileHelper {
             return ValidationResult.VALID;
         if (vmBase.getCpuProfileId() == null) {
             List<CpuProfile> cpuProfiles = getCpuProfileDao().getAllForCluster(vmBase.getVdsGroupId());
-            if (cpuProfiles.size() == 1) {
+            if (cpuProfiles.size() > 0) {
                 vmBase.setCpuProfileId(cpuProfiles.get(0).getId());
                 return ValidationResult.VALID;
             } else {
