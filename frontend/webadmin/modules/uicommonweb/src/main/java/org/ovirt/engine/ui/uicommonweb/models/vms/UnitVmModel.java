@@ -48,6 +48,7 @@ import org.ovirt.engine.ui.uicommonweb.models.hosts.numa.VmNumaSupportModel;
 import org.ovirt.engine.ui.uicommonweb.models.storage.DisksAllocationModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.instancetypes.InstanceTypeManager;
 import org.ovirt.engine.ui.uicommonweb.models.vms.key_value.KeyValueModel;
+import org.ovirt.engine.ui.uicommonweb.validation.AsciiNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.I18NNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IntegerValidation;
@@ -2697,6 +2698,7 @@ public class UnitVmModel extends Model {
             Integer osType = getOSType().getSelectedItem();
             getName().validateEntity(
                     new IValidation[] {
+                            new AsciiNameValidation(),
                             new NotEmptyValidation(),
                             new LengthValidation(
                                     (getBehavior() instanceof TemplateVmModelBehavior || getBehavior() instanceof NewTemplateVmModelBehavior)
@@ -2765,7 +2767,7 @@ public class UnitVmModel extends Model {
         boolean vmInitIsValid = getVmInitModel().validate();
         setIsFirstRunTabValid(vmInitIsValid);
 
-        boolean isValid = hwPartValid && vmInitIsValid && allTabsValid()
+        boolean isValid = getName().getIsValid() && hwPartValid && vmInitIsValid && allTabsValid()
                 && getDisksAllocationModel().getIsValid() && getTemplate().getIsValid() && getComment().getIsValid()
                 && getDefaultHost().getIsValid()
                 && getOSType().getIsValid()
