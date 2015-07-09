@@ -828,7 +828,7 @@ SELECT     vds_groups.vds_group_id as vds_group_id, vds_groups.name as vds_group
                       vds_statistics.ha_local_maintenance as ha_local_maintenance, vds_static.disable_auto_pm as disable_auto_pm, vds_dynamic.controlled_by_pm_policy as controlled_by_pm_policy, vds_statistics.boot_time as boot_time,
                       vds_dynamic.kdump_status as kdump_status, vds_dynamic.selinux_enforce_mode as selinux_enforce_mode,
                       vds_dynamic.auto_numa_balancing as auto_numa_balancing, vds_dynamic.is_numa_supported as is_numa_supported, vds_dynamic.is_live_snapshot_supported as is_live_snapshot_supported, vds_static.protocol as protocol,
-                      vds_dynamic.is_live_merge_supported as is_live_merge_supported, vds_dynamic.online_cpus as online_cpus
+                      vds_dynamic.is_live_merge_supported as is_live_merge_supported, vds_dynamic.online_cpus as online_cpus, vds_dynamic.is_hostdev_enabled as is_hostdev_enabled
 FROM         vds_groups INNER JOIN
 vds_static ON vds_groups.vds_group_id = vds_static.vds_group_id INNER JOIN
 vds_dynamic ON vds_static.vds_id = vds_dynamic.vds_id INNER JOIN
@@ -877,7 +877,7 @@ spm_status, vds_dynamic.supported_cluster_levels, vds_dynamic.supported_engines,
                       vds_dynamic.supported_rng_sources as supported_rng_sources,
                       vds_dynamic.is_live_snapshot_supported as is_live_snapshot_supported, vds_static.protocol as protocol,
                       vds_dynamic.is_live_merge_supported as is_live_merge_supported,
-                      vds_dynamic.online_cpus as online_cpus
+                      vds_dynamic.online_cpus as online_cpus, vds_dynamic.is_hostdev_enabled as is_hostdev_enabled
 FROM         vds_groups INNER JOIN
 vds_static ON vds_groups.vds_group_id = vds_static.vds_group_id INNER JOIN
 vds_dynamic ON vds_static.vds_id = vds_dynamic.vds_id INNER JOIN
@@ -1631,7 +1631,8 @@ CREATE OR REPLACE VIEW user_db_users_permissions_view AS
 CREATE OR REPLACE VIEW vm_device_view
 AS
 SELECT device_id, vm_id, type, device, address, boot_order, spec_params,
-       is_managed, is_plugged, is_readonly, alias, custom_properties, snapshot_id, logical_name
+       is_managed, is_plugged, is_readonly, alias, custom_properties, snapshot_id,
+       logical_name
   FROM vm_device;
 
 -- Permissions on VNIC Profiles
@@ -1840,3 +1841,27 @@ SELECT vm_numa_node.numa_node_id as vm_numa_node_id,
        vm_static.vds_group_id
 FROM numa_node as vm_numa_node
 LEFT OUTER JOIN vm_static on vm_numa_node.vm_id = vm_static.vm_guid;
+
+CREATE OR REPLACE VIEW host_device_view AS
+SELECT host_device.*,
+    NULL::UUID AS configured_vm_id,
+    NULL::VARCHAR AS spec_params,
+    (SELECT array_to_string(array_agg(vm_name), ',')
+     FROM   vm_device INNER JOIN vm_static ON vm_device.vm_id = vm_static.vm_guid
+     WHERE  vm_device.device = host_device.device_name
+     AND    vm_static.dedicated_vm_for_vds::text LIKE '%'||host_device.host_id::text||'%' ) AS attached_vm_names,
+    (SELECT vm_name FROM vm_static WHERE vm_static.vm_guid = host_device.vm_id) AS running_vm_name
+FROM   host_device;
+
+CREATE OR REPLACE VIEW vm_host_device_view AS
+SELECT host_device.*,
+    vm_device.vm_id AS configured_vm_id,
+    vm_device.spec_params AS spec_params,
+    array_to_string(array_agg(vm_name) OVER (PARTITION BY host_id, device_name), ',') AS attached_vm_names,
+    (SELECT vm_name FROM vm_static WHERE vm_static.vm_guid = host_device.vm_id) AS running_vm_name
+FROM vm_device
+INNER JOIN vm_static ON vm_device.vm_id = vm_static.vm_guid
+INNER JOIN host_device
+    ON host_device.device_name = vm_device.device
+    AND vm_static.dedicated_vm_for_vds::text LIKE '%'||host_device.host_id::text||'%'
+WHERE vm_device.type = 'hostdev';

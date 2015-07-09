@@ -17,6 +17,7 @@ import org.ovirt.engine.core.common.action.ConnectHostToStoragePoolServersParame
 import org.ovirt.engine.core.common.action.HostStoragePoolParametersBase;
 import org.ovirt.engine.core.common.action.SetNonOperationalVdsParameters;
 import org.ovirt.engine.core.common.action.VdcActionType;
+import org.ovirt.engine.core.common.action.VdsActionParameters;
 import org.ovirt.engine.core.common.businessentities.AttestationResultEnum;
 import org.ovirt.engine.core.common.businessentities.Entities;
 import org.ovirt.engine.core.common.businessentities.FenceActionType;
@@ -154,6 +155,7 @@ public class InitVdsOnUpCommand extends StorageHandlingCommandBase<HostStoragePo
             processFence();
             processStoragePoolStatus();
             runUpdateMomPolicy(getVdsGroup(), getVds());
+            refreshHostDeviceList();
         } else {
             Map<String, String> customLogValues = new HashMap<>();
             customLogValues.put("StoragePoolName", getStoragePoolName());
@@ -164,6 +166,14 @@ public class InitVdsOnUpCommand extends StorageHandlingCommandBase<HostStoragePo
             return false;
         }
         return true;
+    }
+
+    private void refreshHostDeviceList() {
+        try {
+            runInternalAction(VdcActionType.RefreshHostDevices, new VdsActionParameters(getVdsId()));
+        } catch (VdcBLLException e) {
+            log.errorFormat("Could not refresh host devices for host '{}'", getVds().getName());
+        }
     }
 
     private void processFence() {

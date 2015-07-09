@@ -188,6 +188,9 @@ public class WebAdminApplicationPlaces {
 
     public static final String virtualMachineEventSubTabPlace = virtualMachineMainTabPlace + SUB_TAB_PREFIX + "events"; //$NON-NLS-1$
 
+    public static final String virtualMachineHostDeviceSubTabPlace = virtualMachineMainTabPlace + SUB_TAB_PREFIX
+            + "host_devices"; //$NON-NLS-1$
+
     // Host
 
     public static final String hostGeneralSubTabPlace = hostMainTabPlace + SUB_TAB_PREFIX
@@ -359,6 +362,9 @@ public class WebAdminApplicationPlaces {
 
     public static final String vnicProfileTemplateSubTabPlace = vnicProfileMainTabPlace + SUB_TAB_PREFIX
             + "templates"; //$NON-NLS-1$
+
+    public static final String hostDeviceSubTabPlace = hostMainTabPlace + SUB_TAB_PREFIX
+            + "devices"; // $NON-NLS-1$
 
     // Default places
 

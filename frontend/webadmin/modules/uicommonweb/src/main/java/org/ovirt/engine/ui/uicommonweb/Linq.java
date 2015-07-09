@@ -1452,4 +1452,13 @@ public final class Linq
             return lexoNumeric.compare(entity1.getName(), entity2.getName());
         }
     }
+
+    public static VDS findHostByIdFromId(Collection<VDS> items, Guid hostId) {
+        for (VDS host : items) {
+            if (host.getId().equals(hostId)){
+                return host;
+            }
+        }
+        return null;
+    }
 }

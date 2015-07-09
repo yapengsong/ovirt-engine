@@ -165,7 +165,8 @@ public enum VDSCommandType {
     UpdateVmPolicy("org.ovirt.engine.core.vdsbroker"),
     List("org.ovirt.engine.core.vdsbroker.vdsbroker"),           // get a list of VMs with status only
     GetVmStats("org.ovirt.engine.core.vdsbroker.vdsbroker"),     // get a VM with full data and statistics
-    GetAllVmStats("org.ovirt.engine.core.vdsbroker.vdsbroker");  // get a list of VMs with full data and statistics
+    GetAllVmStats("org.ovirt.engine.core.vdsbroker.vdsbroker"),  // get a list of VMs with full data and statistics
+    HostDevListByCaps("org.ovirt.engine.core.vdsbroker");        // get all host devices with passthrough information
 
     String packageName;
 

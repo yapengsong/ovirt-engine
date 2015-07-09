@@ -187,7 +187,7 @@ public class VDS extends IVdcQueryable implements Serializable, BusinessEntityWi
         vds.setHighlyAvailableLocalMaintenance(getHighlyAvailableLocalMaintenance());
         vds.setNumaNodeList(getNumaNodeList());
         vds.setAutoNumaBalancing(getAutoNumaBalancing());
-
+        vds.setHostDevicePassthroughEnabled(isHostDevicePassthroughEnabled());
         return vds;
     }
 
@@ -1442,4 +1442,11 @@ public class VDS extends IVdcQueryable implements Serializable, BusinessEntityWi
         return countThreadsAsCores;
     }
 
+    public void setHostDevicePassthroughEnabled(boolean value) {
+        mVdsDynamic.setHostDevicePassthroughEnabled(value);
+    }
+
+    public boolean isHostDevicePassthroughEnabled() {
+        return mVdsDynamic.isHostDevicePassthroughEnabled();
+    }
 }

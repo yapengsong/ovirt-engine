@@ -104,7 +104,7 @@ public class VdsDynamicDAODbFacadeImpl extends MassOperationsGenericDaoDbFacade<
             entity.setNumaSupport(rs.getBoolean("is_numa_supported"));
             entity.setLiveSnapshotSupport(rs.getBoolean("is_live_snapshot_supported"));
             entity.setLiveMergeSupport(rs.getBoolean("is_live_merge_supported"));
-
+            entity.setHostDevicePassthroughEnabled(rs.getBoolean("is_hostdev_enabled"));
             return entity;
         }
     }
@@ -268,7 +268,8 @@ public class VdsDynamicDAODbFacadeImpl extends MassOperationsGenericDaoDbFacade<
                 .addValue("supported_rng_sources", VmRngDevice.sourcesToCsv(vds.getSupportedRngSources()))
                 .addValue("supported_emulated_machines", vds.getSupportedEmulatedMachines())
                 .addValue("is_live_snapshot_supported", vds.getLiveSnapshotSupport())
-                .addValue("is_live_merge_supported", vds.getLiveMergeSupport());
+                .addValue("is_live_merge_supported", vds.getLiveMergeSupport())
+                .addValue("is_hostdev_enabled", vds.isHostDevicePassthroughEnabled());
 
         return parameterSource;
     }
@@ -300,5 +301,13 @@ public class VdsDynamicDAODbFacadeImpl extends MassOperationsGenericDaoDbFacade<
                 getCustomMapSqlParameterSource()
                         .addValue("vds_id", id)
                         .addValue("cpu_flags", cpuFlags));
+    }
+
+    @Override
+    public List<Guid> getIdsOfHostsWithStatus(VDSStatus status) {
+        return getCallsHandler().executeReadList("GetIdsOfHostsWithStatus",
+                createGuidMapper(),
+                getCustomMapSqlParameterSource()
+                        .addValue("status", status.getValue()));
     }
 }

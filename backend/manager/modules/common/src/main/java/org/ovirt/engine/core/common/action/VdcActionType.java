@@ -390,6 +390,11 @@ public enum VdcActionType {
     HostUSBAttach(2200, ActionGroup.VM_BASIC_OPERATIONS, QuotaDependency.NONE),
     HostUSBDetach(2201, ActionGroup.VM_BASIC_OPERATIONS, QuotaDependency.NONE),
 
+    RefreshHostDevices(2202, ActionGroup.MANIPULATE_HOST, false, QuotaDependency.NONE),
+    RefreshHost(2203, ActionGroup.MANIPULATE_HOST, false, QuotaDependency.NONE),
+    AddVmHostDevices(2350, ActionGroup.EDIT_ADMIN_VM_PROPERTIES, false, QuotaDependency.NONE),
+    RemoveVmHostDevices(2351, ActionGroup.EDIT_ADMIN_VM_PROPERTIES, false, QuotaDependency.NONE),
+
     SetDataOnSession(3000, false, QuotaDependency.NONE);
 
     private int intValue;

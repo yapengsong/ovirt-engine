@@ -183,4 +183,18 @@ public class Entities {
         }
         return ids;
     }
+
+    public static <E extends VmDevice> Map<String, E> vmDevicesByDevice(Collection<E> deviceList) {
+        if (deviceList != null) {
+            Map<String, E> map = new HashMap<String, E>();
+            for (E device : deviceList) {
+                if (device.getDevice() != null) {
+                    map.put(device.getDevice(), device);
+                }
+            }
+            return map;
+        } else {
+            return Collections.emptyMap();
+        }
+    }
 }

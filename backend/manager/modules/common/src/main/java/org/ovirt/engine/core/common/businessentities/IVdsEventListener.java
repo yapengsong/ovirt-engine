@@ -25,7 +25,7 @@ public interface IVdsEventListener {
 
     EventResult masterDomainNotOperational(Guid storageDomainId, Guid storagePoolId, boolean isReconstructToInactiveDomains, boolean canReconstructToCurrentMaster); // BLL
 
-    void processOnVmStop(Collection<Guid> vmIds);
+    void processOnVmStop(Collection<Guid> vmIds, final Guid hostId);
 
     boolean vdsUpEvent(VDS vds);
 

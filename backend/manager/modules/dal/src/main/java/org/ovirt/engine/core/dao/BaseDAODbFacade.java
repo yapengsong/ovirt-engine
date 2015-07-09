@@ -26,6 +26,14 @@ public abstract class BaseDAODbFacade {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    public JdbcTemplate getJdbcTemplate() {
+        return jdbcTemplate;
+    }
+
+    public DbEngineDialect getDialect() {
+        return dialect;
+    }
+
     public void setDialect(DbEngineDialect dialect) {
         this.dialect = dialect;
     }

@@ -1471,4 +1471,14 @@ public class VdsServerWrapper implements IVdsServer {
             throw new XmlRpcRunTimeException(ute);
         }
     }
+
+    @Override
+    public HostDevListReturnForXmlRpc hostDevListByCaps() {
+        try {
+            Map<String, Object> xmlRpcReturnValue = vdsServer.hostdevListByCaps();
+            return new HostDevListReturnForXmlRpc(xmlRpcReturnValue);
+        } catch (UndeclaredThrowableException ute) {
+            throw new XmlRpcRunTimeException(ute);
+        }
+    }
 }

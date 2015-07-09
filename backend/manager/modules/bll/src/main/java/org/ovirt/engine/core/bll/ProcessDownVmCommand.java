@@ -4,12 +4,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.ovirt.engine.core.bll.context.CommandContext;
+import org.ovirt.engine.core.bll.hostdev.HostDeviceManager;
 import org.ovirt.engine.core.bll.job.ExecutionHandler;
 import org.ovirt.engine.core.bll.quota.QuotaManager;
 import org.ovirt.engine.core.bll.snapshots.SnapshotsManager;
 import org.ovirt.engine.core.bll.utils.PermissionSubject;
 import org.ovirt.engine.core.common.action.IdParameters;
 import org.ovirt.engine.core.common.action.VdcActionType;
+import org.ovirt.engine.core.common.action.VdsActionParameters;
 import org.ovirt.engine.core.common.action.VmManagementParametersBase;
 import org.ovirt.engine.core.common.action.VmOperationParameterBase;
 import org.ovirt.engine.core.common.action.VmPoolSimpleUserParameters;
@@ -36,6 +38,8 @@ import org.ovirt.engine.core.utils.log.LogFactory;
 public class ProcessDownVmCommand<T extends IdParameters> extends CommandBase<T> {
 
     private static final Log log = LogFactory.getLog(ProcessDownVmCommand.class);
+
+    private HostDeviceManager hostDeviceManager = HostDeviceManager.getInstance();
 
     protected ProcessDownVmCommand(Guid commandId) {
         super(commandId);
@@ -72,6 +76,33 @@ public class ProcessDownVmCommand<T extends IdParameters> extends CommandBase<T>
         removeStatelessVmUnmanagedDevices();
 
         applyNextRunConfiguration();
+
+        boolean vmHasDirectPassthroughDevices = releaseUsedHostDevices();
+        Guid alternativeHostsList = vmHasDirectPassthroughDevices ? getVm().getDedicatedVmForVds() : null;
+        refreshHostIfNeeded(alternativeHostsList);
+    }
+
+    private void refreshHostIfNeeded(Guid hostId) {
+        // refresh host to get the host devices that were detached from the VM and re-attached to the host
+        if (hostId != null) {
+            runInternalAction(VdcActionType.RefreshHost, new VdsActionParameters(hostId));
+        }
+    }
+
+    private boolean releaseUsedHostDevices() {
+        if (hostDeviceManager.checkVmNeedsDirectPassthrough(getVm())) {
+            try {
+                // Only single dedicated host allowed for host devices, verified on canDoActions
+                hostDeviceManager.acquireHostDevicesLock(getVm().getDedicatedVmForVds());
+                hostDeviceManager.freeVmHostDevices(getVmId());
+            } finally {
+                // Only single dedicated host allowed for host devices, verified on canDoActions
+                hostDeviceManager.releaseHostDevicesLock(getVm().getDedicatedVmForVds());
+            }
+            return true;
+        }
+
+        return false;
     }
 
     private boolean detachUsers() {

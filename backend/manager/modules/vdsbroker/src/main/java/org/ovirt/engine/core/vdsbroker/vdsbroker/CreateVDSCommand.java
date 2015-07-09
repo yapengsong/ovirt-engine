@@ -80,6 +80,7 @@ public class CreateVDSCommand<P extends CreateVmVDSCommandParameters> extends Vm
         builder.buildUnmanagedDevices();
         builder.buildVmSerialNumber();
         builder.buildVmNumaProperties();
+        builder.buildVmHostDevices();
     }
 
     private static final Log log = LogFactory.getLog(CreateVDSCommand.class);

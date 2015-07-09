@@ -257,4 +257,37 @@ public class VmDeviceDAODbFacadeImpl extends
     public void updateBootOrderInBatch(List<VmDevice> vmDevices) {
         updateAllInBatch("UpdateVmDeviceBootOrder", vmDevices, getBootOrderBatchMapper());
     }
+
+    @Override
+    public List<VmDevice> getVmDeviceByVmId(Guid vmId, Guid userID, boolean isFiltered) {
+        MapSqlParameterSource parameterSource = getCustomMapSqlParameterSource()
+                .addValue("vm_id", vmId)
+                .addValue("user_id", userID)
+                .addValue("is_filtered", isFiltered);
+
+        return getCallsHandler().executeReadList("GetVmDeviceByVmId",
+                createEntityRowMapper(), parameterSource);
+    }
+
+    @Override
+    public List<VmDevice> getVmDeviceByType(VmDeviceGeneralType type) {
+        return getCallsHandler().executeReadList("GetVmDeviceByType",
+                createEntityRowMapper(),
+                getCustomMapSqlParameterSource().addValue("type", type.getValue()));
+    }
+
+    @Override
+    public boolean existsVmDeviceByVmIdAndType(Guid vmId, VmDeviceGeneralType type) {
+        MapSqlParameterSource parameterSource = getCustomMapSqlParameterSource()
+                .addValue("vm_id", vmId).addValue("type", type.getValue());
+        return getCallsHandler().executeRead("ExistsVmDeviceByVmIdAndType",
+                createBooleanMapper(), parameterSource);
+    }
+
+    @Override
+    public void removeVmDevicesByVmIdAndType(Guid vmId, VmDeviceGeneralType type) {
+        MapSqlParameterSource parameterSource = getCustomMapSqlParameterSource()
+                .addValue("vm_id", vmId).addValue("type", type.getValue());
+        getCallsHandler().executeModification("DeleteVmDevicesByVmIdAndType", parameterSource);
+    }
 }

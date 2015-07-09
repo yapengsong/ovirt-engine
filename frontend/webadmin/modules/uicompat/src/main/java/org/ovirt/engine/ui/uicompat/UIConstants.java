@@ -2431,5 +2431,16 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Remove the Data Center(s) will move the entities residing on the storage domain(s) to an unregistered state. For further information please consult documentation.")
     String removeDataCenterWarnningNote();
-}
 
+    @DefaultStringValue("Host Devices")
+    String hostDevicesTitle();
+
+    @DefaultStringValue("Add Host Devices")
+    String addVmHostDevicesTitle();
+
+    @DefaultStringValue("Remove Host Device(s)")
+    String removeHostDevices();
+
+    @DefaultStringValue("Pin VM to Host")
+    String repinHostTitle();
+}

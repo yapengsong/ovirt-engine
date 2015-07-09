@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.lang.StringUtils;
 import org.ovirt.engine.core.bll.context.CommandContext;
+import org.ovirt.engine.core.bll.hostdev.HostDeviceManager;
 import org.ovirt.engine.core.bll.job.ExecutionContext;
 import org.ovirt.engine.core.bll.job.ExecutionHandler;
 import org.ovirt.engine.core.bll.job.JobRepositoryFactory;
@@ -108,6 +109,9 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     private boolean memoryFromSnapshotUsed;
 
     private Guid cachedActiveIsoDomainId;
+    private boolean needsHostDevices = false;
+
+    private HostDeviceManager hostDeviceManager = HostDeviceManager.getInstance();
 
     public static final String ISO_PREFIX = "iso://";
     public static final String STATELESS_SNAPSHOT_DESCRIPTION = "stateless snapshot";
@@ -116,6 +120,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
     protected RunVmCommand(Guid commandId) {
         super(commandId);
+        init();
     }
 
     public RunVmCommand(T runVmParams) {
@@ -128,7 +133,39 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
         setStoragePoolId(getVm() != null ? getVm().getStoragePoolId() : null);
         // Load payload from Database (only if none was sent via the parameters)
         loadPayloadDevice();
+        init();
+    }
 
+    protected void init() {
+        if (getVm() != null) {
+            needsHostDevices = hostDeviceManager.checkVmNeedsDirectPassthrough(getVm());
+        }
+        acquireHostDevicesLock();
+    }
+
+    private void acquireHostDevicesLock() {
+        if (needsHostDevices) {
+            // Only single dedicated host allowed for host devices, verified on canDoActions
+            hostDeviceManager.acquireHostDevicesLock(getVm().getDedicatedVmForVds());
+        }
+    }
+
+    private void markHostDevicesAsUsed() {
+        if (needsHostDevices) {
+            hostDeviceManager.allocateVmHostDevices(getVmId());
+        }
+    }
+
+    private void releaseHostDevicesLock() {
+        if (needsHostDevices) {
+            // Only single dedicated host allowed for host devices, verified on canDoActions
+            hostDeviceManager.releaseHostDevicesLock(getVm().getDedicatedVmForVds());
+        }
+    }
+
+    @Override
+    protected void freeCustomLocks() {
+        releaseHostDevicesLock();
     }
 
     @Override
@@ -229,6 +266,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
                 if (connectLunDisks(getVdsId())) {
                     status = createVm();
                     ExecutionHandler.setAsyncJob(getExecutionContext(), true);
+                    markHostDevicesAsUsed();
                 }
             } catch(VdcBLLException e) {
                 // if the returned exception is such that shoudn't trigger the re-run process,
@@ -279,6 +317,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Override
     public void rerun() {
         setFlow(null);
+        acquireHostDevicesLock();
         super.rerun();
     }
 
@@ -914,6 +953,12 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
                    getParameters().getVmPayload().getDeviceType() == VmDeviceType.CDROM) {
                return failCanDoAction(VdcBllMessages.VMPAYLOAD_CDROM_WITH_CLOUD_INIT);
            }
+        }
+
+        if (needsHostDevices &&
+                // Only single dedicated host allowed for host devices, verified on canDoActions
+                !hostDeviceManager.checkVmHostDeviceAvailability(getVm(), getVm().getDedicatedVmForVds())) {
+            return failCanDoAction(VdcBllMessages.ACTION_TYPE_FAILED_HOST_DEVICE_NOT_AVAILABLE);
         }
 
         return true;

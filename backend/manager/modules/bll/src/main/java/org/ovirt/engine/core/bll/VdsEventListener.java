@@ -17,6 +17,7 @@ import javax.ejb.TransactionAttributeType;
 import org.apache.commons.lang.StringUtils;
 import org.ovirt.engine.core.bll.context.CommandContext;
 import org.ovirt.engine.core.bll.context.EngineContext;
+import org.ovirt.engine.core.bll.hostdev.HostDeviceManager;
 import org.ovirt.engine.core.bll.job.ExecutionHandler;
 import org.ovirt.engine.core.bll.scheduling.SchedulingManager;
 import org.ovirt.engine.core.bll.storage.StoragePoolStatusHandler;
@@ -185,7 +186,11 @@ public class VdsEventListener implements IVdsEventListener {
     }
 
     @Override
-    public void processOnVmStop(final Collection<Guid> vmIds) {
+    public void processOnVmStop(final Collection<Guid> vmIds, final Guid hostId) {
+        if (vmIds.isEmpty()) {
+            return;
+        }
+
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -193,6 +198,9 @@ public class VdsEventListener implements IVdsEventListener {
                     Backend.getInstance().runInternalAction(VdcActionType.ProcessDownVm,
                             new IdParameters(vmId));
                 }
+
+                HostDeviceManager hostDeviceManager = HostDeviceManager.getInstance();
+                hostDeviceManager.refreshHostIfAnyVmHasHostDevices(vmIds, hostId);
             }
         });
     }

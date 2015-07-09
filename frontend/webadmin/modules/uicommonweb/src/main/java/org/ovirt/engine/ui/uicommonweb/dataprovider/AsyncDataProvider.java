@@ -1229,6 +1229,18 @@ public final class AsyncDataProvider {
                 SearchType.VDS), aQuery);
     }
 
+    public static void getHostListByClusterId(AsyncQuery aQuery, Guid clusterId) {
+        Frontend.getInstance().runQuery(VdcQueryType.GetHostsByClusterId, new IdQueryParameters(clusterId), aQuery);
+    }
+
+    public static void getConfiguredVmHostDevices(AsyncQuery aQuery, Guid vmId) {
+        Frontend.getInstance().runQuery(VdcQueryType.GetVmHostDevices, new IdQueryParameters(vmId), aQuery);
+    }
+
+    public static void getHostDevicesByHostId(AsyncQuery aQuery, Guid hostId) {
+        Frontend.getInstance().runQuery(VdcQueryType.GetExtendedHostDevicesByHostId, new IdQueryParameters(hostId), aQuery);
+    }
+
     public static void getHostListByDataCenter(AsyncQuery aQuery, Guid spId) {
         aQuery.converterCallback = new IAsyncConverter() {
             @Override

@@ -26,7 +26,7 @@ import com.google.gwt.view.client.MultiSelectionModel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SelectionChangeEvent.Handler;
 
-public class HorizontalSplitTable extends Composite {
+public class HorizontalSplitTable<M extends ListModel> extends Composite {
 
     interface WidgetUiBinder extends UiBinder<Widget, HorizontalSplitTable> {
         WidgetUiBinder uiBinder = GWT.create(WidgetUiBinder.class);
@@ -50,10 +50,10 @@ public class HorizontalSplitTable extends Composite {
     protected ShapedButton upButton;
 
     @UiField(provided = true)
-    protected EntityModelCellTable<ListModel> topTable;
+    protected EntityModelCellTable<M> topTable;
 
     @UiField(provided = true)
-    protected EntityModelCellTable<ListModel> bottomTable;
+    protected EntityModelCellTable<M> bottomTable;
 
     @UiField(provided = true)
     protected Label topTitle;
@@ -62,8 +62,8 @@ public class HorizontalSplitTable extends Composite {
     protected Label bottomTitle;
 
     @SuppressWarnings("unchecked")
-    public HorizontalSplitTable(EntityModelCellTable<ListModel> topTable,
-            EntityModelCellTable<ListModel> bottomTable,
+    public HorizontalSplitTable(EntityModelCellTable<M> topTable,
+            EntityModelCellTable<M> bottomTable,
             String topTitle,
             String bottomTitle) {
 
@@ -128,8 +128,8 @@ public class HorizontalSplitTable extends Composite {
             @Override
             public void onClick(ClickEvent event) {
                 MultiSelectionModel<EntityModel> sourceSelectionModel = getSelectionModel(topTableIsSource);
-                EntityModelCellTable<ListModel> sourceTable = getTable(topTableIsSource);
-                EntityModelCellTable<ListModel> targetTable = getTable(!topTableIsSource);
+                EntityModelCellTable<M> sourceTable = getTable(topTableIsSource);
+                EntityModelCellTable<M> targetTable = getTable(!topTableIsSource);
                 UICommand command = topTableIsSource ? onDownButtonPressed : onUpButtonPressed;
 
                 if (command != null) {
@@ -158,7 +158,7 @@ public class HorizontalSplitTable extends Composite {
         return down ? downButton : upButton;
     }
 
-    private EntityModelCellTable<ListModel> getTable(boolean top) {
+    private EntityModelCellTable<M> getTable(boolean top) {
         return top ? topTable : bottomTable;
     }
 
@@ -169,8 +169,8 @@ public class HorizontalSplitTable extends Composite {
         bottomTable.asEditor().edit(bottomTable.asEditor().flush());
     }
 
-    private void edit(ListModel model, final boolean topTableIsEdited) {
-        EntityModelCellTable<ListModel> table = getTable(topTableIsEdited);
+    private void edit(M model, final boolean topTableIsEdited) {
+        EntityModelCellTable<M> table = getTable(topTableIsEdited);
         ListModel oldModel = table.asEditor().flush();
         IEventListener listener = topTableIsEdited ? topItemsChangedListener : bottomItemsChangedListener;
         if (oldModel != null) {
@@ -180,13 +180,13 @@ public class HorizontalSplitTable extends Composite {
         table.asEditor().edit(model);
     }
 
-    public void edit(ListModel topListModel, ListModel bottomListModel) {
+    public void edit(M topListModel, M bottomListModel) {
         edit(topListModel, true);
         edit(bottomListModel, false);
     }
 
-    public void edit(ListModel topListModel,
-            ListModel bottomListModel,
+    public void edit(M topListModel,
+            M bottomListModel,
             UICommand onDownButtonPressed,
             UICommand onUpButtonPressed) {
         edit(topListModel, bottomListModel);

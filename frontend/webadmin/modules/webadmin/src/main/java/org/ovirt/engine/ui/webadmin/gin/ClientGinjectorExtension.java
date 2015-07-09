@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.ovirt.engine.core.common.businessentities.AuditLog;
 import org.ovirt.engine.core.common.businessentities.Disk;
+import org.ovirt.engine.core.common.businessentities.HostDeviceView;
 import org.ovirt.engine.core.common.businessentities.IscsiBond;
 import org.ovirt.engine.core.common.businessentities.Permissions;
 import org.ovirt.engine.core.common.businessentities.Quota;
@@ -148,6 +149,8 @@ import org.ovirt.engine.ui.uicommonweb.models.vms.VmInterfaceListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VmListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VmSessionsModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VmSnapshotListModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.HostDeviceListModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.VmHostDeviceListModel;
 import org.ovirt.engine.ui.uicommonweb.models.volumes.VolumeListModel;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 
@@ -295,6 +298,8 @@ public interface ClientGinjectorExtension {
 
     SearchableDetailModelProvider<AuditLog, VmListModel, VmEventListModel> getSubTabVirtualMachineEventModelProvider();
 
+    SearchableDetailModelProvider<HostDeviceView, VmListModel, VmHostDeviceListModel> getSubTabVirtualMachineHostDeviceModelProvider();
+
     // Host
 
     DetailModelProvider<HostListModel, HostGeneralModel> getSubTabHostGeneralModelProvider();
@@ -304,6 +309,8 @@ public interface ClientGinjectorExtension {
     SearchableDetailModelProvider<VM, HostListModel, HostVmListModel> getSubTabHostVmModelProvider();
 
     SearchableDetailModelProvider<HostInterfaceLineModel, HostListModel, HostInterfaceListModel> getSubTabHostInterfaceModelProvider();
+
+    SearchableDetailModelProvider<HostDeviceView, HostListModel, HostDeviceListModel> getSubTabHostDeviceModelProvider();
 
     SearchableDetailModelProvider<Map<String, String>, HostListModel, HostHooksListModel> getSubTabHostHookModelProvider();
 

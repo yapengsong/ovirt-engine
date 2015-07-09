@@ -75,6 +75,7 @@ import org.ovirt.engine.core.dao.EventDAO;
 import org.ovirt.engine.core.dao.ExternalVariableDao;
 import org.ovirt.engine.core.dao.VdsKdumpStatusDao;
 import org.ovirt.engine.core.dao.GenericDao;
+import org.ovirt.engine.core.dao.HostDeviceDao;
 import org.ovirt.engine.core.dao.ImageDao;
 import org.ovirt.engine.core.dao.ImageStorageDomainMapDao;
 import org.ovirt.engine.core.dao.IscsiBondDao;
@@ -831,6 +832,15 @@ public class DbFacade {
 
     public VmDeviceDAO getVmDeviceDao() {
         return getDao(VmDeviceDAO.class);
+    }
+
+    /**
+     * Returns the singleton instance of {@link HostDeviceDao}.
+     *
+     * @return the dao instance
+     */
+    public HostDeviceDao getHostDeviceDao() {
+        return getDao(HostDeviceDao.class);
     }
 
     /**

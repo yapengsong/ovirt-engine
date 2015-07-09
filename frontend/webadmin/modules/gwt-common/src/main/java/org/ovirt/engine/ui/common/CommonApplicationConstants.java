@@ -1959,4 +1959,34 @@ public interface CommonApplicationConstants extends Constants {
 
     @DefaultStringValue("Changed fields list")
     String changedFieldsList();
+
+    @DefaultStringValue("Name")
+    String deviceName();
+
+    @DefaultStringValue("Capability")
+    String capability();
+
+    @DefaultStringValue("Product")
+    String product();
+
+    @DefaultStringValue("Vendor")
+    String vendor();
+
+    @DefaultStringValue("Currently in use by")
+    String currentlyUsedByVm();
+
+    @DefaultStringValue("Attached to VMs")
+    String attachedToVms();
+
+    @DefaultStringValue("IOMMU Group")
+    String iommuGroup();
+
+    @DefaultStringValue("Add device")
+    String addVmHostDevice();
+
+    @DefaultStringValue("Remove device")
+    String removeVmHostDevice();
+
+    @DefaultStringValue("Pin to another host")
+    String repinVmHost();
 }

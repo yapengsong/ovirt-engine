@@ -81,6 +81,7 @@ import org.ovirt.engine.ui.uicommonweb.models.gluster.HostGlusterSwiftListModel;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.numa.NumaSupportModel;
 import org.ovirt.engine.ui.uicommonweb.models.tags.TagListModel;
 import org.ovirt.engine.ui.uicommonweb.models.tags.TagModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.HostDeviceListModel;
 import org.ovirt.engine.ui.uicommonweb.place.WebAdminApplicationPlaces;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.Event;
@@ -1834,7 +1835,7 @@ public class HostListModel extends ListWithDetailsAndReportsModel implements ISu
             list.add(new VdsActionParameters(vds.getId()));
         }
 
-        Frontend.getInstance().runMultipleAction(VdcActionType.RefreshHostCapabilities, list,
+        Frontend.getInstance().runMultipleAction(VdcActionType.RefreshHost, list,
                 new IFrontendMultipleActionAsyncCallback() {
                     @Override
                     public void executed(FrontendMultipleActionAsyncResult result) {
@@ -1860,6 +1861,7 @@ public class HostListModel extends ListWithDetailsAndReportsModel implements ISu
         list.add(new HostHardwareGeneralModel());
         list.add(getHostVmListModel());
         list.add(new HostInterfaceListModel());
+        list.add(new HostDeviceListModel(ConstantsManager.getInstance().getConstants()));
         setHostEventListModel(new HostEventListModel());
         list.add(getHostEventListModel());
         list.add(new HostHooksListModel());

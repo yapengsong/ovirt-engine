@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.ovirt.engine.core.common.businessentities.AuditLog;
+import org.ovirt.engine.core.common.businessentities.HostDeviceView;
 import org.ovirt.engine.core.common.businessentities.Permissions;
 import org.ovirt.engine.core.common.businessentities.VDS;
 import org.ovirt.engine.core.common.businessentities.VM;
@@ -41,6 +42,7 @@ import org.ovirt.engine.ui.uicommonweb.models.hosts.HostManagementNetworkModel;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.HostNicModel;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.HostSetupNetworksModel;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.HostVmListModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.HostDeviceListModel;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.ReportPresenterWidget;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.AssignTagsPopupPresenterWidget;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.DetachConfirmationPopupPresenterWidget;
@@ -257,6 +259,16 @@ public class HostModule extends AbstractGinModule {
 
     @Provides
     @Singleton
+    public SearchableDetailModelProvider<HostDeviceView, HostListModel, HostDeviceListModel> getHostDeviceListProvider(EventBus eventBus,
+            Provider<DefaultConfirmationPopupPresenterWidget> defaultConfirmPopupProvider) {
+        return new SearchableDetailTabModelProvider<HostDeviceView, HostListModel, HostDeviceListModel>(
+                eventBus, defaultConfirmPopupProvider,
+                HostListModel.class,
+                HostDeviceListModel.class);
+    }
+
+    @Provides
+    @Singleton
     public SearchableDetailModelProvider<VM, HostListModel, HostVmListModel> getHostVmListProvider(EventBus eventBus,
             Provider<DefaultConfirmationPopupPresenterWidget> defaultConfirmPopupProvider,
             final Provider<VmMigratePopupPresenterWidget> migratePopupProvider) {
@@ -343,6 +355,7 @@ public class HostModule extends AbstractGinModule {
 
     @Override
     protected void configure() {
+        bind(HostDeviceListModel.class).in(Singleton.class);
     }
 
 }

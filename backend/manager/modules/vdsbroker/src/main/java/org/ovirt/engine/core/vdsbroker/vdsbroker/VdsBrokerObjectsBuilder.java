@@ -25,6 +25,7 @@ import org.ovirt.engine.core.common.businessentities.CpuStatistics;
 import org.ovirt.engine.core.common.businessentities.DiskImageDynamic;
 import org.ovirt.engine.core.common.businessentities.DisplayType;
 import org.ovirt.engine.core.common.businessentities.Entities;
+import org.ovirt.engine.core.common.businessentities.HostDevice;
 import org.ovirt.engine.core.common.businessentities.HostUSBDevice;
 import org.ovirt.engine.core.common.businessentities.KdumpStatus;
 import org.ovirt.engine.core.common.businessentities.LUNs;
@@ -500,6 +501,7 @@ public class VdsBrokerObjectsBuilder {
         vds.setHBAs(hbas);
         vds.setBootTime(AssignLongValue(xmlRpcStruct, VdsProperties.bootTime));
         vds.setKdumpStatus(KdumpStatus.valueOfNumber(AssignIntValue(xmlRpcStruct, VdsProperties.KDUMP_STATUS)));
+        vds.setHostDevicePassthroughEnabled(AssignBoolValue(xmlRpcStruct, VdsProperties.HOST_DEVICE_PASSTHROUGH));
 
         Map<String, Object> selinux = (Map<String, Object>) xmlRpcStruct.get(VdsProperties.selinux);
         if (selinux != null) {
@@ -1762,6 +1764,79 @@ public class VdsBrokerObjectsBuilder {
         if (xmlRpcStruct.get(VdsProperties.vendor) != null)
             hostUSBDevice.setVendor((String) xmlRpcStruct.get(VdsProperties.vendor));
         return hostUSBDevice;
+    }
+
+    /**
+     * Parse Host Device Information in the form of
+     *
+     * {
+     *   'computer': {
+     *      'params': {'capability': 'system', 'product': 'ProLiant DL160 G6  '}
+     *   },
+     *   'pci_0000_00_1d_2': {
+     *      'params': {
+     *        'capability': 'pci',
+     *        'iommu_group': '9',
+     *        'parent': 'computer',
+     *        'product': '82801JI (ICH10 Family) USB UHCI Controller #3',
+     *        'product_id': '0x3a36',
+     *        'vendor': 'Intel Corporation',
+     *        'vendor_id': '0x8086'
+     *      }
+     *   },
+     *   'pci_0000_00_1d_1': {
+     *       ...
+     *   }
+     * }
+     */
+    public static List<HostDevice> buildHostDevices(Map<String, Map<String, Map<String, Object>>> deviceList) {
+        List<HostDevice> devices = new ArrayList<>();
+
+        for (Entry<String, Map<String, Map<String, Object>>> entry : deviceList.entrySet()) {
+
+            Map<String, Object> params = entry.getValue().get(VdsProperties.PARAMS);
+            String deviceName = entry.getKey();
+
+            HostDevice device = new HostDevice();
+            device.setDeviceName(entry.getKey());
+            device.setCapability(params.get(VdsProperties.CAPABILITY).toString());
+
+            // special case for root device "computer"
+            if (VdsProperties.ROOT_HOST_DEVICE.equals(deviceName)) {
+                device.setParentDeviceName(VdsProperties.ROOT_HOST_DEVICE);  // set parent to self, for DB integrity
+            } else {
+                device.setParentDeviceName(params.get(VdsProperties.PARENT_NAME).toString());
+            }
+
+            if (params.containsKey(VdsProperties.IOMMU_GROUP)) {
+                device.setIommuGroup(Integer.parseInt(params.get(VdsProperties.IOMMU_GROUP).toString()));
+            }
+            if (params.containsKey(VdsProperties.PRODUCT_ID)) {
+                device.setProductId(params.get(VdsProperties.PRODUCT_ID).toString());
+            }
+            if (params.containsKey(VdsProperties.PRODUCT_NAME)) {
+                device.setProductName(params.get(VdsProperties.PRODUCT_NAME).toString());
+            }
+            if (params.containsKey(VdsProperties.VENDOR_NAME)) {
+                device.setVendorName(params.get(VdsProperties.VENDOR_NAME).toString());
+            }
+            if (params.containsKey(VdsProperties.VENDOR_ID)) {
+                device.setVendorId(params.get(VdsProperties.VENDOR_ID).toString());
+            }
+            if (params.containsKey(VdsProperties.PHYSICAL_FUNCTION)) {
+                device.setParentPhysicalFunction(params.get(VdsProperties.PHYSICAL_FUNCTION).toString());
+            }
+            if (params.containsKey(VdsProperties.TOTAL_VFS)) {
+                device.setTotalVirtualFunctions(Integer.parseInt(params.get(VdsProperties.TOTAL_VFS).toString()));
+            }
+            if (params.containsKey(VdsProperties.NET_INTERFACE_NAME)) {
+                device.setNetworkInterfaceName(params.get(VdsProperties.NET_INTERFACE_NAME).toString());
+            }
+
+            devices.add(device);
+        }
+
+        return devices;
     }
 
     private static final Log log = LogFactory.getLog(VdsBrokerObjectsBuilder.class);

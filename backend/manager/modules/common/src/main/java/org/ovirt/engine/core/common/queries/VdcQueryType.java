@@ -388,6 +388,11 @@ public enum VdcQueryType implements Serializable {
     GetHostUSBsById,
     GetVmHostUSBs,
 
+    GetVmHostDevices,
+
+    GetExtendedHostDevicesByHostId,
+    GetExtendedVmHostDevicesByVmId,
+
     // Default type instead of having to null check
     Unknown(VdcQueryAuthType.User);
 

@@ -163,6 +163,8 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
 
     private Set<VmRngDevice.Source> supportedRngSources;
 
+    private boolean hostDevicePassthroughEnabled;
+
     public void setVersion(RpmVersion value) {
         rpmVersion = value;
     }
@@ -730,6 +732,14 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
         result = prime * result + (liveMergeSupport ? 0 : 1);
 
         return result;
+    }
+
+    public void setHostDevicePassthroughEnabled(boolean hostDevicePassthroughEnabled) {
+        this.hostDevicePassthroughEnabled = hostDevicePassthroughEnabled;
+    }
+
+    public boolean isHostDevicePassthroughEnabled() {
+        return hostDevicePassthroughEnabled;
     }
 
     @Override

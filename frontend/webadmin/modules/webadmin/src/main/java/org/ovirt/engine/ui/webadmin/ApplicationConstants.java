@@ -440,6 +440,9 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Network Interfaces")
     String virtualMachineNetworkInterfaceSubTabLabel();
 
+    @DefaultStringValue("Host Devices")
+    String hostDeviceSubTabLabel();
+
     @DefaultStringValue("Disks")
     String virtualMachineVirtualDiskSubTabLabel();
 
@@ -3861,4 +3864,16 @@ public interface ApplicationConstants extends CommonApplicationConstants {
 
     @DefaultStringValue("NUMA Support")
     String numaSupport();
+
+    @DefaultStringValue("Pinned Host")
+    String pinnedHost();
+
+    @DefaultStringValue("Available Host Devices")
+    String availableHostDevices();
+
+    @DefaultStringValue("Host Devices to be attached")
+    String selectedHostDevices();
+
+    @DefaultStringValue("Host Devices")
+    String virtualMachineHostDeviceSubTabLabel();
 }

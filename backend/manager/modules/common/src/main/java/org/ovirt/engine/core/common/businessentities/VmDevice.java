@@ -82,6 +82,11 @@ public class VmDevice extends IVdcQueryable implements BusinessEntity<VmDeviceId
     private String logicalName;
 
     /**
+     * A flag indicates whether the device uses scsi reservation.
+     */
+    private boolean usingScsiReservation;
+
+    /**
      * Map of custom properties
      */
     private Map<String, String> customProperties;
@@ -233,6 +238,14 @@ public class VmDevice extends IVdcQueryable implements BusinessEntity<VmDeviceId
 
     public void setLogicalName(String logicalName) {
         this.logicalName = logicalName;
+    }
+
+    public boolean isUsingScsiReservation() {
+        return usingScsiReservation;
+    }
+
+    public void setUsingScsiReservation(boolean usesScsiReservation) {
+        this.usingScsiReservation = usesScsiReservation;
     }
 
     public Map<String, String> getCustomProperties() {

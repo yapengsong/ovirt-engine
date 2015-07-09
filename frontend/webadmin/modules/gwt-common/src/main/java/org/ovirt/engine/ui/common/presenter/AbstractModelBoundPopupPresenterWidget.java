@@ -60,6 +60,8 @@ public abstract class AbstractModelBoundPopupPresenterWidget<T extends Model, V 
 
         void updateTabIndexes();
 
+        void init(T model);
+
     }
 
     private final ModelBoundPopupHandler<T> popupHandler;
@@ -127,6 +129,8 @@ public abstract class AbstractModelBoundPopupPresenterWidget<T extends Model, V 
      */
     public void init(final T model) {
         this.model = model;
+
+        getView().init(model);
 
         // Set up model command invoker
         this.modelCommandInvoker = new DeferredModelCommandInvoker(model) {

@@ -1086,7 +1086,9 @@ public enum AuditLogType {
     USER_CLEAR_ALL_DISMISSED_AUDIT_LOG_FAILED(10603, AuditLogSeverity.ERROR),
 
     VM_SLA_POLICY(10550),
-    FAILED_VM_SLA_POLICY(10551, AuditLogSeverity.ERROR);
+    FAILED_VM_SLA_POLICY(10551, AuditLogSeverity.ERROR),
+    VM_ADD_HOST_DEVICES(10800),
+    VM_REMOVE_HOST_DEVICES(10801);
 
     private int intValue;
     // indicates time interval in seconds on which identical events from same instance are suppressed.

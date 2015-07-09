@@ -10,6 +10,7 @@ import javax.ejb.Startup;
 
 import org.ovirt.engine.core.bll.dwh.DwhHeartBeat;
 import org.ovirt.engine.core.bll.gluster.GlusterJobsManager;
+import org.ovirt.engine.core.bll.hostdev.HostDeviceManager;
 import org.ovirt.engine.core.bll.job.ExecutionHandler;
 import org.ovirt.engine.core.bll.network.MacPoolManager;
 import org.ovirt.engine.core.bll.pm.PmHealthCheckManager;
@@ -97,6 +98,8 @@ public class InitBackendServicesOnStartupBean implements InitBackendServicesOnSt
             }
 
             SchedulingManager.getInstance().init();
+
+            HostDeviceManager.getInstance().init();
 
             new DwhHeartBeat().init();
 

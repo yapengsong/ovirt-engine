@@ -80,6 +80,7 @@ import org.ovirt.engine.ui.uicommonweb.models.tags.TagListModel;
 import org.ovirt.engine.ui.uicommonweb.models.tags.TagModel;
 import org.ovirt.engine.ui.uicommonweb.models.templates.VmBaseListModel;
 import org.ovirt.engine.ui.uicommonweb.models.userportal.AttachCdModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.VmHostDeviceListModel;
 import org.ovirt.engine.ui.uicommonweb.place.WebAdminApplicationPlaces;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.Event;
@@ -681,6 +682,7 @@ public class VmListModel extends VmBaseListModel<VM> implements ISupportSystemTr
         VmDiskListModel diskListModel = new VmDiskListModel();
         diskListModel.setSystemTreeContext(this);
         list.add(diskListModel);
+        list.add(new VmHostDeviceListModel(ConstantsManager.getInstance().getConstants()));
         list.add(new VmSnapshotListModel());
         list.add(new VmEventListModel());
         list.add(new VmAppListModel());

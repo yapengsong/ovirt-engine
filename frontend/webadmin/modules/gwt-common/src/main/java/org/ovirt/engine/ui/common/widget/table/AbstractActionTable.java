@@ -74,6 +74,24 @@ import com.google.gwt.view.client.SelectionModel;
  */
 public abstract class AbstractActionTable<T> extends AbstractActionPanel<T> implements ActionTable<T> {
 
+    /**
+     * Allows customizing table row elements after the table finished loading its items.
+     *
+     * @param <T>
+     *            Table row data type.
+     */
+    public interface RowVisitor<T> {
+
+        /**
+         * @param row
+         *            Table row element.
+         * @param item
+         *            Value associated with this row.
+         */
+        void visit(TableRowElement row, T item);
+
+    }
+
     @UiField
     @WithElementId
     public ButtonBase prevPageButton;
@@ -105,6 +123,8 @@ public abstract class AbstractActionTable<T> extends AbstractActionPanel<T> impl
     private int tableContainerHorizontalScrollPosition = 0;
 
     private boolean doAutoSelect;
+
+    private RowVisitor<T> rowVisitor;
 
     public AbstractActionTable(final SearchableTableModelProvider<T, ?> dataProvider,
             Resources resources, Resources headerResources, EventBus eventBus, ClientStorage clientStorage) {
@@ -180,6 +200,15 @@ public abstract class AbstractActionTable<T> extends AbstractActionPanel<T> impl
                         public void execute() {
                             enforceScrollPosition();
                             doAutoSelect = true;
+
+                            if (rowVisitor != null) {
+                                int count = getVisibleItemCount();
+                                for (int i = 0; i < count; i++) {
+                                    TableRowElement row = getChildElement(i);
+                                    T item = getVisibleItem(i);
+                                    rowVisitor.visit(row, item);
+                                }
+                            }
                         }
                     });
                 }
@@ -242,6 +271,10 @@ public abstract class AbstractActionTable<T> extends AbstractActionPanel<T> impl
             table.enableColumnWidthPersistence(clientStorage, dataProvider.getModel());
         }
         addModelSearchStringChangeListener(dataProvider.getModel());
+    }
+
+    public void setRowVisitor(RowVisitor<T> rowVisitor) {
+        this.rowVisitor = rowVisitor;
     }
 
     void addModelSearchStringChangeListener(final SearchableListModel<?> model) {

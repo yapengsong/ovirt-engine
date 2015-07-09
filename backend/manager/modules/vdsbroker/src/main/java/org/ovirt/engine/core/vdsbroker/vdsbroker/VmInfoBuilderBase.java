@@ -339,6 +339,8 @@ public abstract class VmInfoBuilderBase {
 
     protected abstract void buildVmNumaProperties();
 
+    protected abstract void buildVmHostDevices();
+
     protected static enum VNIC_PROFILE_PROPERTIES {
         PORT_MIRRORING("Port Mirroring"),
         CUSTOM_PROPERTIES("Custom Properties"),

@@ -244,3 +244,34 @@ end;
 $BODY$
 LANGUAGE 'plpgsql';
 
+CREATE OR REPLACE FUNCTION GetVmDeviceByType(v_type VARCHAR(30))
+RETURNS SETOF vm_device_view STABLE
+AS $procedure$
+BEGIN
+    RETURN QUERY
+    SELECT *
+    FROM   vm_device_view
+    WHERE  type = v_type;
+END; $procedure$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION ExistsVmDeviceByVmIdAndType(v_vm_id UUID, v_type VARCHAR(30))
+RETURNS BOOLEAN STABLE
+AS $procedure$
+BEGIN
+  RETURN EXISTS(
+    SELECT 1
+    FROM vm_device
+    WHERE vm_id = v_vm_id AND type = v_type);
+END; $procedure$
+LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION DeleteVmDevicesByVmIdAndType(v_vm_id UUID, v_type VARCHAR(30))
+RETURNS VOID
+AS $procedure$
+BEGIN
+    DELETE
+    FROM   vm_device
+    WHERE  vm_id = v_vm_id AND type = v_type;
+END; $procedure$
+LANGUAGE plpgsql;

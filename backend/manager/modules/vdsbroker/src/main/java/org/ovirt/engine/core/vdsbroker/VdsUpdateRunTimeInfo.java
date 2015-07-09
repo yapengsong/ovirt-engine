@@ -602,7 +602,7 @@ public class VdsUpdateRunTimeInfo {
             }
 
             // process all vms that went down
-            getVdsEventListener().processOnVmStop(_vmsMovedToDown);
+            getVdsEventListener().processOnVmStop(_vmsMovedToDown, _vds.getId());
 
             for (Guid vm_guid : _vmsToRemoveFromAsync) {
                 ResourceManager.getInstance().RemoveAsyncRunningVm(vm_guid);

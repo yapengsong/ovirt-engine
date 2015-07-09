@@ -420,4 +420,21 @@ public final class VdsProperties {
     public static final String vendorId = "vendor_id";
     public static final String vendor = "vendor";
 
+    // host devices
+    public static final String ROOT_HOST_DEVICE = "computer";
+    public static final String DEVICE_LIST = "deviceList";
+    public static final String PARAMS = "params";
+    public static final String CAPABILITY = "capability";
+    public static final String IOMMU_GROUP = "iommu_group";
+    public static final String PRODUCT_NAME = "product";
+    public static final String PRODUCT_ID = "product_id";
+    public static final String VENDOR_NAME = "vendor";
+    public static final String VENDOR_ID = "vendor_id";
+    public static final String VM_ID = "vmId";
+    public static final String PARENT_NAME = "parent";
+    public static final String PHYSICAL_FUNCTION = "physfn";
+    public static final String TOTAL_VFS = "totalvfs";
+    public static final String NET_INTERFACE_NAME = "interface";
+    public static final String HOST_DEVICE_PASSTHROUGH = "hostdevPassthrough";
+
 }

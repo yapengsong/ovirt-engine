@@ -237,6 +237,7 @@
         <include name="common/utils/VersionStorageFormatUtil.java"/>
         <include name="common/utils/SizeConverter.java"/>
         <include name="common/utils/CommonConstants.java"/>
+        <include name="common/utils/ToStringBuilder.java"/>
 
 
         <!-- Required by frontend -->
@@ -357,6 +358,10 @@
         <include name="common/businessentities/ExternalHost.java"/>
         <include name="common/businessentities/ExternalDiscoveredHost.java"/>
         <include name="common/businessentities/ExternalComputeResource.java"/>
+        <include name="common/businessentities/VmHostDevice.java" />
+        <include name="common/businessentities/HostDevice.java" />
+        <include name="common/businessentities/HostDeviceId.java" />
+        <include name="common/businessentities/HostDeviceView.java" />
 	</source>
 
 	<super-source path="ui/uioverrides" />

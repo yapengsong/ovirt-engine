@@ -19,6 +19,8 @@ public interface VmDeviceDAO extends GenericDao<VmDevice, VmDeviceId>, MassOpera
 
     List<VmDevice> getVmDeviceByVmId(Guid vmId);
 
+    List<VmDevice> getVmDeviceByVmId(Guid vmId, Guid userID, boolean isFiltered);
+
     List<VmDevice> getVmDevicesByDeviceId(Guid deviceId, Guid vmId);
 
     List<VmDevice> getVmDeviceByVmIdAndType(Guid vmId, VmDeviceGeneralType type);
@@ -31,11 +33,17 @@ public interface VmDeviceDAO extends GenericDao<VmDevice, VmDeviceId>, MassOpera
             Guid userID,
             boolean isFiltered);
 
+    List<VmDevice> getVmDeviceByType(VmDeviceGeneralType type);
+
     List<VmDevice> getUnmanagedDevicesByVmId(Guid vmId);
+
+    boolean existsVmDeviceByVmIdAndType(Guid vmId, VmDeviceGeneralType type);
 
     boolean isMemBalloonEnabled(Guid vmId);
 
     void removeAll(List<VmDeviceId> removedDeviceIds);
+
+    void removeVmDevicesByVmIdAndType(Guid vmId, VmDeviceGeneralType type);
 
     void saveAll(List<VmDevice> newVmDevices);
 

@@ -148,7 +148,8 @@ public enum ConfigurationValues {
     MaxIopsUpperBoundQosValue,
     MaxReadIopsUpperBoundQosValue,
     MaxWriteIopsUpperBoundQosValue,
-    MaxCpuLimitQosValue;
+    MaxCpuLimitQosValue,
+    HostDevicePassthroughCapabilities;
 
     public static enum ConfigAuthType {
         Admin,

@@ -2012,5 +2012,14 @@ public enum ConfigValues {
     @OptionBehaviourAttribute(behaviour = OptionBehaviour.CommaSeparatedStringArray)
     UnsupportedLocalesFilter,
 
+    @TypeConverterAttribute(Boolean.class)
+    @DefaultValueAttribute("true")
+    HostDevicePassthroughSupported,
+
+    @TypeConverterAttribute(List.class)
+    @DefaultValueAttribute("pci,scsi,usb_device")
+    @OptionBehaviourAttribute(behaviour = OptionBehaviour.CommaSeparatedStringArray)
+    HostDevicePassthroughCapabilities,
+
     Invalid;
 }
