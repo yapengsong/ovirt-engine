@@ -3876,4 +3876,25 @@ public interface ApplicationConstants extends CommonApplicationConstants {
 
     @DefaultStringValue("Host Devices")
     String virtualMachineHostDeviceSubTabLabel();
+
+    @DefaultStringValue("Name")
+    String deviceName();
+
+    @DefaultStringValue("Capability")
+    String capability();
+
+    @DefaultStringValue("Product")
+    String product();
+
+    @DefaultStringValue("Vendor")
+    String vendor();
+
+    @DefaultStringValue("Currently in use by")
+    String currentlyUsedByVm();
+
+    @DefaultStringValue("Attached to VMs")
+    String attachedToVms();
+
+    @DefaultStringValue("IOMMU Group")
+    String iommuGroup();
 }

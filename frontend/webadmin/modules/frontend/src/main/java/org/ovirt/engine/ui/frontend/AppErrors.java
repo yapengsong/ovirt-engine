@@ -3417,4 +3417,22 @@ public interface AppErrors extends ConstantsWithLookup {
 
     @DefaultStringValue("Cannot ${action} ${type}. Balloon is not supported on '${clusterArch}' architecture.")
     String BALLOON_REQUESTED_ON_NOT_SUPPORTED_ARCH();
+
+    @DefaultStringValue("$type Host devices")
+    String VAR__TYPE__HOST_DEVICES();
+
+    @DefaultStringValue("Cannot ${action} ${type}. Host Devices not available.")
+    String ACTION_TYPE_FAILED_HOST_DEVICE_NOT_AVAILABLE();
+
+    @DefaultStringValue("$detailMessage it does not support host device passthrough.")
+    String VAR__DETAIL__HOSTDEV_DISABLED();
+
+    @DefaultStringValue("Cannot ${action} ${type}. Device must be specified.")
+    String ACTION_TYPE_FAILED_DEVICE_MUST_BE_SPECIFIED();
+
+    @DefaultStringValue("Cannot ${action} ${type}. VM must be pinned to a host.")
+    String ACTION_TYPE_FAILED_VM_NOT_PINNED_TO_HOST();
+
+    @DefaultStringValue("Cannot ${action} ${type}. One or more of specified host devices not found.")
+    String ACTION_TYPE_FAILED_HOST_DEVICE_NOT_FOUND();
 }
