@@ -111,7 +111,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     private Guid cachedActiveIsoDomainId;
     private boolean needsHostDevices = false;
 
-    private HostDeviceManager hostDeviceManager = HostDeviceManager.getInstance();
+    private HostDeviceManager hostDeviceManager = null;
 
     public static final String ISO_PREFIX = "iso://";
     public static final String STATELESS_SNAPSHOT_DESCRIPTION = "stateless snapshot";
@@ -137,6 +137,9 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     }
 
     protected void init() {
+        if (hostDeviceManager == null) {
+            hostDeviceManager = HostDeviceManager.getInstance();
+        }
         if (getVm() != null) {
             needsHostDevices = hostDeviceManager.checkVmNeedsDirectPassthrough(getVm());
         }
