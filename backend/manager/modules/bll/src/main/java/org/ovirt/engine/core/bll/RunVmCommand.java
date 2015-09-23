@@ -137,32 +137,36 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     }
 
     protected void init() {
-        if (hostDeviceManager == null) {
-            hostDeviceManager = HostDeviceManager.getInstance();
-        }
         if (getVm() != null) {
-            needsHostDevices = hostDeviceManager.checkVmNeedsDirectPassthrough(getVm());
+            needsHostDevices = getHostDeviceManager().checkVmNeedsDirectPassthrough(getVm());
         }
         acquireHostDevicesLock();
     }
 
-    private void acquireHostDevicesLock() {
+    protected HostDeviceManager getHostDeviceManager() {
+        if (hostDeviceManager == null) {
+            hostDeviceManager = HostDeviceManager.getInstance();
+        }
+        return hostDeviceManager;
+    }
+
+    protected void acquireHostDevicesLock() {
         if (needsHostDevices) {
             // Only single dedicated host allowed for host devices, verified on canDoActions
-            hostDeviceManager.acquireHostDevicesLock(getVm().getDedicatedVmForVds());
+            getHostDeviceManager().acquireHostDevicesLock(getVm().getDedicatedVmForVds());
         }
     }
 
-    private void markHostDevicesAsUsed() {
+    protected void markHostDevicesAsUsed() {
         if (needsHostDevices) {
-            hostDeviceManager.allocateVmHostDevices(getVmId());
+            getHostDeviceManager().allocateVmHostDevices(getVmId());
         }
     }
 
-    private void releaseHostDevicesLock() {
+    protected void releaseHostDevicesLock() {
         if (needsHostDevices) {
             // Only single dedicated host allowed for host devices, verified on canDoActions
-            hostDeviceManager.releaseHostDevicesLock(getVm().getDedicatedVmForVds());
+            getHostDeviceManager().releaseHostDevicesLock(getVm().getDedicatedVmForVds());
         }
     }
 
@@ -960,7 +964,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         if (needsHostDevices &&
                 // Only single dedicated host allowed for host devices, verified on canDoActions
-                !hostDeviceManager.checkVmHostDeviceAvailability(getVm(), getVm().getDedicatedVmForVds())) {
+                !getHostDeviceManager().checkVmHostDeviceAvailability(getVm(), getVm().getDedicatedVmForVds())) {
             return failCanDoAction(VdcBllMessages.ACTION_TYPE_FAILED_HOST_DEVICE_NOT_AVAILABLE);
         }
 

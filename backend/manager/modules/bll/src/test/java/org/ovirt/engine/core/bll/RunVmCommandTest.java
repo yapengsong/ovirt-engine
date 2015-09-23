@@ -109,6 +109,11 @@ public class RunVmCommandTest {
     public void mockBackend() {
         doReturn(backend).when(command).getBackend();
 
+        doReturn(null).when(command).getHostDeviceManager();
+        doNothing().when(command).init();
+        doNothing().when(command).markHostDevicesAsUsed();
+        doNothing().when(command).releaseHostDevicesLock();
+
         VDSReturnValue vdsReturnValue = new VDSReturnValue();
         vdsReturnValue.setReturnValue(true);
         when(vdsBrokerFrontend.RunVdsCommand(any(VDSCommandType.class), any(VDSParametersBase.class))).thenReturn(vdsReturnValue);
