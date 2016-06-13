@@ -676,7 +676,7 @@ select fn_db_add_config_value('LogMaxSwapUsedThresholdInPercentage', '95', 'gene
 select fn_db_add_config_value_for_versions_up_to('SupportCustomDeviceProperties', 'false', '3.2');
 select fn_db_add_config_value_for_versions_up_to('CustomDeviceProperties', '', '3.3');
 -- Allow to specify SecurityGroups property for vNICs, containing either an empty string or a list of one or more comma seperated UUIDs.
-select fn_db_add_config_value_for_versions_up_to('CustomDeviceProperties', '{type=interface;prop={SecurityGroups=^(?:(?:[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}, *)*[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}|)$}}', '3.6');
+select fn_db_add_config_value_for_versions_up_to('CustomDeviceProperties', '{type=interface;prop={SecurityGroups=^(?:(?:[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}, *)*[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}|);ifacemacspoof=^(true|false)$}}', '3.6');
 
 -- Network Custom Properties
 select fn_db_add_config_value_for_versions_up_to('NetworkCustomPropertiesSupported', 'false', '3.4');
