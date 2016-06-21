@@ -47,7 +47,12 @@
 }
 
 .login-modal-content .login-modal-body-form .login-btn {
-    background-color: #00b6ec;
+    background-color: #69B83C;
+    border-color: transparent;
+}
+.login-modal-content .login-modal-body-form .back-btn {
+	margin-top: 20px;
+    background-color: #00B6EE;
     border-color: transparent;
 }
 .inner-addon{
