@@ -11,14 +11,18 @@ import org.ovirt.engine.ui.common.widget.editor.EntityModelCellTable;
 import org.ovirt.engine.ui.common.widget.editor.ListModelListBoxEditor;
 import org.ovirt.engine.ui.common.widget.renderer.NameRenderer;
 import org.ovirt.engine.ui.common.widget.table.column.AbstractTextColumn;
+import org.ovirt.engine.ui.common.widget.uicommon.hosts.HostDeviceFilterView;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.SortedListModel;
+import org.ovirt.engine.ui.uicommonweb.models.hosts.HostDeviceFilterUtil;
 import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.AddVmHostDevicesModel;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.hostdev.AddVmHostDevicePopupPresenterWidget;
 
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -37,6 +41,8 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
 
     private final Driver driver;
 
+    private HostDeviceFilterUtil<HostDeviceView> filter;
+
     @UiField(provided = true)
     @Path("pinnedHost.selectedItem")
     @WithElementId
@@ -46,6 +52,9 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
     @Path("capability.selectedItem")
     @WithElementId
     ListModelListBoxEditor<String> capabilityEditor;
+
+    @UiField(provided = true)
+    HostDeviceFilterView hostDeviceFilter;
 
     @UiField(provided = true)
     HorizontalSplitTable<SortedListModel<EntityModel<HostDeviceView>>, EntityModel<HostDeviceView>> splitTable;
@@ -74,6 +83,13 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
 
         availableHostDevices = new EntityModelCellTable<>(true, false, true);
         selectedHostDevices = new EntityModelCellTable<>(true, false, true);
+
+        hostDeviceFilter = new HostDeviceFilterView();
+        hostDeviceFilter.removeEditButton(); //remove edit-button, later will add this function
+        hostDeviceFilter.getFilterCheckBox().setValue(true);
+        filter = new HostDeviceFilterUtil<HostDeviceView>();
+        filter.setUseFilter(hostDeviceFilter.getFilterCheckBox().getValue());
+
         splitTable = new HorizontalSplitTable<>(availableHostDevices,
                 selectedHostDevices,
                 constants.availableHostDevices(),
@@ -160,6 +176,15 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
     public void init(AddVmHostDevicesModel model) {
         availableHostDevices.initModelSortHandler((SortedListModel) model.getAvailableHostDevices());
         selectedHostDevices.initModelSortHandler((SortedListModel) model.getSelectedHostDevices());
+        initFilterHandler(model);
     }
 
+    public void initFilterHandler(final AddVmHostDevicesModel model){
+        hostDeviceFilter.getFilterCheckBox().addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+            @Override
+            public void onValueChange(ValueChangeEvent event) {
+                model.getFilter().setUseFilter(hostDeviceFilter.getFilterCheckBox().getValue());
+                model.updateHostDeviceWidget();
+            }});
+    }
 }

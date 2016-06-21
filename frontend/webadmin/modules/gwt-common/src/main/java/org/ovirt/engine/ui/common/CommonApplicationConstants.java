@@ -2301,4 +2301,10 @@ public interface CommonApplicationConstants extends Constants {
 
     @DefaultStringValue("Please have your administrator check the UI logs")
     String checkUiLogs();
+
+    @DefaultStringValue("Enable Filter")
+    String enableFilterOfHostDevice();
+
+    @DefaultStringValue("Edit Filter")
+    String editFilterOfHostDevice();
 }

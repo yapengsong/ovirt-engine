@@ -20,6 +20,7 @@ import org.ovirt.engine.ui.uicommonweb.help.HelpTag;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.ListModel;
 import org.ovirt.engine.ui.uicommonweb.models.SortedListModel;
+import org.ovirt.engine.ui.uicommonweb.models.hosts.HostDeviceFilterUtil;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
@@ -35,6 +36,8 @@ public class AddVmHostDevicesModel extends ModelWithPinnedHost {
     private SortedListModel<EntityModel<HostDeviceView>> availableHostDevices;
     private SortedListModel<EntityModel<HostDeviceView>> selectedHostDevices;
 
+    private HostDeviceFilterUtil<HostDeviceView> filter;
+
     private UICommand addDeviceCommand = new UICommand(null, this);
     private UICommand removeDeviceCommand = new UICommand(null, this);
 
@@ -45,6 +48,9 @@ public class AddVmHostDevicesModel extends ModelWithPinnedHost {
         setAllAvailableHostDevices(new SortedListModel<EntityModel<HostDeviceView>>());
         setAvailableHostDevices(new SortedListModel<EntityModel<HostDeviceView>>());
         setSelectedHostDevices(new SortedListModel<EntityModel<HostDeviceView>>());
+
+        filter = new HostDeviceFilterUtil<>();
+        filter.setUseFilter(true);
 
         setTitle(ConstantsManager.getInstance().getConstants().addVmHostDevicesTitle());
         setHelpTag(HelpTag.add_host_device);
@@ -104,6 +110,10 @@ public class AddVmHostDevicesModel extends ModelWithPinnedHost {
         getCapability().setItems(capabilities);
     }
 
+    public void updateHostDeviceWidget(){
+        updateAvailableHostDevices();
+    }
+
     private void updateAvailableHostDevices() {
         if (getPinnedHost().getSelectedItem() == null) {
             return;
@@ -118,6 +128,9 @@ public class AddVmHostDevicesModel extends ModelWithPinnedHost {
             public void onSuccess(final Object model, Object returnValue) {
                 stopProgress();
                 Collection<HostDeviceView> fetchedDevices = ((VdcQueryReturnValue) returnValue).getReturnValue();
+                filter.setOrigineItem(fetchedDevices);
+                // execFilterOrNot() must be called after setOrigineItem()
+                fetchedDevices = filter.execFilterOrNot(filter.isUseFilter());
                 List<EntityModel<HostDeviceView>> models = new ArrayList<>();
                 for (HostDeviceView hostDevice : fetchedDevices) {
                     // show only devices that support assignment and are not yet attached
@@ -143,6 +156,10 @@ public class AddVmHostDevicesModel extends ModelWithPinnedHost {
                         !getSelectedHostDevices().getItems().contains(hostDevice);
             }
         }));
+    }
+
+    public HostDeviceFilterUtil getFilter(){
+      return filter;
     }
 
     public ListModel<String> getCapability() {
