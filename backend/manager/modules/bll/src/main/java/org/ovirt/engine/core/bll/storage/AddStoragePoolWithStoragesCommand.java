@@ -95,6 +95,11 @@ public class AddStoragePoolWithStoragesCommand<T extends StoragePoolWithStorages
 
             // Following code performs only read operations, therefore no need for new transaction
             boolean result = false;
+
+            // Once we create a storage pool with multiple hosts, the engine should connect all
+            // the hosts in the storage pool,
+            // since the engine picks a random host to fetch all the unregistered disks.
+            boolean isStoragePoolCreated = false;
             retVal = null;
             for (VDS vds : getAllRunningVdssInPool()) {
                 setVds(vds);
@@ -111,17 +116,18 @@ public class AddStoragePoolWithStoragesCommand<T extends StoragePoolWithStorages
                             .connectStorageToDomainByVdsId(storageDomain,
                                     getVds().getId());
                 }
-                retVal = addStoragePoolInIrs();
-                if (!retVal.getSucceeded()
-                        && retVal.getVdsError().getCode() == EngineError.StorageDomainAccessError) {
-                    log.warn("Error creating storage pool on vds '{}' - continuing",
-                            vds.getName());
-                    continue;
-                } else {
+                if (!isStoragePoolCreated) {
+                    retVal = addStoragePoolInIrs();
+                    if (!retVal.getSucceeded()
+                            && retVal.getVdsError().getCode() == EngineError.StorageDomainAccessError) {
+                        log.warn("Error creating storage pool on vds '{}' - continuing",
+                                vds.getName());
+                        continue;
+                    }
                     // storage pool creation succeeded or failed
                     // but didn't throw exception
                     result = retVal.getSucceeded();
-                    break;
+                    isStoragePoolCreated = true;
                 }
             }
 
@@ -134,9 +140,8 @@ public class AddStoragePoolWithStoragesCommand<T extends StoragePoolWithStorages
                     // command
                     throw new EngineException(EngineError.ENGINE_ERROR_CREATING_STORAGE_POOL);
                 }
-            } else {
-                registerOvfStoreDisks();
             }
+            registerOvfStoreDisks();
         }
 
         // Create pool phase completed, no rollback is needed here, so compensation information needs to be cleared!

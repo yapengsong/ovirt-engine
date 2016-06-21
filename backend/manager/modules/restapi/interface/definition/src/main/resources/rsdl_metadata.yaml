@@ -407,6 +407,29 @@ actions:
             payload_file.type: xs:string
           action.use_sysprep: xs:boolean
           action.use_cloud_init: xs:boolean
+          action.vm.initialization.host_name: xs:string
+          action.vm.initialization.custom_script: xs:string
+          action.vm.initialization.active_directory_ou: xs:string
+          action.vm.initialization.authorized_ssh_keys: xs:string
+          action.vm.initialization.dns_search: xs:string
+          action.vm.initialization.dns_servers: xs:string
+          action.vm.initialization.domain: xs:string
+          action.vm.initialization.input_locale: xs:string
+          action.vm.initialization.nic_configurations.nic_configuration--COLLECTION:
+            nic_configuration.name: xs:string
+            nic_configuration.on_boot: xs:boolean
+            nic_configuration.boot_protocol: xs:string
+            nic_configuration.ip.address: xs:string
+            nic_configuration.ip.netmask: xs:string
+            nic_configuration.ip.gateway: xs:string
+          action.vm.initialization.org_name: xs:string
+          action.vm.initialization.regenerate_ssh_keys: xs:string
+          action.vm.initialization.root_password: xs:string
+          action.vm.initialization.system_locale: xs:string
+          action.vm.initialization.timezone: xs:string
+          action.vm.initialization.ui_language: xs:string
+          action.vm.initialization.user_name: xs:string
+          action.vm.initialization.windows_license_key: xs:string
         description: start a virtual machine in the system identified by the given id with the options specified in the request body
     headers:
       Filter: {value: true|false, required: false}
@@ -3116,11 +3139,19 @@ actions:
     body:
       parameterType: VmPool
       signatures:
-      - mandatoryArguments: {}
-        optionalArguments: {vmpool.cluster.id|name: 'xs:string', vmpool.template.id|name: 'xs:string',
-          vmpool.name: 'xs:string', vmpool.comment: 'xs:string', vmpool.size: 'xs:int', vmpool.max_user_vms: 'xs:int', vmpool.display.proxy: 'xs:string',
-          vmpool.description: 'xs:string',
-          vm_pool.use_latest_template_version: 'xs:boolean'}
+      - mandatoryArguments: { }
+        optionalArguments:
+          vm_pool.cluster.id|name: xs:string
+          vm_pool.template.id|name: xs:string
+          vm_pool.name: xs:string
+          vm_pool.comment: xs:string
+          vm_pool.size: xs:int
+          vm_pool.max_user_vms: xs:int
+          vm_pool.display.proxy: xs:string
+          vm_pool.description: xs:string
+          vm_pool.use_latest_template_version: xs:boolean
+          vm_pool.prestarted_vms: xs:int
+          vm_pool.type: xs:string
         description: update the specified virtual machine pool in the system
 - name: /vmpools/{vmpool:id}/allocatevm|rel=allocatevm
   description: attach the user to a vm from the vmpool and run the vm
@@ -3130,16 +3161,25 @@ actions:
       signatures:
       - mandatoryArguments: {}
 - name: /vmpools|rel=add
-  description: add anew vm pool to the system
+  description: add a new vm pool to the system
   request:
     body:
       parameterType: VmPool
       signatures:
-      - mandatoryArguments: {vmpool.cluster.id|name: 'xs:string', vmpool.template.id|name: 'xs:string',
-          vmpool.name: 'xs:string'}
-        optionalArguments: {vmpool.comment: 'xs:string', vmpool.size: 'xs:int', vmpool.max_user_vms: 'xs:int', vmpool.display.proxy: 'xs:string',
-          vmpool.description: 'xs:string', vmpool.soundcard_enabled: 'xs:boolean', vmpool.type: 'xs:string',
-          vm_pool.use_latest_template_version: 'xs:boolean'}
+      - mandatoryArguments:
+          vm_pool.cluster.id|name: xs:string
+          vm_pool.name: xs:string
+          vm_pool.template.id|name: xs:string
+        optionalArguments:
+          vm_pool.comment: xs:string
+          vm_pool.description: xs:string
+          vm_pool.display.proxy: xs:string
+          vm_pool.max_user_vms: xs:int
+          vm_pool.size: xs:int
+          vm_pool.soundcard_enabled: xs:boolean
+          vm_pool.type: xs:string
+          vm_pool.use_latest_template_version: xs:boolean
+          vm_pool.prestarted_vms: xs:int
         description: add a new vm pool to the system
 - name: /vmpools/{vmpool:id}/permissions|rel=get
   description: get the list of permissions for the specified vm pool
