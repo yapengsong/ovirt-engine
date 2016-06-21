@@ -15,6 +15,7 @@ import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.EventArgs;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
@@ -26,6 +27,7 @@ import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.safehtml.shared.UriUtils;
+import com.google.gwt.user.client.Window;
 import com.gwtplatform.mvp.client.PresenterWidget;
 import com.gwtplatform.mvp.client.View;
 
@@ -48,6 +50,8 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
         void clearErrorMessages();
 
         HasUiCommandClickHandlers getLoginButton();
+
+        HasUiCommandClickHandlers getBackButton();
 
         HasKeyPressHandlers getLoginForm();
 
@@ -106,6 +110,13 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
             }
 
         });
+
+        getView().getBackButton().setCommand(loginModel.getBackCommand());
+        registerHandler(getView().getBackButton().addClickHandler(new ClickHandler(){
+            @Override
+            public void onClick(ClickEvent event) {
+                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost());//$NON-NLS-1$
+            }}));
 
         getView().getLoginButton().setCommand(loginModel.getLoginCommand());
         registerHandler(getView().getLoginButton().addClickHandler(new ClickHandler() {

@@ -88,6 +88,10 @@ public abstract class AbstractLoginFormView extends AbstractView {
     public PatternflyUiCommandButton loginButton;
 
     @UiField
+    @WithElementId
+    public PatternflyUiCommandButton backButton;
+
+    @UiField
     @Ignore
     public AlertPanel errorMessagePanel;
 
@@ -205,6 +209,10 @@ public abstract class AbstractLoginFormView extends AbstractView {
 
     public HasUiCommandClickHandlers getLoginButton() {
         return loginButton;
+    }
+
+    public HasUiCommandClickHandlers getBackButton() {
+        return backButton;
     }
 
     public HasKeyPressHandlers getLoginForm() {

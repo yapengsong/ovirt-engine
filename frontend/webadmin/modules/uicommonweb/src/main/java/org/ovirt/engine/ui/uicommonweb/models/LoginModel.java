@@ -57,6 +57,16 @@ public class LoginModel extends Model {
         privateLoginCommand = value;
     }
 
+    private UICommand privateBackCommand;
+
+    public UICommand getBackCommand(){
+        return privateBackCommand;
+    }
+
+    public void setBackCommand(UICommand value){
+        this.privateBackCommand = value;
+    }
+
     private ListModel<String> privateProfile;
 
     public ListModel<String> getProfile() {
@@ -151,6 +161,10 @@ public class LoginModel extends Model {
         setLoginCommand(tempVar);
         getCommands().add(tempVar);
 
+        UICommand backVar = new UICommand("Back", this); //$NON-NLS-1$
+        backVar.setIsExecutionAllowed(false);
+        setBackCommand(backVar);
+
         setProfile(new ListModel<String>());
         getProfile().setIsChangeable(false);
         setUserName(new EntityModel<String>());
@@ -185,6 +199,7 @@ public class LoginModel extends Model {
                     // If this happens to be executed before the AutoLogin() is executed,
                     // it is not a problem, as the AutoLogin() will disable the screen by itself.
                     loginModel.getLoginCommand().setIsExecutionAllowed(true);
+                    loginModel.getBackCommand().setIsExecutionAllowed(true);
                     loginModel.getUserName().setIsChangeable(true);
                     loginModel.getPassword().setIsChangeable(true);
                     loginModel.getProfile().setIsChangeable(true);
@@ -228,6 +243,7 @@ public class LoginModel extends Model {
                         loginModel.getPassword().setIsChangeable(true);
                         loginModel.getProfile().setIsChangeable(true);
                         loginModel.getLoginCommand().setIsExecutionAllowed(true);
+                        loginModel.getBackCommand().setIsExecutionAllowed(true);
                         loginModel.getLoginFailedEvent().raise(this, EventArgs.EMPTY);
                     }
                     else {
@@ -268,6 +284,7 @@ public class LoginModel extends Model {
         getPassword().setIsChangeable(false);
         getProfile().setIsChangeable(false);
         getLoginCommand().setIsExecutionAllowed(false);
+        getBackCommand().setIsExecutionAllowed(false);
     }
 
     protected boolean validate() {
