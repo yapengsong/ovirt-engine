@@ -67,7 +67,6 @@
 									<b:Column size="XS_6" >
 										<b:ListBox ui:field="localeBox" addStyleNames="login-localebox" />
 									</b:Column>
-								
 								</b:Row>
 							</b:FormGroup>
 							<b:Row>
@@ -89,19 +88,23 @@
 								<b:Column size="XS_12">
 									<ge:EntityModelCheckBoxEditor ui:field="connectAutomaticallyEditor" usePatternFly="true" />
 								</b:Column>
-							</b:Row>	
+							</b:Row>
 							<b:Row>
 								<b:Column size="XS_12">
 									<w:PatternflyUiCommandButton ui:field="loginButton" addStyleNames="btn btn-primary btn-block login-btn" />
 								</b:Column>
-							</b:Row>	
-						
+							</b:Row>
+							<b:Row>
+								<b:Column size="XS_12">
+									<w:PatternflyUiCommandButton ui:field="backButton" addStyleNames="btn btn-primary btn-block back-btn" />
+								</b:Column>
+							</b:Row>
 						</htl:Div>
 					</b:ModalBody>
 					
 				</mdl:ModalContent>
 			</mdl:ModalDialog>
-			
+
 			<htl:Div addStyleNames="logo-modal-footer">
 				<htl:Div addStyleNames="footer-container">
 					<b:Column size="SM_9">
@@ -117,5 +120,5 @@
 		  </htl:Div>
 		</g:HTMLPanel>
 	</g:FocusPanel>
-	
+
 </ui:UiBinder>

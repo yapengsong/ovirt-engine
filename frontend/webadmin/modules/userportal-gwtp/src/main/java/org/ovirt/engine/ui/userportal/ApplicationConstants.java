@@ -30,6 +30,9 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Login")
     String loginButtonLabel();
 
+    @DefaultStringValue("Back")
+    String backButtonLabel();
+
     @DefaultStringValue("Connect Automatically")
     String loginFormConnectAutomaticallyLabel();
 

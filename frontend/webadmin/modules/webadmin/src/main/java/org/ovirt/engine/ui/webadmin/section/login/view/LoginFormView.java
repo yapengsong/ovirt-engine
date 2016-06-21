@@ -48,6 +48,7 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
         userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
         passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
         loginButton.setLabel(constants.loginButtonLabel());
+        backButton.setLabel(constants.backButtonLabel());
     }
 
     @Override
@@ -59,5 +60,4 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
     public LoginModel flush() {
         return driver.flush();
     }
-
 }

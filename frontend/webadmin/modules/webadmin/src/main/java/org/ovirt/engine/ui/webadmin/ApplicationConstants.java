@@ -32,6 +32,9 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Login")
     String loginButtonLabel();
 
+    @DefaultStringValue("Back")
+    String backButtonLabel();
+
     // Main section
 
     @DefaultStringValue("Configure")
@@ -4736,7 +4739,4 @@ public interface ApplicationConstants extends CommonApplicationConstants {
 
     @DefaultStringValue("Physical Function")
     String physicalFunction();
-
-    @DefaultStringValue("Enable Filter")
-    String enableFilterOfHostDevice();
 }

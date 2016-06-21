@@ -115,6 +115,7 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
         passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
         connectAutomaticallyEditor.setLabel(constants.loginFormConnectAutomaticallyLabel());
         loginButton.setLabel(constants.loginButtonLabel());
+        backButton.setLabel(constants.backButtonLabel());
         motdHeaderLabel.setText(constants.motdHeaderLabel());
     }
 
