@@ -161,6 +161,7 @@ public class DisksAllocationModel extends EntityModel {
     private boolean isVolumeTypeAvailable;
     private boolean isVolumeTypeChangable;
     private boolean isAliasChangable;
+    private boolean isSizeChangable;
     private boolean isSourceStorageDomainAvailable;
     private boolean isSourceStorageDomainNameAvailable;
     private boolean isWarningAvailable;
@@ -282,6 +283,7 @@ public class DisksAllocationModel extends EntityModel {
             diskModel.getVolumeType().setIsAvailable(isVolumeTypeAvailable);
             diskModel.getVolumeType().setIsChangeable(isVolumeTypeChangable);
             diskModel.getAlias().setIsChangeable(isAliasChangable);
+            diskModel.getSize().setIsChangeable(isSizeChangable);
         }
     }
 
@@ -391,6 +393,14 @@ public class DisksAllocationModel extends EntityModel {
 
     public void setIsAliasChangable(boolean isAliasChangable) {
         this.isAliasChangable = isAliasChangable;
+    }
+
+    public boolean getIsSizeChangable() {
+        return isSizeChangable;
+    }
+
+    public void setIsSizeChangable(boolean isSizeChangable) {
+        this.isSizeChangable = isSizeChangable;
     }
 
     public void setIsVolumeTypeChangable(boolean isVolumeTypeChangable) {
