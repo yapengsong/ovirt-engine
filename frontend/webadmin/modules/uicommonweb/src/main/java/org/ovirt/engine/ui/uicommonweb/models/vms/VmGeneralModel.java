@@ -12,6 +12,7 @@ import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
 import org.ovirt.engine.core.common.utils.ObjectUtils;
 import org.ovirt.engine.core.compat.StringHelper;
+import org.ovirt.engine.core.compat.VersionTransform;
 import org.ovirt.engine.ui.frontend.AsyncQuery;
 import org.ovirt.engine.ui.frontend.Frontend;
 import org.ovirt.engine.ui.frontend.INewAsyncCallback;
@@ -530,7 +531,7 @@ public class VmGeneralModel extends AbstractGeneralModel<VM> {
         setCustomProperties(getHasCustomProperties() ? constants.configured() : constants.notConfigured());
 
         setCompatibilityVersion(vm.getVdsGroupCompatibilityVersion() != null ?
-                vm.getVdsGroupCompatibilityVersion().toString() : ""); //$NON-NLS-1$
+                VersionTransform.getEayunVersion(vm.getVdsGroupCompatibilityVersion()).toString() : ""); //$NON-NLS-1$
 
         setVmId(vm.getId().toString());
         setFqdn(vm.getVmFQDN());

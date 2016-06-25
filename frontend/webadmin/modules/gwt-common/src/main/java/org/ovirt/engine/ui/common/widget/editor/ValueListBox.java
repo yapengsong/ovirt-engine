@@ -166,10 +166,13 @@ public class ValueListBox<T> extends Composite implements Focusable, HasConstrai
         }
         if (value instanceof Version) {
             Version version = (Version) value;
-            valueKeyToIndex.put(key, values.size());
-            values.add(value);
-            // option: text, value
-            getListBox().addItem(VersionTransform.getEayunVersion(version).getValue(), renderer.render(value));
+            String eayunVersion = VersionTransform.getEayunVersion(version).getValue();
+            if(eayunVersion != null && !("".equals(eayunVersion))){
+                valueKeyToIndex.put(key, values.size());
+                values.add(value);
+                // option: text, value
+                getListBox().addItem(eayunVersion, renderer.render(value));
+            }
         } else {
             valueKeyToIndex.put(key, values.size());
             values.add(value);
@@ -196,9 +199,11 @@ public class ValueListBox<T> extends Composite implements Focusable, HasConstrai
         if (index == null) {
             addValue(value);
         }
-
-        index = valueKeyToIndex.get(key);
-        getListBox().setSelectedIndex(index);
+        //Sometime the addValue()'s execution don't change the valueKeyIndex and ListBox
+        if(valueKeyToIndex.containsKey(key)){
+            index = valueKeyToIndex.get(key);
+            getListBox().setSelectedIndex(index);
+        }
     }
 
     public List<T> getValues() {
