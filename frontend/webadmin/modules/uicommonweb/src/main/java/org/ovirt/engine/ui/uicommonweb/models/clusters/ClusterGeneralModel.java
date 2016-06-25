@@ -25,6 +25,7 @@ import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
 import org.ovirt.engine.core.common.utils.ObjectUtils;
 import org.ovirt.engine.core.compat.Guid;
+import org.ovirt.engine.core.compat.VersionTransform;
 import org.ovirt.engine.ui.frontend.AsyncQuery;
 import org.ovirt.engine.ui.frontend.Frontend;
 import org.ovirt.engine.ui.frontend.INewAsyncCallback;
@@ -217,7 +218,7 @@ public class ClusterGeneralModel extends EntityModel<VDSGroup> {
         setCpuThreads(vdsGroup.getCountThreadsAsCores());
         setResiliencePolicy(vdsGroup.getMigrateOnError());
         setEmulatedMachine(vdsGroup.getEmulatedMachine());
-        setCompatibilityVersion(vdsGroup.getCompatibilityVersion().getValue());
+        setCompatibilityVersion(VersionTransform.getEayunVersion(vdsGroup.getCompatibilityVersion()).getValue());
         generateClusterType(vdsGroup.supportsGlusterService(), vdsGroup.supportsVirtService());
         AsyncDataProvider.getInstance().getNumberOfVmsInCluster(new AsyncQuery(this, new INewAsyncCallback() {
             @Override

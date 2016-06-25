@@ -1652,6 +1652,7 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
 
         driver.edit(model);
         profilesInstanceTypeEditor.edit(model.getNicsWithLogicalNetworks());
+        profilesInstanceTypeEditor.setVisible(false);
         instanceImagesEditor.edit(model.getInstanceImages());
         customPropertiesSheetEditor.edit(model.getCustomPropertySheet());
         vmInitEditor.edit(model.getVmInitModel());
