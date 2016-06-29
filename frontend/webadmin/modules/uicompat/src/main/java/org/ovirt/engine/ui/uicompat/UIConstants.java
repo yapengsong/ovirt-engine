@@ -3029,4 +3029,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Cannot change Cluster Compatibility Version when a VM is active. Please shutdown all VMs in the Cluster.")
     String cannotClusterVersionChangeWithActiveVm();
+
+    @DefaultStringValue("Operating")
+    String operating();
 }
