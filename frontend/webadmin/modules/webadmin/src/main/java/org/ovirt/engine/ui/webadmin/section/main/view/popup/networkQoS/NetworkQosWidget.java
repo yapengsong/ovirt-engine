@@ -12,8 +12,11 @@ import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
+import com.google.gwt.event.dom.client.BlurEvent;
+import com.google.gwt.event.dom.client.BlurHandler;
 import com.google.gwt.resources.client.CssResource;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -143,12 +146,43 @@ public class NetworkQosWidget extends AbstractModelBoundPopupWidget<BaseNetworkQ
         }
         this.model = model;
         model.getPropertyChangedEvent().addListener(availabilityListener);
+
         toggleVisibility();
+        initHandler(model);
     }
 
     @Override
     public BaseNetworkQosModel flush() {
         return driver.flush();
+    }
+
+    private void initHandler(final BaseNetworkQosModel model){
+        inboundAverageEditor.asValueBox().addBlurHandler(new BlurHandler(){
+            @Override
+            public void onBlur(BlurEvent event) {
+                if((inboundAverageEditor.asValueBox().getValue() != null) && (model.getInbound().validate()) && (model.getInbound().getIsValid())){
+                    int inboundAverage = inboundAverageEditor.asValueBox().getValue();
+                    inboundPeakEditor.asValueBox().setValue(calcBoundPeak(inboundAverage));
+                    inboundBurstEditor.asValueBox().setValue(calcBoundBurst(inboundAverage));
+                }
+            }});
+        outboundAverageEditor.asValueBox().addBlurHandler(new BlurHandler(){
+            @Override
+            public void onBlur(BlurEvent event) {
+                if((outboundAverageEditor.asValueBox().getValue() != null) && (model.getOutbound().validate()) && (model.getOutbound().getIsValid())){
+                    int outboundAverage = outboundAverageEditor.asValueBox().getValue();
+                    outboundPeakEditor.asValueBox().setValue(calcBoundPeak(outboundAverage));
+                    outboundBurstEditor.asValueBox().setValue(calcBoundBurst(outboundAverage));
+                }
+            }});
+    }
+
+    protected int calcBoundPeak(int boundAverage){
+        return boundAverage * 2;
+    }
+
+    protected int calcBoundBurst(int boundAverage){
+        return boundAverage * 10;
     }
 
 }
