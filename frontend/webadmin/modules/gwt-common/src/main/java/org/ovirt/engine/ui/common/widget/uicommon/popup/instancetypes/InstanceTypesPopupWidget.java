@@ -5,6 +5,7 @@ import static org.ovirt.engine.ui.common.widget.uicommon.popup.vm.PopupWidgetCon
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
 import org.ovirt.engine.ui.common.widget.uicommon.popup.AbstractVmPopupWidget;
 import org.ovirt.engine.ui.common.widget.uicommon.popup.vm.PopupWidgetConfigMap;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 
@@ -16,6 +17,7 @@ public class InstanceTypesPopupWidget extends AbstractVmPopupWidget {
 
     public InstanceTypesPopupWidget(EventBus eventBus) {
         super(eventBus);
+        profilesInstanceTypeEditor.removeFromParent();//Bug #7281
     }
 
     @Override
