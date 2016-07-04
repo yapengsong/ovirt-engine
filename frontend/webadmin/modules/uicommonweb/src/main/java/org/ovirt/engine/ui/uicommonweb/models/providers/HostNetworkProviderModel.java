@@ -40,6 +40,10 @@ public class HostNetworkProviderModel extends EntityModel {
         return getNeutronAgentModel().getInterfaceMappings();
     }
 
+    public EntityModel<String> getLocalIP() {
+        return getNeutronAgentModel().getLocalIP();
+    }
+
     public HostNetworkProviderModel() {
         getNetworkProviders().getSelectedItemChangedEvent().addListener(new IEventListener<EventArgs>() {
 

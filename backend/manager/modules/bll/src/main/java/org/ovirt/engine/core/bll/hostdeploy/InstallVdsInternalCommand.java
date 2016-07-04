@@ -135,6 +135,11 @@ public class InstallVdsInternalCommand<T extends InstallVdsParameters> extends V
                             parameters.getNetworkMappings()
                         );
                     }
+                    if (StringUtils.isNotBlank(parameters.getLocalIP())) {
+                        agentProperties.getAgentConfiguration().setLocalIP(
+                            parameters.getLocalIP()
+                        );
+                    }
                     deploy.addUnit(new VdsDeployOpenStackUnit(agentProperties));
                 }
             }

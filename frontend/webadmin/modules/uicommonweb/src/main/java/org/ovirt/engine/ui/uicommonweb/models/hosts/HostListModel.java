@@ -1349,6 +1349,7 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
         if (networkProvider != null) {
             param.getVdsStaticData().setOpenstackNetworkProviderId(networkProvider.getId());
             param.setNetworkMappings((String) model.getInterfaceMappings().getEntity());
+            param.setLocalIP((String) model.getlocalIP().getEntity());
         }
 
         AsyncDataProvider.getInstance().getClusterById(new AsyncQuery(param, new INewAsyncCallback() {
