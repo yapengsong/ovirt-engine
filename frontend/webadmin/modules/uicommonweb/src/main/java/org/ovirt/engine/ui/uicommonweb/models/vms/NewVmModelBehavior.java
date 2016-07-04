@@ -122,7 +122,7 @@ public class NewVmModelBehavior extends VmModelBehaviorBase<UnitVmModel> {
                                     }),
                                     true, false);
                         } else {
-                            getModel().disableEditing(ConstantsManager.getInstance().getConstants().notAvailableWithNoUpDC());
+                            getModel().disableEditing(ConstantsManager.getInstance().getConstants().notAvailableStorageInDC());
                         }
                     }
                 }),

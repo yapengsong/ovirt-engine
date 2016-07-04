@@ -20,6 +20,7 @@ import org.ovirt.engine.ui.frontend.INewAsyncCallback;
 import org.ovirt.engine.ui.uicommonweb.ErrorPopupManager;
 import org.ovirt.engine.ui.uicommonweb.TypeResolver;
 import org.ovirt.engine.ui.uicommonweb.UICommand;
+import org.ovirt.engine.ui.uicommonweb.help.HelpTag;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.MoveHost;
 import org.ovirt.engine.ui.uicommonweb.models.hosts.MoveHostData;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
@@ -27,6 +28,7 @@ import org.ovirt.engine.ui.uicompat.FrontendMultipleActionAsyncResult;
 import org.ovirt.engine.ui.uicompat.IFrontendMultipleActionAsyncCallback;
 import org.ovirt.engine.ui.uicompat.ObservableCollection;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.user.client.Timer;
 
 @SuppressWarnings("unused")
@@ -171,9 +173,32 @@ public class GuideModel extends EntityModel {
                                 if (succeeded) {
                                     guideModel.postAction();
                                 } else {
-                                    errorPopupManager.show(ConstantsManager.getInstance().getConstants().hostActivationTimeOut());
+                                    ConfirmationModel confirmModel = new ConfirmationModel();
+                                    setConfirmWindow(confirmModel);
+                                    confirmModel.setTitle(ConstantsManager.getInstance()
+                                            .getConstants().operating());
+                                    confirmModel.setHelpTag(HelpTag.select_host);
+                                    confirmModel.setHashName("guide_model"); //$NON-NLS-1$
+                                    confirmModel.setMessage(ConstantsManager.getInstance().getConstants().hostActivationTimeOut());
+                                    confirmModel.getCommands().add(new UICommand("CancelConfirm", GuideModel.this)//$NON-NLS-1$
+                                    .setTitle(ConstantsManager.getInstance().getConstants().close())
+                                    .setIsDefault(true)
+                                    .setIsCancel(true));
                                 }
                             }
                         }));
+    }
+
+    @Override
+    public void executeCommand(UICommand command) {
+        super.executeCommand(command);
+
+        if("CancelConfirm".equals(command.getName())){//$NON-NLS-1$
+            cancelConfirm();
+        }
+    }
+
+    protected void cancelConfirm() {
+        setConfirmWindow(null);
     }
 }

@@ -2589,6 +2589,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Not available when no Data Center is up.")
     String notAvailableWithNoUpDC();
 
+    @DefaultStringValue("Not available storage in current data center.")
+    String notAvailableStorageInDC();
+
     @DefaultStringValue("The VM is suspended, it might not operate normally after resume on different cluster. It's suggested to power it off before cluster change.")
     String suspendedVMsWhenClusterChange();
 
@@ -3032,4 +3035,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Cannot change Cluster Compatibility Version when a VM is active. Please shutdown all VMs in the Cluster.")
     String cannotClusterVersionChangeWithActiveVm();
+
+    @DefaultStringValue("Operating")
+    String operating();
 }
