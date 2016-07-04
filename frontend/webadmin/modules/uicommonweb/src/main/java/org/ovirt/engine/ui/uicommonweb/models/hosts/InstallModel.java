@@ -115,6 +115,10 @@ public class InstallModel extends Model {
         return getNetworkProviderModel().getInterfaceMappings();
     }
 
+    public EntityModel<?> getlocalIP() {
+        return getNetworkProviderModel().getLocalIP();
+    }
+
     public void setVds(VDS value) {
         vds = value;
     }

@@ -26,6 +26,7 @@
 
 	<g:FlowPanel>
 		<w:EntityModelWidgetWithInfo ui:field="mappings" />
+		<w:EntityModelWidgetWithInfo ui:field="localIPInfo" />
 		<g:FlowPanel addStyleNames="{style.sectionStyle}">
 			<g:Label text="{constants.messagingConfiguration}" addStyleNames="{style.messagingServerHeader}"/>
 			<g:FlowPanel addStyleNames="{style.messagingServerInnerPanel}">

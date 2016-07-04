@@ -19,6 +19,7 @@ public class VdsDeployOpenStackUnit implements VdsDeployUnit {
 
     private static final String COND_NEUTRON_LINUX_BRIDGE_SETUP = "NEUTRON_LINUX_BRIDGE_SETUP";
     private static final String COND_NEUTRON_OPEN_VSWITCH_SETUP = "NEUTRON_OPEN_VSWITCH_SETUP";
+    private static final String COND_NEUTRON_OPEN_VSWITCH_TUNNEL_SETUP = "NEUTRON_OPEN_VSWITCH_TUNNEL_SETUP";
 
     private final List<Callable<Boolean>> CUSTOMIZATION_DIALOG = Arrays.asList(
         new Callable<Boolean>() {
@@ -109,6 +110,22 @@ public class VdsDeployOpenStackUnit implements VdsDeployUnit {
                 _openStackAgentProperties.getAgentConfiguration().getNetworkMappings()
             );
             return true;
+        }},
+        new Callable<Boolean>() {@VdsDeployUnit.CallWhen(COND_NEUTRON_OPEN_VSWITCH_TUNNEL_SETUP)
+        public Boolean call() throws Exception {
+            _setCliEnvironmentIfNecessary(
+                OpenStackEnv.NEUTRON_OPENVSWITCH_CONFIG_PREFIX + "OVS/local_ip",
+                _openStackAgentProperties.getAgentConfiguration().getLocalIP()
+            );
+            return true;
+        }},
+        new Callable<Boolean>() {@VdsDeployUnit.CallWhen(COND_NEUTRON_OPEN_VSWITCH_TUNNEL_SETUP)
+        public Boolean call() throws Exception {
+            _setCliEnvironmentIfNecessary(
+                OpenStackEnv.NEUTRON_OPENVSWITCH_CONFIG_PREFIX + "OVS/enable_tunneling",
+                "True"
+            );
+            return true;
         }}
     );
 
@@ -145,6 +162,10 @@ public class VdsDeployOpenStackUnit implements VdsDeployUnit {
         }
         else if (_openStackAgentProperties.isOpenVSwitch()) {
             _deploy.addCustomizationCondition(COND_NEUTRON_OPEN_VSWITCH_SETUP);
+        }
+        if (_openStackAgentProperties.getAgentConfiguration().getLocalIP() != null &&
+                !_openStackAgentProperties.getAgentConfiguration().getLocalIP().trim().isEmpty()) {
+            _deploy.addCustomizationCondition(COND_NEUTRON_OPEN_VSWITCH_TUNNEL_SETUP);
         }
     }
 

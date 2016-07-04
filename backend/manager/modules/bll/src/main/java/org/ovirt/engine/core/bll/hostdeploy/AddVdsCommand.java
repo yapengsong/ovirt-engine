@@ -193,6 +193,7 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
                     .isRebootAfterInstallation());
             installVdsParameters.setNetworkProviderId(getParameters().getVdsStaticData().getOpenstackNetworkProviderId());
             installVdsParameters.setNetworkMappings(getParameters().getNetworkMappings());
+            installVdsParameters.setLocalIP(getParameters().getLocalIP());
             installVdsParameters.setEnableSerialConsole(getParameters().getEnableSerialConsole());
             Map<String, String> values = new HashMap<>();
             values.put(VdcObjectType.VDS.name().toLowerCase(), getParameters().getvds().getName());

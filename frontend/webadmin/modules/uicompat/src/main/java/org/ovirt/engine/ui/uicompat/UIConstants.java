@@ -721,7 +721,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Export Image(s)")
     String exportImagesTitle();
-    
+
     @DefaultStringValue("Upload Image")
     String uploadImageTitle();
 
@@ -2406,11 +2406,17 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Bridge Mappings")
     String bridgeMappings();
 
+    @DefaultStringValue("Local IP")
+    String localIP();
+
     @DefaultStringValue("Please use a comma-separated list of 'label:interface'")
     String interfaceMappingsExplanation();
 
     @DefaultStringValue("Please use a comma-separated list of 'label:bridge'")
     String bridgeMappingsExplanation();
+
+    @DefaultStringValue("Please enter the IP address the agent tunnel uses for gre and vxlan network")
+    String localIPExplanation();
 
     @DefaultStringValue("The given mappings are of an invalid format.")
     String interfaceMappingsInvalid();

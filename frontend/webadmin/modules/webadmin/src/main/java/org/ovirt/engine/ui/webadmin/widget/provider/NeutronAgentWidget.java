@@ -18,6 +18,7 @@ import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.ApplicationTemplates;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -46,6 +47,9 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
     @UiField(provided = true)
     EntityModelWidgetWithInfo mappings;
 
+    @UiField(provided = true)
+    EntityModelWidgetWithInfo localIPInfo;
+
     @Path(value = "interfaceMappingsLabel.entity")
     @WithElementId("interfaceMappingsLabel")
     EnableableFormLabel mappingsLabel;
@@ -53,6 +57,14 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
     @Path(value = "interfaceMappings.entity")
     @WithElementId("interfaceMappings")
     StringEntityModelTextBoxOnlyEditor interfaceMappings;
+
+    @Path(value = "localIPLabel.entity")
+    @WithElementId("localIPLabel")
+    EnableableFormLabel localIPLabel;
+
+    @Path(value = "localIP.entity")
+    @WithElementId("localIP")
+    StringEntityModelTextBoxOnlyEditor localIP;
 
     @UiField(provided = true)
     @Path("brokerType.selectedItem")
@@ -85,6 +97,9 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
         mappingsLabel = new EnableableFormLabel();
         interfaceMappings = new StringEntityModelTextBoxOnlyEditor();
         mappings = new EntityModelWidgetWithInfo(mappingsLabel, interfaceMappings);
+        localIPLabel = new EnableableFormLabel();
+        localIP = new StringEntityModelTextBoxOnlyEditor();
+        localIPInfo = new EntityModelWidgetWithInfo(localIPLabel, localIP);
         initWidget(ViewUiBinder.uiBinder.createAndBindUi(this));
         ViewIdHandler.idHandler.generateAndSetIds(this);
 
@@ -101,12 +116,14 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
     public void edit(final NeutronAgentModel model) {
         driver.edit(model);
         mappings.setExplanation(templates.italicText(model.getInterfaceMappingsExplanation().getEntity()));
+        localIPInfo.setExplanation(templates.italicText(model.getLocalIPExplanation().getEntity()));
         model.getInterfaceMappingsExplanation().getEntityChangedEvent().addListener(new IEventListener<EventArgs>() {
 
             @Override
             public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
                 mappings.setExplanation(templates.italicText(model.getInterfaceMappingsExplanation()
                         .getEntity()));
+                localIPInfo.setExplanation(templates.italicText(model.getLocalIPExplanation().getEntity()));
             }
         });
     }

@@ -15,6 +15,7 @@ import org.ovirt.engine.ui.uicommonweb.validation.HostAddressValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IntegerValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.InterfaceMappingsValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.IpAddressValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.EnumTranslator;
@@ -31,6 +32,9 @@ public class NeutronAgentModel extends EntityModel {
     private EntityModel<String> interfaceMappingsLabel = new EntityModel<String>();
     private EntityModel<String> interfaceMappingsExplanation = new EntityModel<String>();
     private EntityModel<String> interfaceMappings = new EntityModel<String>();
+    private EntityModel<String> localIP = new EntityModel<String>();
+    private EntityModel<String> localIPExplanation = new EntityModel<String>();
+    private EntityModel<String> localIPLabel = new EntityModel<String>();
     private ListModel<BrokerType> brokerType = new ListModel<BrokerType>();
     private EntityModel<String> messagingServer = new EntityModel<String>();
     private EntityModel<String> messagingServerPort = new EntityModel<String>();
@@ -55,6 +59,18 @@ public class NeutronAgentModel extends EntityModel {
 
     public EntityModel<String> getInterfaceMappings() {
         return interfaceMappings;
+    }
+
+    public EntityModel<String> getLocalIP() {
+        return localIP;
+    }
+
+    public EntityModel<String> getLocalIPExplanation() {
+        return localIPExplanation;
+    }
+
+    public EntityModel<String> getLocalIPLabel() {
+        return localIPLabel;
     }
 
     public ListModel<BrokerType> getBrokerType() {
@@ -92,6 +108,12 @@ public class NeutronAgentModel extends EntityModel {
                         getInterfaceMappingsExplanation().setEntity(ConstantsManager.getInstance()
                                 .getConstants()
                                 .bridgeMappingsExplanation());
+                        getLocalIPLabel().setEntity(ConstantsManager.getInstance()
+                                .getConstants()
+                                .localIP());
+                        getLocalIPExplanation().setEntity(ConstantsManager.getInstance()
+                                .getConstants()
+                                .localIPExplanation());
                             break;
                         case LINUX_BRIDGE:
                         default:
@@ -101,6 +123,12 @@ public class NeutronAgentModel extends EntityModel {
                         getInterfaceMappingsExplanation().setEntity(ConstantsManager.getInstance()
                                 .getConstants()
                                 .interfaceMappingsExplanation());
+                        getLocalIPLabel().setEntity(ConstantsManager.getInstance()
+                                .getConstants()
+                                .localIP());
+                        getLocalIPExplanation().setEntity(ConstantsManager.getInstance()
+                                .getConstants()
+                                .localIPExplanation());
                     }
                 }
             }
@@ -124,6 +152,12 @@ public class NeutronAgentModel extends EntityModel {
         getInterfaceMappingsExplanation().setEntity(ConstantsManager.getInstance()
                 .getConstants()
                 .interfaceMappingsExplanation());
+        getLocalIPLabel().setEntity(ConstantsManager.getInstance()
+                .getConstants()
+                .localIP());
+        getLocalIPExplanation().setEntity(ConstantsManager.getInstance()
+                .getConstants()
+                .localIPExplanation());
         getBrokerType().setItems(Arrays.asList(BrokerType.values()));
         getBrokerType().setSelectedItem(BrokerType.RABBIT_MQ);
     }
@@ -133,13 +167,14 @@ public class NeutronAgentModel extends EntityModel {
             getPluginType().validateSelectedItem(new IValidation[] { new NotEmptyValidation() });
             getBrokerType().validateSelectedItem(new IValidation[] { new NotEmptyValidation() });
             getInterfaceMappings().validateEntity(new IValidation[] { new InterfaceMappingsValidation() });
+            getLocalIP().validateEntity(new IValidation[] { new IpAddressValidation(true) });
             getMessagingServer().validateEntity(new IValidation[] { new HostAddressValidation(true) });
             getMessagingServerPort().validateEntity(new IValidation[] { new IntegerValidation(BusinessEntitiesDefinitions.NETWORK_MIN_LEGAL_PORT,
                     BusinessEntitiesDefinitions.NETWORK_MAX_LEGAL_PORT) });
 
             setIsValid(getPluginType().getIsValid() && getInterfaceMappings().getIsValid()
                     && getMessagingServer().getIsValid() && getMessagingServerPort().getIsValid()
-                    && getBrokerType().getIsValid());
+                    && getBrokerType().getIsValid() && getLocalIP().getIsValid());
         }
         return getIsValid();
     }

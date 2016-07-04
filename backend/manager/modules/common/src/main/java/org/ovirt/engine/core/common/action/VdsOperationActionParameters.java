@@ -31,6 +31,8 @@ public class VdsOperationActionParameters extends VdsActionParameters {
 
     private String networkMappings;
 
+    private String localIP;
+
     public enum AuthenticationMethod {
         Password(0),
         PublicKey(1);
@@ -148,6 +150,14 @@ public class VdsOperationActionParameters extends VdsActionParameters {
 
     public void setNetworkMappings(String networkMappings) {
         this.networkMappings = networkMappings;
+    }
+
+    public String getLocalIP() {
+        return localIP;
+    }
+
+    public void setLocalIP(String localIP) {
+        this.localIP = localIP;
     }
 
     public void setEnableSerialConsole(boolean enableSerialConsole) {

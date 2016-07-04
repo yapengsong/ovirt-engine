@@ -201,6 +201,7 @@ public class OpenstackNetworkProviderProperties extends TenantProviderProperties
         private static final long serialVersionUID = -3588687921167640459L;
         private MessagingConfiguration messagingConfiguration;
         private String networkMappings;
+        private String localIP;
 
         public MessagingConfiguration getMessagingConfiguration() {
             return messagingConfiguration;
@@ -218,11 +219,20 @@ public class OpenstackNetworkProviderProperties extends TenantProviderProperties
             this.networkMappings = networkMappings;
         }
 
+        public String getLocalIP() {
+            return localIP;
+        }
+
+        public void setLocalIP(String localIP) {
+            this.localIP = localIP;
+        }
+
         @Override
         public int hashCode() {
             final int prime = 31;
             int result = 1;
             result = prime * result + ((getNetworkMappings() == null) ? 0 : getNetworkMappings().hashCode());
+            result = prime * result + ((getLocalIP() == null) ? 0 : getLocalIP().hashCode());
             result = prime * result + ((getMessagingConfiguration() == null) ? 0 : getMessagingConfiguration().hashCode());
             return result;
         }
@@ -244,6 +254,8 @@ public class OpenstackNetworkProviderProperties extends TenantProviderProperties
                     return false;
                 }
             } else if (!getNetworkMappings().equals(other.getNetworkMappings())) {
+                return false;
+            } else if (!getLocalIP().equals(other.getLocalIP())) {
                 return false;
             }
             if (getMessagingConfiguration() == null) {
