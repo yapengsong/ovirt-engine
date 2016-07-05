@@ -123,6 +123,12 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
             public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
                 mappings.setExplanation(templates.italicText(model.getInterfaceMappingsExplanation()
                         .getEntity()));
+            }
+        });
+        model.getLocalIPExplanation().getEntityChangedEvent().addListener(new IEventListener<EventArgs>() {
+
+            @Override
+            public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
                 localIPInfo.setExplanation(templates.italicText(model.getLocalIPExplanation().getEntity()));
             }
         });

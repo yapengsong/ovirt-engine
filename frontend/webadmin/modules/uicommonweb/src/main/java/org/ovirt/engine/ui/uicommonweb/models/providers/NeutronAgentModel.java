@@ -188,6 +188,7 @@ public class NeutronAgentModel extends EntityModel {
             AgentConfiguration agentConfiguration = properties.getAgentConfiguration();
             if (agentConfiguration != null) {
                 getInterfaceMappings().setEntity(agentConfiguration.getNetworkMappings());
+                getLocalIP().setEntity(agentConfiguration.getLocalIP());
 
                 MessagingConfiguration messagingConfiguration = agentConfiguration.getMessagingConfiguration();
                 if (messagingConfiguration != null) {
@@ -220,6 +221,7 @@ public class NeutronAgentModel extends EntityModel {
                 properties.setAgentConfiguration(agentConfiguration);
             }
             agentConfiguration.setNetworkMappings(getInterfaceMappings().getEntity());
+            agentConfiguration.setLocalIP(getLocalIP().getEntity());
 
             MessagingConfiguration messagingConfiguration = agentConfiguration.getMessagingConfiguration();
             if (messagingConfiguration == null) {

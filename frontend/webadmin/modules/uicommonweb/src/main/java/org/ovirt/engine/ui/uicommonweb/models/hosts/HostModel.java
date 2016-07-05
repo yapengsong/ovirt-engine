@@ -527,6 +527,10 @@ public abstract class HostModel extends Model implements HasValidatedTabs {
         return getNetworkProviderModel().getInterfaceMappings();
     }
 
+    public EntityModel<String> getlocalIP() {
+        return getNetworkProviderModel().getLocalIP();
+    }
+
     public HostModel() {
         setUpdateHostsCommand(new UICommand("", new ICommandTarget() { //$NON-NLS-1$
             @Override

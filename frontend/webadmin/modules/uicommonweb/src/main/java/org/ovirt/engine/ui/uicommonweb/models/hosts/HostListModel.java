@@ -937,6 +937,7 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
             if (networkProvider != null) {
                 parameters.getVdsStaticData().setOpenstackNetworkProviderId(networkProvider.getId());
                 parameters.setNetworkMappings(model.getInterfaceMappings().getEntity());
+                parameters.setLocalIP(model.getlocalIP().getEntity());
             }
 
             if (model.getProviders().getSelectedItem() != null) {
