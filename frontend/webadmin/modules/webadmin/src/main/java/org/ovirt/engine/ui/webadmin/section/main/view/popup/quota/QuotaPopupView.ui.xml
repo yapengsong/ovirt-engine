@@ -57,7 +57,7 @@
 			<g:FlowPanel>
 				<g:FlowPanel addStyleNames="{style.topDecorator}">
 					<g:HorizontalPanel>
-						<ge:StringEntityModelTextBoxEditor ui:field="nameEditor" />
+						<ge:StringEntityModelTextBoxEditor ui:field="nameEditor" width="299px"/>
 						<ge:StringEntityModelTextBoxEditor ui:field="descriptionEditor" />
 					</g:HorizontalPanel>
 					<g:HorizontalPanel>
