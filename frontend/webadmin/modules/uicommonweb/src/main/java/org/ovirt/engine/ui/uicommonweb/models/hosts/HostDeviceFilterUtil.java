@@ -3,7 +3,6 @@ package org.ovirt.engine.ui.uicommonweb.models.hosts;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import org.ovirt.engine.core.common.businessentities.HostDevice;
 import org.ovirt.engine.core.common.queries.ConfigurationValues;
@@ -12,8 +11,6 @@ import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import com.google.gwt.regexp.shared.RegExp;
 
 public class HostDeviceFilterUtil<T extends HostDevice> {
-
-    private static Logger logger = Logger.getLogger(HostDeviceFilterUtil.class.getName());
 
     // Whether use the list filter, the default is false : don't use
     private boolean useFilter;

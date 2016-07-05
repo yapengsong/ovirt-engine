@@ -406,6 +406,15 @@ public class ImportVmFromExportDomainModel extends ImportVmModel {
         }
         getCluster().validateSelectedItem(
                 new IValidation[] { new NotEmptyValidation() });
+        if(!validateNames()) {
+            setMessage(ConstantsManager.getInstance().getConstants().nameMustBeUniqueInvalidReason());
+        }
+        if(!getCluster().getIsValid()) {
+            setMessage(ConstantsManager.getInstance().getConstants().invalidCluster());
+        }
+        if(!getClusterQuota().getIsValid()) {
+            setMessage(ConstantsManager.getInstance().getConstants().invalidClusterQuota());
+        }
 
         return validateNames()
                 && getCluster().getIsValid()

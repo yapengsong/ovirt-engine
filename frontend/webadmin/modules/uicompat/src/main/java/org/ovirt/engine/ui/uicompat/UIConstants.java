@@ -3038,4 +3038,14 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Operating")
     String operating();
+
+    @DefaultStringValue("Invalid cluster.")
+    String invalidCluster();
+
+    @DefaultStringValue("Invalid cluster quota.")
+    String invalidClusterQuota();
+
+    @DefaultStringValue("Warning")
+    String warnPopupTitle();
+
 }
