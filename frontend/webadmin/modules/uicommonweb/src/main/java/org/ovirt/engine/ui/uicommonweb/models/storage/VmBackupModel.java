@@ -183,6 +183,13 @@ public class VmBackupModel extends ManageBackupModel<VM> {
         }
 
         if (!importModel.validate()) {
+            ConfirmationModel confirmModel = new ConfirmationModel();
+            setConfirmWindow(confirmModel);
+            confirmModel.setTitle(ConstantsManager.getInstance().getConstants().warnPopupTitle());
+            confirmModel.setHelpTag(HelpTag.import_virtual_machine);
+            confirmModel.setHashName("import_virtual_machine"); //$NON-NLS-1$
+            confirmModel.setMessage(importModel.getMessage());
+            confirmModel.getCommands().add(new UICommand(CANCEL_CONFIRMATION_COMMAND, VmBackupModel.this).setTitle(ConstantsManager.getInstance().getConstants().close()).setIsDefault(true).setIsCancel(true));
             return;
         }
 
