@@ -1,1 +1,1 @@
-RedirectMatch ^/$ /ovirt-engine/
+RedirectMatch ^/$ /eayunos/
