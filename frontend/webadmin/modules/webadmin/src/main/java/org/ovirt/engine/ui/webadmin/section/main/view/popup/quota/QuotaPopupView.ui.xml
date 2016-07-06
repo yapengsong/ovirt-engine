@@ -35,18 +35,18 @@
 		.thresholdLabel {
 			height: 10px;
 			width: 10px;
-			background-color: #AFBF27;	
+			background-color: #AFBF27;
 		}
 		.graceLabel {
 			height: 10px;
 			width: 10px;
-			background-color: #4E9FDD;	
+			background-color: #4E9FDD;
 		}
 		.marginLeft {
 			margin-left: 10px;
 		}
 		.gerySplitPanel {
-			background-color: grey;	
+			background-color: grey;
 			height: 20px;
 			width: 8px;
 		}
@@ -57,7 +57,7 @@
 			<g:FlowPanel>
 				<g:FlowPanel addStyleNames="{style.topDecorator}">
 					<g:HorizontalPanel>
-						<ge:StringEntityModelTextBoxEditor ui:field="nameEditor" width="299px"/>
+						<ge:StringEntityModelTextBoxEditor ui:field="nameEditor" width="300px"/>
 						<ge:StringEntityModelTextBoxEditor ui:field="descriptionEditor" />
 					</g:HorizontalPanel>
 					<g:HorizontalPanel>
@@ -70,7 +70,7 @@
 					<f:Slider ui:field="clusterThresholdSlider" />
 					<g:SimplePanel addStyleNames="{style.gerySplitPanel}"/>
 					<f:Slider ui:field="clusterGraceSlider" />
-					<g:VerticalPanel addStyleNames="{style.marginLeft}"> 
+					<g:VerticalPanel addStyleNames="{style.marginLeft}">
 						<g:HorizontalPanel>
 							<g:SimplePanel addStyleNames="{style.thresholdLabel}"/>
 							<g:Label ui:field="clusterThresholdLabel"/>
@@ -91,7 +91,7 @@
 					<f:Slider ui:field="storageThresholdSlider" />
 					<g:SimplePanel addStyleNames="{style.gerySplitPanel}"/>
 					<f:Slider ui:field="storageGraceSlider" />
-					<g:VerticalPanel addStyleNames="{style.marginLeft}"> 
+					<g:VerticalPanel addStyleNames="{style.marginLeft}">
 						<g:HorizontalPanel>
 							<g:SimplePanel addStyleNames="{style.thresholdLabel}"/>
 							<g:Label ui:field="storageThresholdLabel"/>
