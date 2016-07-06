@@ -778,7 +778,7 @@ select fn_db_add_config_value('HostedEngineStorageDomainName','hosted_storage','
 select fn_db_add_config_value('AllowEditingHostedEngine','true','general');
 
 -- Host Device filter list
-select fn_db_add_config_value('HostDeviceBlackList','','general');
+select fn_db_add_config_value('HostDeviceBlackList','{}','general');
 select fn_db_add_config_value('HostDeviceWhiteList','{"name":"(ether)|(radeon)","vendor":"(ether)|(radeon)","product":"(a727)|(0cf3)|(1186)|(10ec)|(10de)|(ether)|(radeon)|(network)"}','general');
 
 select fn_db_add_config_value_for_versions_up_to('ChangeNetworkUnderBridgeInUseSupported','false','3.5');
