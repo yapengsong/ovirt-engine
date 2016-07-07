@@ -25,3 +25,9 @@ This class allows you to change the error icon on the guide popup window. */
     left: -7px;
     border: 0px;
 }
+
+/* AbstractSubTabTreeView.ui.xml
+This class's sub-class SubTabTemplateDiskView. */
+.template-disk-tree-container {
+	top: 75px !important;
+}
