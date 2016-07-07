@@ -3,6 +3,7 @@ package org.ovirt.engine.ui.common.view;
 import java.util.Arrays;
 import java.util.List;
 
+import org.gwtbootstrap3.client.ui.Heading;
 import org.gwtbootstrap3.client.ui.ListBox;
 import org.gwtbootstrap3.client.ui.ModalHeader;
 import org.gwtbootstrap3.client.ui.constants.ColumnOffset;
@@ -59,6 +60,9 @@ public abstract class AbstractLoginFormView extends AbstractView {
 
     @UiField
     public ModalHeader modalHeader;
+
+    @UiField
+    public Heading loginText;
 
     @UiField(provided = true)
     @Ignore

@@ -111,6 +111,7 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
     }
 
     void localize() {
+        loginText.setText(constants.loginTextLabel());
         userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
         passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
         connectAutomaticallyEditor.setLabel(constants.loginFormConnectAutomaticallyLabel());

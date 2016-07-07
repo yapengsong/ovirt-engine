@@ -4,19 +4,22 @@ import org.ovirt.engine.ui.common.CommonApplicationConstants;
 
 public interface ApplicationConstants extends CommonApplicationConstants {
 
-    @DefaultStringValue("oVirt Engine User Portal")
+    @DefaultStringValue("EayunOS User Portal")
     String applicationTitle();
 
     @DefaultStringValue("About")
     String aboutPopupCaption();
 
-    @DefaultStringValue("oVirt Engine Version:")
+    @DefaultStringValue("EayunOS Version:")
     String ovirtVersionAbout();
 
     @DefaultStringValue("")
     String copyRightNotice();
 
     // Login section
+
+    @DefaultStringValue("Login")
+    String loginTextLabel();
 
     @DefaultStringValue("User Name")
     String loginFormUserNameLabel();
