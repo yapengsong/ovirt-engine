@@ -60,7 +60,7 @@
 							<b:FormGroup>
 								<b:Row>
 									<b:Column size="XS_6" >
-										<b:Heading size="H2" addStyleNames="login-word"  text="Login" />
+										<b:Heading size="H2" ui:field="loginText" addStyleNames="login-word" />
 									</b:Column>
 									<b:Column size="XS_6" >
 										<b:ListBox ui:field="localeBox" addStyleNames="login-localebox"/>

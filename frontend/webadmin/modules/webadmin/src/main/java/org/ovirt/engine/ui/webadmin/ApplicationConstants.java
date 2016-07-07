@@ -4,13 +4,13 @@ import org.ovirt.engine.ui.common.CommonApplicationConstants;
 
 public interface ApplicationConstants extends CommonApplicationConstants {
 
-    @DefaultStringValue("oVirt Engine Web Administration")
+    @DefaultStringValue("EayunOS Web Administration")
     String applicationTitle();
 
     @DefaultStringValue("About")
     String aboutPopupCaption();
 
-    @DefaultStringValue("oVirt Engine Version:")
+    @DefaultStringValue("EayunOS Version:")
     String ovirtVersionAbout();
 
     // Widgets
@@ -19,6 +19,9 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     String actionTableRefreshPageButtonLabel();
 
     // Login section
+
+    @DefaultStringValue("Login")
+    String loginTextLabel();
 
     @DefaultStringValue("User Name")
     String loginFormUserNameLabel();
