@@ -120,6 +120,7 @@ public class UserPortalLoginModel extends LoginModel {
         getPassword().setIsChangeable(false);
         getProfile().setIsChangeable(false);
         getLoginCommand().setIsExecutionAllowed(false);
+        getBackCommand().setIsExecutionAllowed(false);
         getIsAutoConnect().setIsChangeable(false);
 
         AsyncQuery asyncQuery = new AsyncQuery();
@@ -142,6 +143,7 @@ public class UserPortalLoginModel extends LoginModel {
                     loginModel.getPassword().setIsChangeable(true);
                     loginModel.getProfile().setIsChangeable(true);
                     loginModel.getLoginCommand().setIsExecutionAllowed(true);
+                    loginModel.getBackCommand().setIsExecutionAllowed(true);
                     getIsAutoConnect().setIsChangeable(true);
                     loginModel.getLoginFailedEvent().raise(this, EventArgs.EMPTY);
                 }
