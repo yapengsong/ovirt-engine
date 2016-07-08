@@ -701,12 +701,12 @@ select fn_db_add_config_value('MaxPeakNetworkQoSValue','2048','general');
 select fn_db_add_config_value('MaxBurstNetworkQoSValue','10240','general');
 select fn_db_add_config_value('MaxHostNetworkQosShares', '100', 'general');
 select fn_db_add_config_value('UserMessageOfTheDay','','general');
-select fn_db_add_config_value('QoSInboundAverageDefaultValue','10','general');
-select fn_db_add_config_value('QoSInboundPeakDefaultValue','10','general');
-select fn_db_add_config_value('QoSInboundBurstDefaultValue','100','general');
-select fn_db_add_config_value('QoSOutboundAverageDefaultValue','10','general');
-select fn_db_add_config_value('QoSOutboundPeakDefaultValue','10','general');
-select fn_db_add_config_value('QoSOutboundBurstDefaultValue','100','general');
+select fn_db_add_config_value('QoSInboundAverageDefaultValue','100','general');
+select fn_db_add_config_value('QoSInboundPeakDefaultValue','200','general');
+select fn_db_add_config_value('QoSInboundBurstDefaultValue','20','general');
+select fn_db_add_config_value('QoSOutboundAverageDefaultValue','100','general');
+select fn_db_add_config_value('QoSOutboundPeakDefaultValue','200','general');
+select fn_db_add_config_value('QoSOutboundBurstDefaultValue','20','general');
 
 -- single qxl pci
 select fn_db_add_config_value_for_versions_up_to('SingleQxlPciEnabled','false','3.2');
