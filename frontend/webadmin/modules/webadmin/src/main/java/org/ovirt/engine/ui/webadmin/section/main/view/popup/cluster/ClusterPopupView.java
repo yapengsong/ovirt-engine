@@ -495,6 +495,8 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
         additionalFeaturesExpanderContent.setStyleName(style.additionalFeaturesExpanderContent());
         ksmPolicyForNumaEditor.addContentWidgetContainerStyleName(style.overrideRadioButtonPanelWidth());
         ksmPolicyForNumaEditor.addLabelStyleName(style.overideRadioButtonLabel());
+
+        hostsWithBrokenConnectivityThresholdEditor.getContentWidgetContainer().getWidget().removeStyleName("form-control");//$NON-NLS-1$
     }
 
     private void localize() {

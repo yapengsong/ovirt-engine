@@ -1717,15 +1717,15 @@ public enum ConfigValues {
     MaxHostNetworkQosShares,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("10")
+    @DefaultValueAttribute("100")
     QoSInboundAverageDefaultValue,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("10")
+    @DefaultValueAttribute("200")
     QoSInboundPeakDefaultValue,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("100")
+    @DefaultValueAttribute("20")
     QoSInboundBurstDefaultValue,
 
     @TypeConverterAttribute(Boolean.class)
@@ -1741,15 +1741,15 @@ public enum ConfigValues {
     IterationsWithBalloonProblem,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("10")
+    @DefaultValueAttribute("100")
     QoSOutboundAverageDefaultValue,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("10")
+    @DefaultValueAttribute("200")
     QoSOutboundPeakDefaultValue,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("100")
+    @DefaultValueAttribute("20")
     QoSOutboundBurstDefaultValue,
 
     @TypeConverterAttribute(Boolean.class)

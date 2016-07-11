@@ -182,7 +182,7 @@ public class NetworkQosWidget extends AbstractModelBoundPopupWidget<BaseNetworkQ
     }
 
     protected int calcBoundBurst(int boundAverage){
-        return boundAverage * 10;
+        return boundAverage / 5;
     }
 
 }
