@@ -384,7 +384,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("To allow editing the network parameters, <b>detach all Clusters</b> and <b>click Apply</b>")
     String dataCenterNetworkPopupSubLabel();
 
-    @DefaultStringValue("Attach/Detach Network to/from Cluster(s)")
+    @DefaultStringValue("Attached network to the cluster /Separation network from Cluster(s)")
     String networkPopupAssignLabel();
 
     @DefaultStringValue("Attach All")
