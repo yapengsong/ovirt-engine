@@ -45,6 +45,7 @@ import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.EventArgs;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -452,10 +453,6 @@ public class VmDiskPopupWidget extends AbstractModelBoundPopupWidget<AbstractDis
                 }
             }
         });
-        if (!disk.isEditEnabled()) {
-            disableWidget(getWidget());
-            disableWidget(diskTypePanel);
-        }
 
         revealStorageView(disk);
         revealDiskPanel(disk);
