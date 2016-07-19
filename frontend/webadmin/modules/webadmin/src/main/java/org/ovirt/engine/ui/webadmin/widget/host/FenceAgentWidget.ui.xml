@@ -39,15 +39,20 @@
             line-height: 16px;
         }
 
-        .bold {
+        .orderLabel {
             font-weight: bolder;
             background-color: transparent !important;
+            border: none;
+            width: 15px;
         }
 
         .fakeAnchor {
             color: #0099d3;
             text-decoration: underline;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .highlightRow {
@@ -64,7 +69,7 @@
         <b:Column size="LG_1">
           <b:Row>
             <b:Column size="LG_6" addStyleNames="{style.editColumn}">
-              <ge:IntegerEntityModelLabel ui:field="orderLabel" addStyleNames="{style.bold}"/>
+              <ge:IntegerEntityModelLabel ui:field="orderLabel" addStyleNames="{style.orderLabel}"/>
             </b:Column>
             <b:Column size="LG_6" addStyleNames="{style.editColumn}">
               <g:PushButton ui:field="editFenceAgent" addStyleNames="{style.button}">

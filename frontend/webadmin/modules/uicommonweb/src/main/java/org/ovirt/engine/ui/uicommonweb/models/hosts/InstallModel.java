@@ -115,7 +115,7 @@ public class InstallModel extends Model {
         return getNetworkProviderModel().getInterfaceMappings();
     }
 
-    public EntityModel<?> getlocalIP() {
+    public EntityModel<?> getLocalIP() {
         return getNetworkProviderModel().getLocalIP();
     }
 

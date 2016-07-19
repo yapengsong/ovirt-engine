@@ -37,6 +37,9 @@
             color: #0099d3;
             text-decoration: underline;
             cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .separator {

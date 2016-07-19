@@ -136,6 +136,7 @@ public class UpdateVdsCommand<T extends UpdateVdsActionParameters>  extends VdsC
                     .isRebootAfterInstallation());
             tempVar.setNetworkProviderId(getParameters().getVdsStaticData().getOpenstackNetworkProviderId());
             tempVar.setNetworkMappings(getParameters().getNetworkMappings());
+            tempVar.setLocalIP(getParameters().getLocalIP());
             tempVar.setAuthMethod(getParameters().getAuthMethod());
             ArrayList<VdcReturnValueBase> resultList = runInternalMultipleActions(
                     actionType,

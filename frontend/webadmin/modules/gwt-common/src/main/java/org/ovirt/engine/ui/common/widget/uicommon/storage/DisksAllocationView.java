@@ -18,6 +18,7 @@ import org.ovirt.engine.ui.uicommonweb.models.vms.DiskModel;
 import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -143,6 +144,7 @@ public class DisksAllocationView extends Composite implements HasEditorDriver<Di
             disksAllocationItemView.setElementId(
                     ElementIdUtils.createElementId(elementId, "disk" + (diskIndex++))); //$NON-NLS-1$
             diskListPanel.add(disksAllocationItemView);
+            disksAllocationItemView.diskSizeLabel.asValueBox().setEnabled(model.getIsSizeChangable());
         }
     }
 
