@@ -527,7 +527,7 @@ public abstract class HostModel extends Model implements HasValidatedTabs {
         return getNetworkProviderModel().getInterfaceMappings();
     }
 
-    public EntityModel<String> getlocalIP() {
+    public EntityModel<String> getLocalIP() {
         return getNetworkProviderModel().getLocalIP();
     }
 

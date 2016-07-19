@@ -937,7 +937,7 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
             if (networkProvider != null) {
                 parameters.getVdsStaticData().setOpenstackNetworkProviderId(networkProvider.getId());
                 parameters.setNetworkMappings(model.getInterfaceMappings().getEntity());
-                parameters.setLocalIP(model.getlocalIP().getEntity());
+                parameters.setLocalIP(model.getLocalIP().getEntity());
             }
 
             if (model.getProviders().getSelectedItem() != null) {
@@ -1350,7 +1350,7 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
         if (networkProvider != null) {
             param.getVdsStaticData().setOpenstackNetworkProviderId(networkProvider.getId());
             param.setNetworkMappings((String) model.getInterfaceMappings().getEntity());
-            param.setLocalIP((String) model.getlocalIP().getEntity());
+            param.setLocalIP((String) model.getLocalIP().getEntity());
         }
 
         AsyncDataProvider.getInstance().getClusterById(new AsyncQuery(param, new INewAsyncCallback() {
