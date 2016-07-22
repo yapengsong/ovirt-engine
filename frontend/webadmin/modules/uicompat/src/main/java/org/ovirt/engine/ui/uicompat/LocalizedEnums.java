@@ -1185,4 +1185,6 @@ public interface LocalizedEnums extends ConstantsWithLookup {
     String SerialNumberPolicy___CUSTOM();
 
     String ArchitectureType___undefined();
+
+    String DiskStorageType___IMAGE();
 }

@@ -302,8 +302,6 @@ public interface Enums extends LocalizedEnums {
 
     String DiskStorageType___LUN();
 
-    String DiskStorageType___IMAGE();
-
     String DiskStorageType___CINDER();
 
     String RoleType___ADMIN();

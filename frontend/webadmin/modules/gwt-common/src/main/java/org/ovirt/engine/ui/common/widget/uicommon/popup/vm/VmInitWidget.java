@@ -29,6 +29,7 @@ import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.EventArgs;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -76,6 +77,8 @@ public abstract class VmInitWidget extends AbstractModelBoundPopupWidget<VmInitM
 
     interface Style extends CssResource {
         String displayNone();
+
+        String authorizeTextarea();
     }
 
     private final BasicStyle customizableStyle;
@@ -544,6 +547,7 @@ public abstract class VmInitWidget extends AbstractModelBoundPopupWidget<VmInitM
         sysprepAdminPasswordEditor.addStyleName(customizableStyle.primaryOption());
         sysprepAdminPasswordVerificationEditor.addStyleName(customizableStyle.primaryOption());
         authorizedKeysEditor.addStyleName(customizableStyle.primaryOption());
+        authorizedKeysEditor.asValueBox().addStyleName(style.authorizeTextarea());
         cloudInitPasswordSetEditor.addStyleName(customizableStyle.primaryOption());
         sysprepPasswordSetEditor.addStyleName(customizableStyle.primaryOption());
         regenerateKeysEnabledEditor.addStyleName(customizableStyle.primaryOption());
