@@ -1001,7 +1001,7 @@ public abstract class VmModelBehaviorBase<TModel extends UnitVmModel> {
                     || (pinToHostSize == 0 && presentHosts.size() < 2))
                 && (!isAutoAssign || presentHosts.size() < 2)
                 && !isHighlyAvailable) {
-            getModel().getIsHighlyAvailable().setChangeProhibitionReason(constants.hostNonMigratable());
+            getModel().getIsHighlyAvailable().setChangeProhibitionReason(constants.vmNonMigratable());
             getModel().getIsHighlyAvailable().setEntity(false);
             isHighlyAvailable = false;
         }

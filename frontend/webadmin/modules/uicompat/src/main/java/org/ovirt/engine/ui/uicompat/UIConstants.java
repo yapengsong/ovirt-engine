@@ -2437,8 +2437,8 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Changing Host Clusters is taking longer than expected, please close the 'Guide Me' window and activate hosts via the Hosts tab")
     String hostChangeClusterTimeOut();
 
-    @DefaultStringValue("Host cannot be set highly available when 'Do not allow migration' is selected and pinning to a single hosts is requested.")
-    String hostNonMigratable();
+    @DefaultStringValue("VM cannot be set highly available when 'Do not allow migration' is selected and pinning to a single hosts is requested.")
+    String vmNonMigratable();
 
     @DefaultStringValue("VM cannot be set highly available when hosted engine is used.")
     String noHaWhenHostedEngineUsed();
