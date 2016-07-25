@@ -143,7 +143,8 @@ public interface CommonApplicationMessages extends Messages {
     String migrationSelectInfo();
 
     @DefaultMessage("Hot add CPUs by changing the number of sockets." +
-            " Please consult documentation for your guest operating system to ensure it has proper support for CPU Hot Add")
+            " Please consult documentation for your guest operating system to ensure it has proper support for CPU Hot Add." + 
+    		   " Attention:Hot un-plugging a CPU is not supported for cluster version EayunOS 4.2 and below version.")
     String hotPlugUnplugCpuWarning();
 
     @DefaultMessage("Set simultaneous multithreading.\n" +
