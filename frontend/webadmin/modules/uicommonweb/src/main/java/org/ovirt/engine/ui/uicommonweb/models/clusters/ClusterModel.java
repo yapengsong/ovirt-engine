@@ -24,7 +24,6 @@ import org.ovirt.engine.core.common.businessentities.network.Network;
 import org.ovirt.engine.core.common.mode.ApplicationMode;
 import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.core.common.queries.IdAndNameQueryParameters;
-import org.ovirt.engine.core.common.queries.IdQueryParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryParametersBase;
 import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
@@ -52,7 +51,6 @@ import org.ovirt.engine.ui.uicommonweb.models.TabName;
 import org.ovirt.engine.ui.uicommonweb.models.ValidationCompleteEvent;
 import org.ovirt.engine.ui.uicommonweb.models.vms.SerialNumberPolicyModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.key_value.KeyValueModel;
-import org.ovirt.engine.ui.uicommonweb.validation.ClusterVersionChangeValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.HostWithProtocolAndPortAddressValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.I18NNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
@@ -607,8 +605,6 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
     public void setSpiceProxyEnabled(EntityModel<Boolean> spiceProxyEnabled) {
         this.spiceProxyEnabled = spiceProxyEnabled;
     }
-
-    private boolean hasActiveVm = false;
 
     private MigrateOnErrorOptions migrateOnErrorOption = MigrateOnErrorOptions.values()[0];
 
@@ -1211,18 +1207,7 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
 
         setVersion(new ListModel<Version>());
         getVersion().getSelectedItemChangedEvent().addListener(this);
-        if (isEdit) {
-            Guid clusterId = getEntity().getId();
-            Frontend.getInstance().runQuery(VdcQueryType.GetNumberOfActiveVmsInVdsGroupByVdsGroupId, new IdQueryParameters(clusterId),
-                    new AsyncQuery(new INewAsyncCallback() {
-                        @Override
-                        public void onSuccess(Object model, Object returnValue) {
-                            Integer numOfActiveVms = ((VdcQueryReturnValue)returnValue).getReturnValue();
-                            hasActiveVm = numOfActiveVms != 0;
-                        }
-                    }));
 
-        }
         setMigrateOnErrorOption(MigrateOnErrorOptions.YES);
 
         getRngRandomSourceRequired().setEntity(false);
@@ -2012,10 +1997,7 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
         }
         setValidTab(TabName.CLUSTER_POLICY_TAB, getCustomPropertySheet().getIsValid());
 
-        final IValidation[] versionValidations = getIsNew()
-                ? new IValidation[] { new NotEmptyValidation() }
-                : new IValidation[] { new NotEmptyValidation(),
-                        new ClusterVersionChangeValidation(hasActiveVm, getEntity().getCompatibilityVersion()) };
+        final IValidation[] versionValidations = new IValidation[] { new NotEmptyValidation() };
         getVersion().validateSelectedItem(versionValidations);
 
         getManagementNetwork().validateSelectedItem(new IValidation[] { new NotEmptyValidation() });
