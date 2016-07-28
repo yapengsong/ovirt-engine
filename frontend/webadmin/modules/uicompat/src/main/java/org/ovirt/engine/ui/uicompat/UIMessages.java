@@ -361,7 +361,7 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
     @DefaultMessage("Are you sure you want to stop the rebalance operation on the volume : {0}?")
     String confirmStopVolumeRebalance(String name);
 
-    @DefaultMessage("The following disks cannot be moved: {0}")
+    @DefaultMessage("The following disks cannot be moved: {0}. If disks' vm is created from template via thin provisioning, make sure template's disks are copied to target storage domain.")
     String cannotMoveDisks(String disks);
 
     @DefaultMessage("The following disks cannot be copied: {0}")
