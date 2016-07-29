@@ -21,6 +21,7 @@ import org.ovirt.engine.ui.userportal.ApplicationConstants;
 import org.ovirt.engine.ui.userportal.ApplicationResources;
 import org.ovirt.engine.ui.userportal.gin.AssetProvider;
 import org.ovirt.engine.ui.userportal.uicommon.model.UserPortalDataBoundModelProvider;
+
 import com.google.gwt.cell.client.HasCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -292,8 +293,14 @@ public class VmTable extends Composite implements HasEditorDriver<ResourcesModel
             @Override
             public String getValue(EntityModel entity) {
                 ArrayList<DiskImage> diskImages = asVm(entity).getDiskList();
-                return diskImages != null ? diskImages.size() > 0 ? diskImages.get(0).getSnapshots().size()
-                        + "" : "0" : "0"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                if(diskImages != null && diskImages.size() > 0){
+                    int numOfSnapshot = 0;
+                    for(DiskImage diskImage : diskImages){
+                        numOfSnapshot += diskImage.getSnapshots().size();
+                    }
+                    return "" + numOfSnapshot;//$NON-NLS-1$
+                }
+                return "0"; //$NON-NLS-1$
             }
         };
 
