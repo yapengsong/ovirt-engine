@@ -14,6 +14,7 @@ import org.ovirt.engine.ui.uicommonweb.models.vms.UnitVmModel;
 import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.text.shared.Parser;
@@ -77,6 +78,7 @@ public class PoolEditPopupWidget extends PoolNewPopupWidget {
         incraseNumOfVmsEditor.setEnabled(true);
         editMaxAssignedVmsPerUserEditor.setEnabled(true);
 
+        spiceProxyEnabledCheckboxWithInfoIcon.setEnabled(true);
         spiceProxyEditor.setEnabled(model.getSpiceProxyEnabled().getEntity());
 
         templateWithVersionEditor.setEnabled(true);
