@@ -12,7 +12,7 @@ import com.google.gwt.regexp.shared.RegExp;
 
 public class HostDeviceFilterUtil<T extends HostDevice> {
 
-    // Whether use the list filter, the default is false : don't use
+    // Whether use the list filter
     private boolean useFilter;
     private Collection<T> origineItem;
     private Collection<T> itemAfterFilter;
@@ -22,18 +22,15 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
     private Map<String, String> whiteList;
 
     public HostDeviceFilterUtil(){
-        initKeys();
-        initFilterList();
+        initMapAndKeys();
+        initItemAfterFilter();
     }
 
-    private void initKeys(){
+    private void initMapAndKeys(){
         keys = new String[3];
         keys[0] = "name";//$NON-NLS-1$
         keys[1] = "vendor";//$NON-NLS-1$
         keys[2] = "product";//$NON-NLS-1$
-    }
-
-    private void initFilterList(){
         blackList = (Map<String, String>) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.HostDeviceBlackList);
         whiteList = (Map<String, String>) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.HostDeviceWhiteList);
     }
@@ -41,9 +38,7 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
     public Collection<T> execFilterOrNot(boolean useFilter) {
         setUseFilter(useFilter);
         if (isUseFilter()) {
-            if (itemAfterFilter == null) {
-                initItemAfterFilter();
-            }
+            initItemAfterFilter();
             return itemAfterFilter;
         }
         return origineItem;
@@ -55,17 +50,37 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
         itemAfterFilter = new ArrayList<T>();
         if (origineItem != null) {
             for (T item : origineItem) {
-                if (rowMatcher(item, whiteList, keys)) {
-                    itemAfterFilter.add(item);
-                } else if (!rowMatcher(item, blackList, keys)) {
-                    itemAfterFilter.add(item);
+                if((whiteList != null) && !whiteList.isEmpty()){ //白不空
+                    if(rowMatch(item, whiteList, keys)) { //白匹配
+                        itemAfterFilter.add(item);
+                    } else { // 白不匹配
+                        if(blackList != null && !blackList.isEmpty()){ //黑不空
+                            if(rowMatch(item, blackList, keys)){ //黑匹配
+
+                            } else { //黑不匹配
+                                itemAfterFilter.add(item);
+                            }
+                        } else { //黑为空
+
+                        }
+                    }
+                } else { //白为空
+                    if(blackList != null && !blackList.isEmpty()){ //黑不空
+                        if(rowMatch(item, blackList, keys)){ //黑匹配
+
+                        } else { //黑不匹配
+                            itemAfterFilter.add(item);
+                        }
+                    } else { //黑为空
+                        itemAfterFilter.add(item);
+                    }
                 }
             }
         }
 
     }
 
-    private boolean rowMatcher(T item, Map<String, String> filterList, String[] keys) {
+    private boolean rowMatch(T item, Map<String, String> filterList, String[] keys) {
         if (filterList != null) {
             boolean nameMatch = cellPattern(item.getName(), getValueFromFilterList(filterList, keys[0]));
             boolean vendorMatch = cellPattern(item.getVendorName(), getValueFromFilterList(filterList, keys[1]));

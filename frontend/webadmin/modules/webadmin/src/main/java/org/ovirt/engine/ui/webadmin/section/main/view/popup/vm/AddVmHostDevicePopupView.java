@@ -14,7 +14,6 @@ import org.ovirt.engine.ui.common.widget.table.column.AbstractTextColumn;
 import org.ovirt.engine.ui.common.widget.uicommon.hosts.HostDeviceFilterView;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.SortedListModel;
-import org.ovirt.engine.ui.uicommonweb.models.hosts.HostDeviceFilterUtil;
 import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.AddVmHostDevicesModel;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
@@ -40,8 +39,6 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
     }
 
     private final Driver driver;
-
-    private HostDeviceFilterUtil<HostDeviceView> filter;
 
     @UiField(provided = true)
     @Path("pinnedHost.selectedItem")
@@ -87,8 +84,6 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
         hostDeviceFilter = new HostDeviceFilterView();
         hostDeviceFilter.removeEditButton(); //remove edit-button, later will add this function
         hostDeviceFilter.getFilterCheckBox().setValue(true);
-        filter = new HostDeviceFilterUtil<HostDeviceView>();
-        filter.setUseFilter(hostDeviceFilter.getFilterCheckBox().getValue());
 
         splitTable = new HorizontalSplitTable<>(availableHostDevices,
                 selectedHostDevices,
