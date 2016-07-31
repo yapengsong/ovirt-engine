@@ -18,6 +18,7 @@ public abstract class HostDeviceListModelBase<E> extends SearchableListModel<E, 
 
     public HostDeviceListModelBase(){
         setFilter(new HostDeviceFilterUtil<HostDeviceView>());
+        filter.setUseFilter(true);
     }
 
     @Override
@@ -47,6 +48,7 @@ public abstract class HostDeviceListModelBase<E> extends SearchableListModel<E, 
             @Override
             public void onSuccess(Object model, Object ReturnValue) {
                 filter.setOrigineItem(((Collection<HostDeviceView>) ((VdcQueryReturnValue) ReturnValue).getReturnValue()));
+                filter.initItemAfterFilter();
                 execFilterOrNot(filter.isUseFilter());
             }
         };

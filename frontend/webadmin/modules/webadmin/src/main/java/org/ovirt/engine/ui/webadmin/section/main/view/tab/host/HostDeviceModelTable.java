@@ -17,7 +17,6 @@ public class HostDeviceModelTable extends HostDeviceModelBaseTable<HostDeviceLis
             EventBus eventBus, ClientStorage clientStorage) {
         super(modelProvider, eventBus, clientStorage);
         initFilterPanel(modelProvider);
-        modelProvider.getModel().getFilter().setUseFilter(filterPanel.getFilterCheckBox().getValue());
     }
 
     private void initFilterPanel(SearchableTableModelProvider<HostDeviceView, HostDeviceListModel> modelProvider) {
