@@ -3717,6 +3717,10 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. Affinity Group name already exists.")
     String ACTION_TYPE_FAILED_AFFINITY_GROUP_NAME_EXISTS();
 
+    // 不可以创建重复内容的 affinity
+    @DefaultStringValue("Cannot create Affinity Group whose content is the same as others.")
+    String ACTION_TYPE_FAILED_AFFINITY_GROUP_CONTENT_REPETITION();
+
     @DefaultStringValue("VM is associated with a positive Affinity Group (${affinityGroupName}) and require to run on the same Host (${hostName}) as the other group VMs")
     String ACTION_TYPE_FAILED_POSITIVE_AFFINITY_GROUP();
 
