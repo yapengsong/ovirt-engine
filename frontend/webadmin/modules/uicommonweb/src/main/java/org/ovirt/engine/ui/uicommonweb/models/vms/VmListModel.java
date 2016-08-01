@@ -469,6 +469,8 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
                 }), null, null, null);
     }
 
+    private int indexOfVmSnapshotListModel;
+
     private void setDetailList(final VmGeneralModel vmGeneralModel, final VmInterfaceListModel vmInterfaceListModel,
             final VmDiskListModel vmDiskListModel, final VmSnapshotListModel vmSnapshotListModel,
             final VmEventListModel vmEventListModel, final VmAppListModel<VM> vmAppListModel,
@@ -481,6 +483,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         vmDiskListModel.setSystemTreeContext(this);
         list.add(vmDiskListModel);
         list.add(vmSnapshotListModel);
+        indexOfVmSnapshotListModel = list.indexOf(vmSnapshotListModel);
         list.add(vmEventListModel);
         list.add(vmAppListModel);
         list.add(vmDevicesListModel);
@@ -1996,6 +1999,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.ExportVm));
         getCreateSnapshotCommand().setIsExecutionAllowed(singleVmSelected
                 && !getSelectedItem().isStateless()
+                && (indexOfVmSnapshotListModel == -1) ? true : ((VmSnapshotListModel)getDetailModels().get(indexOfVmSnapshotListModel)).getNewCommand().getIsExecutionAllowed()
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.CreateAllSnapshotsFromVm));
         getRetrieveIsoImagesCommand().setIsExecutionAllowed(singleVmSelected
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.ChangeDisk));
