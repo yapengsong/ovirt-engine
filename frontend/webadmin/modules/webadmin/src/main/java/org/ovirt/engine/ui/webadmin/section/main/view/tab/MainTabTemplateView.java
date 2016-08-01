@@ -59,9 +59,9 @@ public class MainTabTemplateView extends AbstractMainTabWithDetailsTableView<VmT
                     return ""; //$NON-NLS-1$
                 }
 
-                return StringFormat.format("%s (%s)", //$NON-NLS-1$
-                        object.getTemplateVersionName() != null ? object.getTemplateVersionName() : "", //$NON-NLS-1$
-                        object.getTemplateVersionNumber());
+                return StringFormat.format("%s", //$NON-NLS-1$
+                        object.getTemplateVersionName() != null ? object.getTemplateVersionName() : "" //$NON-NLS-1$
+                        );
             }
         };
         versionNameColumn.makeSortable(VmTemplateConditionFieldAutoCompleter.VERSION_NAME);
