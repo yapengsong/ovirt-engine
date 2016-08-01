@@ -424,7 +424,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Remove Network Interface(s)")
     String removeNetworkInterfacesTitle();
 
-    @DefaultStringValue("Remove VM Interface Profile(s)")
+    @DefaultStringValue("Remove vNIC Profile(s)")
     String removeVnicProfileTitle();
 
     @DefaultStringValue("Copy Template")
@@ -608,7 +608,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("You must select a provider")
     String validateSelectExternalProvider();
 
-    @DefaultStringValue("VNIC Profiles")
+    @DefaultStringValue("vNIC Profiles")
     String vnicProfilesTitle();
 
     @DefaultStringValue("New External Subnet")
@@ -2541,7 +2541,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Content must be Base64")
     String cloudInitBase64Message();
 
-    @DefaultStringValue("VM Interface Profile")
+    @DefaultStringValue("vNIC Profile")
     String vnicProfileTitle();
 
     @DefaultStringValue("Cannot edit name in tree context")
