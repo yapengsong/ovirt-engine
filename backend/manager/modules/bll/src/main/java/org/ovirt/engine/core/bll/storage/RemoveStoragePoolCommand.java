@@ -84,7 +84,6 @@ public class RemoveStoragePoolCommand<T extends StoragePoolParametersBase> exten
         }
 
         getMacPool().freeMacs(macsToRemove);
-        getDbFacade().getMacPoolDao().remove(getStoragePool().getMacPoolId());
         removeDataCenter();
 
         setSucceeded(true);
@@ -97,6 +96,7 @@ public class RemoveStoragePoolCommand<T extends StoragePoolParametersBase> exten
             public Void runInTransaction() {
                 getCompensationContext().snapshotEntity(getStoragePool());
                 getStoragePoolDao().remove(getStoragePool().getId());
+                getDbFacade().getMacPoolDao().remove(getStoragePool().getMacPoolId());
                 getCompensationContext().stateChanged();
 
                 return null;
