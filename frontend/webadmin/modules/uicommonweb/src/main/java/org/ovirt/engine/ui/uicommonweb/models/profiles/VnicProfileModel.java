@@ -31,6 +31,7 @@ import org.ovirt.engine.ui.uicommonweb.models.datacenters.NetworkQoSModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.key_value.KeyValueModel;
 import org.ovirt.engine.ui.uicommonweb.validation.AsciiNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.Event;
@@ -335,7 +336,7 @@ public abstract class VnicProfileModel extends Model {
     }
 
     public boolean validate() {
-        getName().validateEntity(new IValidation[] { new NotEmptyValidation(), new AsciiNameValidation() });
+        getName().validateEntity(new IValidation[] { new NotEmptyValidation(), new LengthValidation(40), new AsciiNameValidation() });
 
         return getName().getIsValid() && getCustomPropertySheet().validate();
     }
