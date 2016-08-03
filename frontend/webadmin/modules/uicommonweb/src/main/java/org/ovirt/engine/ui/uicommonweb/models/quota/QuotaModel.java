@@ -9,6 +9,7 @@ import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.ui.uicommonweb.UICommand;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.ListModel;
+import org.ovirt.engine.ui.uicommonweb.validation.I18NNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IntegerValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
@@ -379,7 +380,10 @@ public class QuotaModel extends EntityModel<Quota> {
         lenValidation.setMaxLength(60);
         getName().setIsValid(true);
         getName().validateEntity(new IValidation[] { new NotEmptyValidation(), lenValidation });
-
+        getDescription().validateEntity(new IValidation[] {
+                new NotEmptyValidation(),
+                new LengthValidation(250),
+                new I18NNameValidation() });
         IValidation[] graceValidationArr =
                 new IValidation[] { new NotEmptyValidation(), new IntegerValidation(0, Integer.MAX_VALUE) };
 
