@@ -259,6 +259,7 @@ public class ImportVmsModel extends ListWithSimpleDetailsModel {
                    };
                    AsyncDataProvider.getInstance().getStorageConnectionById(_asyncQuery, exportDomain.getStorage(), true);
                }
+               validateSource();
             }
         };
     }
@@ -399,7 +400,6 @@ public class ImportVmsModel extends ListWithSimpleDetailsModel {
             }
         });
         importSources.setSelectedItem(ImportSource.EXPORT_DOMAIN);
-        validateSource();
     }
 
     private void validateSource() {

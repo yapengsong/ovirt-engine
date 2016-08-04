@@ -62,8 +62,12 @@ public class ImportVmsPopupPresenterWidget extends AbstractModelBoundPopupPresen
     }
 
     private void updateExportDomainLoadButtonEnabledState() {
-        final boolean enabled = getModel().getExportDomain() != null
-                && getModel().getDataCenters().getIsChangable();
-        getView().getLoadVmsFromExportDomainButton().setEnabled(enabled);
+        getModel().getProblemDescription().getEntityChangedEvent().addListener(new IEventListener<EventArgs>() {
+            @Override
+            public void eventRaised(org.ovirt.engine.ui.uicompat.Event<? extends EventArgs> ev, Object object, EventArgs args) {
+                final boolean enabled = getModel().getExportDomain() != null && getModel().getDataCenters().getIsChangable();
+                getView().getLoadVmsFromExportDomainButton().setEnabled(enabled);
+            }
+        });
     }
 }
