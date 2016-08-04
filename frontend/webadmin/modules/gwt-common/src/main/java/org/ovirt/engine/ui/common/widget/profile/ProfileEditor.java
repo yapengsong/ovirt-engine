@@ -29,7 +29,7 @@ public class ProfileEditor extends ListModelTypeAheadListBoxEditor<VnicProfileVi
                                     messages.emptyProfileDescription().asString()).asString();
                         }
 
-                        String profileDescription = profile.getDescription();
+                        String profileDescription = profile.getDescription().length() > 80 ?  profile.getDescription().substring(0, 51) + "..." : profile.getDescription();
                         String profileAndNetwork =
                                 messages.profileAndNetwork(profile.getName(), profile.getNetworkName()).asString();
 
