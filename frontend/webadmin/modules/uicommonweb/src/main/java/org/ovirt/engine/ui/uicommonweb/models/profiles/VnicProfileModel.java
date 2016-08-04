@@ -337,7 +337,7 @@ public abstract class VnicProfileModel extends Model {
 
     public boolean validate() {
         getName().validateEntity(new IValidation[] { new NotEmptyValidation(), new LengthValidation(40), new AsciiNameValidation() });
-
+        getDescription().validateEntity(new IValidation[] { new LengthValidation(200) });
         return getName().getIsValid() && getCustomPropertySheet().validate();
     }
 
