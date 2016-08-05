@@ -27,6 +27,9 @@ public enum ConfigValues {
     @TypeConverterAttribute(String.class)
     @DefaultValueAttribute("EXAMPLE.COM")
     DomainName,
+    @TypeConverterAttribute(String.class)
+    @DefaultValueAttribute("BaseVersion")
+    EayunOSVersion,
 
     /**
      * Timeout in seconds for the completion of calls to VDSM. It should

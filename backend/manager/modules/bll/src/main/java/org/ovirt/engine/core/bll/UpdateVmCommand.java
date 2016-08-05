@@ -72,6 +72,8 @@ import org.ovirt.engine.core.common.businessentities.network.Network;
 import org.ovirt.engine.core.common.businessentities.network.VmNic;
 import org.ovirt.engine.core.common.businessentities.storage.Disk;
 import org.ovirt.engine.core.common.businessentities.storage.DiskImage;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineError;
 import org.ovirt.engine.core.common.errors.EngineException;
 import org.ovirt.engine.core.common.errors.EngineMessage;
@@ -733,6 +735,8 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_VM_FROM_POOL_CANNOT_BE_STATELESS);
         }
 
+        String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
+
         int numOfSockets = vmFromParams.getNumOfSockets();
 
         int cpuPerSocket = vmFromParams.getCpuPerSocket();
@@ -745,12 +749,26 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         String vmName = getVm().getName();
 
-        if(getVm().getStatus() == VMStatus.Up){
-            if(memSizeMb > 8192){
-                return  failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
+        if(version.equals("BaseVersion")){
+            if(getVm().getStatus() == VMStatus.Up){
+                if(memSizeMb > 8192){
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
+                }
+                if(totalCpus > 2 && !vmName.equals("HostedEngine")){
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+                }
             }
-            if(totalCpus > 2 && !vmName.equals("HostedEngine")){
-                return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+        }
+
+
+        if(version.equals("HigherVersion")){
+            if(getVm().getStatus() == VMStatus.Up){
+                if(memSizeMb > 16384){
+                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
+                }
+                if(totalCpus > 8 && !vmName.equals("HostedEngine")){
+                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
+                }
             }
         }
 

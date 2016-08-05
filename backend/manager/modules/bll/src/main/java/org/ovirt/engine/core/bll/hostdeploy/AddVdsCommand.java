@@ -328,8 +328,19 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
 
         List<VDS> hosts = getVdsDao().getAll();
 
-        if(hosts.size() >= 1){
-            return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
+        String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
+
+        if(version.equals("BaseVersion")){
+            if(hosts.size() > 3){
+                return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
+            }
+        }
+
+
+        if(version.equals("HigherVersion")){
+            if(hosts.size() > 32){
+                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_HOST);
+            }
         }
 
         if (returnValue) {
