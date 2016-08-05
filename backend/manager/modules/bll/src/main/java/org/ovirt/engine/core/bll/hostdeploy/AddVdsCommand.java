@@ -325,6 +325,13 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
         params.setVdsForUniqueId(null);
         // Check if this is a valid cluster
         boolean returnValue = validateVdsGroup();
+
+        List<VDS> hosts = getVdsDao().getAll();
+
+        if(hosts.size() >= 1){
+            return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
+        }
+
         if (returnValue) {
             HostValidator validator = getHostValidator();
             returnValue = validate(validator.nameNotEmpty())

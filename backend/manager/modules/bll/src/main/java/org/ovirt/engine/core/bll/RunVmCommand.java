@@ -967,6 +967,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Override
     protected boolean canDoAction() {
         VM vm = getVm();
+        int totalUpVm = 0;
 
         if (vm == null) {
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_VM_NOT_FOUND);
@@ -978,6 +979,31 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         if (!canRunActionOnNonManagedVm()) {
             return false;
+        }
+
+        int cpuNums = vm.getNumOfCpus();
+
+        String vmName = getVm().getName();
+
+        int vmMemSize = vm.getVmMemSizeMb();
+
+        List<VM> vms = getVmDao().getAll();
+
+        if(cpuNums > 2 && !vmName.equals("HostedEngine")){
+            return failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+        }
+
+        if(vmMemSize > 8192){
+            return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
+        }
+
+        for (VM tmpVm : vms){
+                if (tmpVm.getStatus() == VMStatus.Up){
+                               totalUpVm++;
+                }
+                if (totalUpVm >= 8){
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
+                }
         }
 
         RunVmValidator runVmValidator = getRunVmValidator();
