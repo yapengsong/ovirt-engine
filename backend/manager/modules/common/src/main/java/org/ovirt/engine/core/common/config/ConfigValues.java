@@ -28,7 +28,7 @@ public enum ConfigValues {
     @DefaultValueAttribute("EXAMPLE.COM")
     DomainName,
     @TypeConverterAttribute(String.class)
-    @DefaultValueAttribute("BaseVersion")
+    @DefaultValueAttribute("")
     EayunOSVersion,
 
     /**
