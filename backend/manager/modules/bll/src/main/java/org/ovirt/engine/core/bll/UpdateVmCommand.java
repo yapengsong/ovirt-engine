@@ -72,6 +72,8 @@ import org.ovirt.engine.core.common.businessentities.network.Network;
 import org.ovirt.engine.core.common.businessentities.network.VmNic;
 import org.ovirt.engine.core.common.businessentities.storage.Disk;
 import org.ovirt.engine.core.common.businessentities.storage.DiskImage;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineError;
 import org.ovirt.engine.core.common.errors.EngineException;
 import org.ovirt.engine.core.common.errors.EngineMessage;
@@ -175,8 +177,11 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         // save user selected value for hotplug before overriding with db values (when updating running vm)
         int cpuPerSocket = newVmStatic.getCpuPerSocket();
+
         int numOfSockets = newVmStatic.getNumOfSockets();
+
         int threadsPerCpu = newVmStatic.getThreadsPerCpu();
+
         int memSizeMb = newVmStatic.getMemSizeMb();
 
         if (newVmStatic.getCreationDate().equals(DateTime.getMinValue())) {
@@ -728,6 +733,43 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         if (vmFromDB.getVmPoolId() != null && vmFromParams.isStateless()) {
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_VM_FROM_POOL_CANNOT_BE_STATELESS);
+        }
+
+        String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
+
+        int numOfSockets = vmFromParams.getNumOfSockets();
+
+        int cpuPerSocket = vmFromParams.getCpuPerSocket();
+
+        int threadsPerCpu = vmFromParams.getThreadsPerCpu();
+
+        int totalCpus = numOfSockets * cpuPerSocket * threadsPerCpu;
+
+        int memSizeMb = vmFromParams.getMemSizeMb();
+
+        String vmName = getVm().getName();
+
+        if(version.equals("BaseVersion")){
+            if(getVm().getStatus() == VMStatus.Up){
+                if(memSizeMb > 8192){
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
+                }
+                if(totalCpus > 2 && !vmName.equals("HostedEngine")){
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+                }
+            }
+        }
+
+
+        if(version.equals("HigherVersion")){
+            if(getVm().getStatus() == VMStatus.Up){
+                if(memSizeMb > 16384){
+                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
+                }
+                if(totalCpus > 8 && !vmName.equals("HostedEngine")){
+                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
+                }
+            }
         }
 
         if (!AddVmCommand.checkCpuSockets(vmFromParams.getNumOfSockets(),

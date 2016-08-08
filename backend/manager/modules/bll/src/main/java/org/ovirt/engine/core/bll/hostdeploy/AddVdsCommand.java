@@ -325,6 +325,24 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
         params.setVdsForUniqueId(null);
         // Check if this is a valid cluster
         boolean returnValue = validateVdsGroup();
+
+        List<VDS> hosts = getVdsDao().getAll();
+
+        String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
+
+        if(version.equals("BaseVersion")){
+            if(hosts.size() > 3){
+                return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
+            }
+        }
+
+
+        if(version.equals("HigherVersion")){
+            if(hosts.size() > 32){
+                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_HOST);
+            }
+        }
+
         if (returnValue) {
             HostValidator validator = getHostValidator();
             returnValue = validate(validator.nameNotEmpty())

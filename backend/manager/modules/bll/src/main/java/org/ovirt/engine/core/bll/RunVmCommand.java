@@ -67,6 +67,8 @@ import org.ovirt.engine.core.common.businessentities.storage.CinderDisk;
 import org.ovirt.engine.core.common.businessentities.storage.Disk;
 import org.ovirt.engine.core.common.businessentities.storage.ImageFileType;
 import org.ovirt.engine.core.common.businessentities.storage.RepoImage;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineError;
 import org.ovirt.engine.core.common.errors.EngineException;
 import org.ovirt.engine.core.common.errors.EngineMessage;
@@ -967,6 +969,8 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Override
     protected boolean canDoAction() {
         VM vm = getVm();
+        int totalUpVm = 0;
+        String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
         if (vm == null) {
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_VM_NOT_FOUND);
@@ -978,6 +982,44 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         if (!canRunActionOnNonManagedVm()) {
             return false;
+        }
+
+        int cpuNums = vm.getNumOfCpus();
+
+        String vmName = getVm().getName();
+
+        int vmMemSize = vm.getVmMemSizeMb();
+
+        List<VM> vms = getVmDao().getAll();
+
+        if(version.equals("BaseVersion")){
+            if(cpuNums > 2 && !vmName.equals("HostedEngine")){
+                return failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+            }
+
+            if(vmMemSize > 8192){
+                return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
+            }
+
+            for (VM tmpVm : vms){
+                    if (tmpVm.getStatus() == VMStatus.Up){
+                                   totalUpVm++;
+                    }
+                    if (totalUpVm >= 8){
+                        return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
+                    }
+            }
+        }
+
+
+        if(version.equals("HigherVersion")){
+            if(cpuNums > 8 && !vmName.equals("HostedEngine")){
+                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
+            }
+
+            if(vmMemSize > 16384){
+                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
+            }
         }
 
         RunVmValidator runVmValidator = getRunVmValidator();

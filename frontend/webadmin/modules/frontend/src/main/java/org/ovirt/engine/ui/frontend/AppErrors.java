@@ -1165,6 +1165,27 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("$vmStatus Image Illegal")
     String VAR__VM_STATUS__IMAGE_ILLEGAL();
 
+    @DefaultStringValue("Sorry,EayunOS base version only can runing 8 vms the most.")
+    String USE_BASE_VERSION();
+
+    @DefaultStringValue("Sorry,EayunOS base version only can set 2 cpus the most.")
+    String USE_BASE_VERSION_CPU();
+
+    @DefaultStringValue("Sorry,EayunOS base version only can set 8192MB memory the most.")
+    String USE_BASE_VERSION_MEM();
+
+    @DefaultStringValue("Sorry,EayunOS base version only can add 3 host the most.")
+    String USE_BASE_VERSION_HOST();
+
+    @DefaultStringValue("Sorry,EayunOS enterprise version only can set 8 cpus the most.")
+    String USE_HIGHER_VERSION_CPU();
+
+    @DefaultStringValue("Sorry,EayunOS enterprise version only can set 16384MB memory the most.")
+    String USE_HIGHER_VERSION_MEM();
+
+    @DefaultStringValue("Sorry,EayunOS enterprise version only can add 32 host the most.")
+    String USE_HIGHER_VERSION_HOST();
+
     @DefaultStringValue("$type Gluster Volume")
     String VAR__TYPE__GLUSTER_VOLUME();
 
