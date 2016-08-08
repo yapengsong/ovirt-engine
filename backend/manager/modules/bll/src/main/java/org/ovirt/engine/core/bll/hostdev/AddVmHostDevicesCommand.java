@@ -10,12 +10,22 @@ import org.ovirt.engine.core.common.action.VmHostDevicesParameters;
 import org.ovirt.engine.core.common.businessentities.HostDevice;
 import org.ovirt.engine.core.common.businessentities.VmDevice;
 import org.ovirt.engine.core.common.businessentities.VmHostDevice;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 
 public class AddVmHostDevicesCommand extends AbstractVmHostDevicesCommand<VmHostDevicesParameters> {
 
     public AddVmHostDevicesCommand(VmHostDevicesParameters parameters) {
         super(parameters);
+    }
+
+    @Override
+    protected boolean canDoAction() {
+        if("BaseVersion".equals(Config.<String> getValue(ConfigValues.EayunOSVersion))) {
+            return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOSTDEV);
+            }
+        return super.canDoAction();
     }
 
     @Override

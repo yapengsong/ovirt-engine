@@ -1177,6 +1177,9 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Sorry,EayunOS base version only can add 3 host the most.")
     String USE_BASE_VERSION_HOST();
 
+    @DefaultStringValue("Sorry,EayunOS base version doesn't support host device passthrough.")
+    String USE_BASE_VERSION_HOSTDEV();
+
     @DefaultStringValue("Sorry,EayunOS enterprise version only can set 8 cpus the most.")
     String USE_HIGHER_VERSION_CPU();
 
