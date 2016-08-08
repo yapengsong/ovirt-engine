@@ -769,6 +769,12 @@ class ConfigEnv(object):
     def ADMIN_PASSWORD(self):
         return 'OVESETUP_CONFIG/adminPassword'
 
+    @osetupattrs(
+        answerfile=True,
+    )
+    def EAYUNOS_VERSION(self):
+        return 'OVESETUP_CONFIG/eayunosVersion'
+
     PKI_RENEWAL_DOC_URL = 'OVESETUP_CONFIG/pkiRenewalDocUrl'
 
 
