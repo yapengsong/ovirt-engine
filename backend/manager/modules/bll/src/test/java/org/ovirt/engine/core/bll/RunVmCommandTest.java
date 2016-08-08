@@ -77,7 +77,8 @@ public class RunVmCommandTest {
 
     @ClassRule
     public static MockConfigRule mcr = new MockConfigRule(
-            mockConfig(ConfigValues.GuestToolsSetupIsoPrefix, "General", "")
+            mockConfig(ConfigValues.GuestToolsSetupIsoPrefix, "General", ""),
+            mockConfig(ConfigValues.EayunOSVersion, "AdvancedVersion")
             );
 
     @Rule
@@ -387,6 +388,8 @@ public class RunVmCommandTest {
         doReturn(true).when(command).checkPayload(any(VmPayload.class), anyString());
         doReturn(false).when(command).hasVmInit();
         doReturn(new VDSGroup()).when(command).getVdsGroup();
+        doReturn(vmDao).when(command).getVmDao();
+        when(vmDao.getAll()).thenReturn(new ArrayList<VM>());
         assertTrue(command.canDoAction());
         assertTrue(command.getReturnValue().getCanDoActionMessages().isEmpty());
     }
@@ -429,6 +432,9 @@ public class RunVmCommandTest {
         doReturn(deviceDao).when(command).getVmDeviceDao();
 
         doReturn(false).when(command).hasVmInit();
+
+        doReturn(vmDao).when(command).getVmDao();
+        when(vmDao.getAll()).thenReturn(new ArrayList<VM>());
 
         Assert.assertThat(command.canDoAction(), is(clusterReqSources.contains(vmRngSource)));
     }
