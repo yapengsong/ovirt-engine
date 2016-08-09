@@ -26,7 +26,7 @@ public class EditVnicProfileModel extends VnicProfileModel {
             Guid dcId,
             boolean customPropertiesVisible) {
         super(sourceModel, dcCompatibilityVersion, customPropertiesVisible, dcId, profile.getNetworkQosId());
-        setTitle(ConstantsManager.getInstance().getConstants().vnicProfileTitle());
+        setTitle(ConstantsManager.getInstance().getConstants().editVnicProfileTitle());
         setHelpTag(HelpTag.edit_vnic_profile);
         setHashName("edit_vnic_profile"); //$NON-NLS-1$
 
