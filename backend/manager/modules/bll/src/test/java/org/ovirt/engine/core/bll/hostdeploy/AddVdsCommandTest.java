@@ -75,7 +75,8 @@ public class AddVdsCommandTest {
     public static MockConfigRule configRule =
             new MockConfigRule(MockConfigRule.mockConfig(ConfigValues.MaxVdsNameLength, 4),
                     MockConfigRule.mockConfig(ConfigValues.EncryptHostCommunication, false),
-                    MockConfigRule.mockConfig(ConfigValues.InstallVds, true));
+                    MockConfigRule.mockConfig(ConfigValues.InstallVds, true),
+                    MockConfigRule.mockConfig(ConfigValues.EayunOSVersion, "AdvancedVersion"));
 
     private VDS makeTestVds(Guid vdsId) {
         VDS newVdsData = new VDS();

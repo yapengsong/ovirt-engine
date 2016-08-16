@@ -150,7 +150,8 @@ public class UpdateVmCommandTest {
             mockConfig(ConfigValues.ValidNumOfMonitors, Arrays.asList("1,2,4".split(","))),
             mockConfig(ConfigValues.IsMigrationSupported, Version.v3_0.toString(), migrationMap),
             mockConfig(ConfigValues.IsMigrationSupported, Version.v3_3.toString(), migrationMap),
-            mockConfig(ConfigValues.MaxIoThreadsPerVm, 127)
+            mockConfig(ConfigValues.MaxIoThreadsPerVm, 127),
+            mockConfig(ConfigValues.EayunOSVersion, "AdvancedVersion")
     );
 
     @Before

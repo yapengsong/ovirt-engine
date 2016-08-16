@@ -29,12 +29,13 @@ public class ProfileEditor extends ListModelTypeAheadListBoxEditor<VnicProfileVi
                                     messages.emptyProfileDescription().asString()).asString();
                         }
 
-                        String profileDescription = profile.getDescription().length() > 80 ?  profile.getDescription().substring(0, 51) + "..." : profile.getDescription();
+                        String profileDescription = (profile.getDescription() != null)
+                                ? (profile.getDescription().length() > 50
+                                        ? profile.getDescription().substring(0, 48) + "..." : profile.getDescription()) : "";//$NON-NLS-1$//$NON-NLS-2$
                         String profileAndNetwork =
                                 messages.profileAndNetwork(profile.getName(), profile.getNetworkName()).asString();
 
-                        return templates.typeAheadNameDescription(profileAndNetwork,
-                                profileDescription != null ? profileDescription : "").asString(); //$NON-NLS-1$
+                        return templates.typeAheadNameDescription(profileAndNetwork, profileDescription).asString();
                     }
 
                 }, false);
