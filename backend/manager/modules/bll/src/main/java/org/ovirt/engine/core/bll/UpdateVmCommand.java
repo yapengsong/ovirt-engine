@@ -757,6 +757,9 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
                 if(totalCpus > 2 && !vmName.equals("HostedEngine")){
                     return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
                 }
+                if(totalCpus > vmFromDB.getNumOfCpus()) {
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU_HOTPLUG);
+                }
             }
         }
 

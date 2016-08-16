@@ -1171,6 +1171,9 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Sorry,EayunOS base version only can set 2 cpus the most.")
     String USE_BASE_VERSION_CPU();
 
+    @DefaultStringValue("Sorry,EayunOS base version doesn't support cpu hot plug.")
+    String USE_BASE_VERSION_CPU_HOTPLUG();
+
     @DefaultStringValue("Sorry,EayunOS base version only can set 8192MB memory the most.")
     String USE_BASE_VERSION_MEM();
 
