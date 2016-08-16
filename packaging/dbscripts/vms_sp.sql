@@ -1301,6 +1301,19 @@ END; $procedure$
 LANGUAGE plpgsql;
 
 
+Create or replace FUNCTION GetVmsRunning() RETURNS SETOF vms STABLE
+   AS $procedure$
+BEGIN
+RETURN QUERY SELECT DISTINCT vms.*
+   FROM vms
+   WHERE status != -1 AND
+         status != 0 AND
+         status != 13;
+
+END; $procedure$
+LANGUAGE plpgsql;
+
+
 Create or replace FUNCTION GetVmsMigratingToVds(v_vds_id UUID) RETURNS SETOF vms STABLE
    AS $procedure$
 BEGIN

@@ -137,6 +137,13 @@ public class VmDaoImpl extends BaseDao implements VmDao {
     }
 
     @Override
+    public List<VM> getAllRunning() {
+        return getCallsHandler().executeReadList("GetVmsRunning",
+                VMRowMapper.instance,
+                getCustomMapSqlParameterSource());
+    }
+
+    @Override
     public List<VM> getAllRunningOnOrMigratingToVds(Guid id) {
         return getCallsHandler().executeReadList("GetVmsRunningOnOrMigratingToVds",
                 VMRowMapper.instance,
