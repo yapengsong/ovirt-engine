@@ -50,7 +50,7 @@ public interface CommonApplicationConstants extends Constants {
 
     // Table columns
 
-    @DefaultStringValue("Disk Activate/Deactivate while VM is running, is supported only for Clusters of version 3.1 and above")
+    @DefaultStringValue("Disk Activate/Deactivate while VM is running, is supported only for Clusters of version 4.0 and above")
     String diskHotPlugNotSupported();
 
     @DefaultStringValue("Disks Allocation:")
@@ -1482,7 +1482,7 @@ public interface CommonApplicationConstants extends Constants {
             "1#1-4,^2 => pin vCPU 1 to pCPU set 1 to 4, excluding 2")
     String cpuPinningLabelExplanation();
 
-    @DefaultStringValue("Migration is NOT currently supported using SPICE Native USB redirection on cluster version lower than 3.2")
+    @DefaultStringValue("Migration is NOT currently supported using SPICE Native USB redirection on cluster version lower than 4.0")
     String nativeUsbSupportWarning();
 
     @DefaultStringValue("Monitors")

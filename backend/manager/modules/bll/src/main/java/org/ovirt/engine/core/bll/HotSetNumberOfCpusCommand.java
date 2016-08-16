@@ -19,6 +19,7 @@ import org.ovirt.engine.core.common.errors.EngineFault;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.vdscommands.VDSCommandType;
 import org.ovirt.engine.core.common.vdscommands.VDSReturnValue;
+import org.ovirt.engine.core.compat.VersionTransform;
 import org.ovirt.engine.core.vdsbroker.SetNumberOfCpusVDSCommand;
 
 /**
@@ -125,7 +126,7 @@ public class HotSetNumberOfCpusCommand<T extends HotSetNumberOfCpusParameters> e
     protected void setActionMessageParameters() {
         addCanDoActionMessage(EngineMessage.VAR__ACTION__HOT_SET_CPUS);
         addCanDoActionMessage(EngineMessage.VAR__TYPE__VM);
-        addCanDoActionMessageVariable("clusterVersion", getVm().getVdsGroupCompatibilityVersion());
+        addCanDoActionMessageVariable("clusterVersion", VersionTransform.getEayunVersion(getVm().getVdsGroupCompatibilityVersion()));
         addCanDoActionMessageVariable("architecture", getVm().getClusterArch());
     }
 
