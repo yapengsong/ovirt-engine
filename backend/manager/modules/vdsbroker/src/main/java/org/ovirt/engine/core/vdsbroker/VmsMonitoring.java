@@ -240,6 +240,7 @@ public class VmsMonitoring {
                 }
             }
         }
+        updateHEcluster();
         processExternallyManagedVms();
         processVmsWithDevicesChange();
         saveVmsToDb();
