@@ -240,7 +240,7 @@ public class VmsMonitoring {
                 }
             }
         }
-
+        updateHEcluster();
         processExternallyManagedVms();
         processVmsWithDevicesChange();
         saveVmsToDb();
@@ -371,19 +371,6 @@ public class VmsMonitoring {
             updateVmDevices(vmsToUpdate);
             }
         }
-        List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
-        String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
-        Guid host_id = dbFacade.getVmDynamicDao().get(byName.get(0).getId()).getRunOnVds();
-        if (null != host_id) {
-           Guid cluster_id_from_host = dbFacade.getVdsDao().get(host_id).getVdsGroupId();
-           if (!cluster_id_from_vm.equals(cluster_id_from_host.toString())) {
-              byName.get(0).setVdsGroupId(cluster_id_from_host);
-              dbFacade.getVmStaticDao().update(byName.get(0));
-           }
-        else{
-           log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
-           }
-        }
     }
     private void saveVmsToDb() {
         getDbFacade().getVmDynamicDao().updateAllInBatch(vmDynamicToSave.values());
@@ -438,6 +425,21 @@ public class VmsMonitoring {
         return DisplayType.qxl;
     }
 
+    protected void updateHEcluster() {
+    	List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
+        String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
+        Guid host_id = dbFacade.getVmDynamicDao().get(byName.get(0).getId()).getRunOnVds();
+        if (null != host_id) {
+           Guid cluster_id_from_host = dbFacade.getVdsDao().get(host_id).getVdsGroupId();
+           if (!cluster_id_from_vm.equals(cluster_id_from_host.toString())) {
+              byName.get(0).setVdsGroupId(cluster_id_from_host);
+              dbFacade.getVmStaticDao().update(byName.get(0));
+           }
+	        else{
+	           log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
+	        }
+        }
+    }
     protected void processExternallyManagedVms() {
         // Fetching for details from the host
         // and marking the VMs for addition
