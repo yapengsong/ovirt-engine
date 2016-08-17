@@ -427,6 +427,9 @@ public class VmsMonitoring {
 
     protected void updateHEcluster() {
         List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
+        if(byName.size()<1) {
+            return;
+        }
         String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
         Guid host_id = dbFacade.getVmDynamicDao().get(byName.get(0).getId()).getRunOnVds();
         if (null != host_id) {
