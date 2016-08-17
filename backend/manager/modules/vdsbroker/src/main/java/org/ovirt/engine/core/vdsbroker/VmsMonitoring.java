@@ -123,6 +123,7 @@ public class VmsMonitoring {
 
     private static final String EXTERNAL_VM_NAME_FORMAT = "external-%1$s";
     private static final Logger log = LoggerFactory.getLogger(VmsMonitoring.class);
+    private DbFacade dbFacade;
 
     /**
      *  @param vdsManager the host manager related to this cycle.
@@ -436,7 +437,7 @@ public class VmsMonitoring {
               dbFacade.getVmStaticDao().update(byName.get(0));
            }
         }
-        else{
+        else {
            log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
         }
     }

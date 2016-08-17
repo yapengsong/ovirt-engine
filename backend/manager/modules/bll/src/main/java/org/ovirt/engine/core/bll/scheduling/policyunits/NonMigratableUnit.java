@@ -14,9 +14,9 @@ import org.ovirt.engine.core.common.businessentities.VM;
 import org.ovirt.engine.core.common.scheduling.PerHostMessages;
 import org.ovirt.engine.core.common.scheduling.PolicyUnit;
 
-public class PinToHostPolicyUnit extends PolicyUnitImpl {
+public class NonMigratableUnit extends PolicyUnitImpl {
 
-    public PinToHostPolicyUnit(PolicyUnit policyUnit,
+    public NonMigratableUnit(PolicyUnit policyUnit,
             PendingResourceManager pendingResourceManager) {
         super(policyUnit, pendingResourceManager);
     }

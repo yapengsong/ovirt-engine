@@ -7,7 +7,7 @@
 -- Data for Name: policy_units; Type: TABLE DATA; Schema: public; Owner: engine
 --
 
-INSERT INTO policy_units (id, name, is_internal, custom_properties_regex, type, enabled, description) VALUES ('12262ab6-9690-4bc3-a2b3-35573b172d54', 'PinToHost', true, NULL, 0, true, 'Filters out all hosts that VM is not pinned to');
+INSERT INTO policy_units (id, name, is_internal, custom_properties_regex, type, enabled, description) VALUES ('12262ab6-9690-4bc3-a2b3-35573b172d54', 'PinToHostOrImplicityNonMigratable', true, NULL, 0, true, 'Filters out all hosts that VM is not pinned to');
 INSERT INTO policy_units (id, name, is_internal, custom_properties_regex, type, enabled, description) VALUES ('6d636bf6-a35c-4f9d-b68d-0731f720cddc', 'CPU', true, NULL, 0, true, 'Filters out hosts with less CPUs than VM''s CPUs');
 INSERT INTO policy_units (id, name, is_internal, custom_properties_regex, type, enabled, description) VALUES ('c9ddbb34-0e1d-4061-a8d7-b0893fa80932', 'Memory', true, NULL, 0, true, 'Filters out hosts that have insufficient memory to run the VM');
 INSERT INTO policy_units (id, name, is_internal, custom_properties_regex, type, enabled, description) VALUES ('72163d1c-9468-4480-99d9-0888664eb143', 'Network', true, NULL, 0, true, 'Filters out hosts that are missing networks required by VM NICs, or missing cluster''s display network');
