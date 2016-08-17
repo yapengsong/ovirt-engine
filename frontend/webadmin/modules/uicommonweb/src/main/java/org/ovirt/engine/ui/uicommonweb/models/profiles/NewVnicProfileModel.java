@@ -16,7 +16,7 @@ public class NewVnicProfileModel extends VnicProfileModel {
             boolean customPropertiesVisible,
             Guid dcId) {
         super(sourceModel, dcCompatibilityVersion, customPropertiesVisible, dcId, null);
-        setTitle(ConstantsManager.getInstance().getConstants().vnicProfileTitle());
+        setTitle(ConstantsManager.getInstance().getConstants().newVnicProfileTitle());
         setHelpTag(HelpTag.new_vnic_profile);
         setHashName("new_vnic_profile"); //$NON-NLS-1$
         getPortMirroring().setEntity(false);

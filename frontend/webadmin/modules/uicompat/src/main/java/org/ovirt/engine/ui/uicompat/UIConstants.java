@@ -2541,9 +2541,12 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Content must be Base64")
     String cloudInitBase64Message();
 
-    @DefaultStringValue("vNIC Profile")
-    String vnicProfileTitle();
-
+    @DefaultStringValue("Edit vNIC Profile")
+    String editVnicProfileTitle();
+    
+    @DefaultStringValue("New vNIC Profile")
+    String newVnicProfileTitle();
+    
     @DefaultStringValue("Cannot edit name in tree context")
     String cannotEditNameInTreeContext();
 

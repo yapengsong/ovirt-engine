@@ -79,6 +79,8 @@ public class VmsMonitoring {
     private final boolean timeToUpdateVmStatistics;
     private final long fetchTime;
     private VdsManager vdsManager;
+    private DbFacade dbFacade;
+
     /**
      * The Vms we want to monitor and analyze for changes.
      * VM object represent the persisted object(namely the one in db) and the VmInternalData
@@ -152,6 +154,7 @@ public class VmsMonitoring {
         this.auditLogDirector = auditLogDirector;
         this.fetchTime = fetchTime;
         this.timeToUpdateVmStatistics = timeToUpdateVmStatistics;
+        dbFacade = DbFacade.getInstance();
     }
 
     /**
@@ -365,11 +368,23 @@ public class VmsMonitoring {
                         log.warn("VM '{}' not in changed list, skipping devices update.", vmId);
                     }
                 }
-                updateVmDevices(vmsToUpdate);
+            updateVmDevices(vmsToUpdate);
             }
         }
+        List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
+        String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
+        Guid host_id = dbFacade.getVmDynamicDao().get(byName.get(0).getId()).getRunOnVds();
+        if (null != host_id) {
+           Guid cluster_id_from_host = dbFacade.getVdsDao().get(host_id).getVdsGroupId();
+           if (!cluster_id_from_vm.equals(cluster_id_from_host.toString())) {
+              byName.get(0).setVdsGroupId(cluster_id_from_host);
+              dbFacade.getVmStaticDao().update(byName.get(0));
+           }
+        else{
+           log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
+           }
+        }
     }
-
     private void saveVmsToDb() {
         getDbFacade().getVmDynamicDao().updateAllInBatch(vmDynamicToSave.values());
         getDbFacade().getVmStatisticsDao().updateAllInBatch(vmStatisticsToSave);
@@ -434,7 +449,6 @@ public class VmsMonitoring {
             VDSGroup vdsGroup = getDbFacade().getVdsGroupDao().get(vdsManager.getVdsGroupId());
             int defaultOsId = getDefaultOsId(vdsGroup.getArchitecture());
             DisplayType defaultDisplayType = getDefaultDisplayType(defaultOsId, vdsGroup.getCompatibilityVersion());
-
             // Query VDSM for VMs info, and creating a proper VMStatic to be used when importing them
             Map[] vmsInfo = getVmInfo(vmsToQuery);
             for (Map vmInfo : vmsInfo) {
