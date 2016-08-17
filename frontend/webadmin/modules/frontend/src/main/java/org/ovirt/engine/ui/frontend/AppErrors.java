@@ -559,7 +559,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. The storage selected contains the self hosted engine.")
     String ACTION_TYPE_FAILED_HOSTED_ENGINE_STORAGE();
 
-    @DefaultStringValue("Cannot ${action} ${type}. You are using an unmanaged hosted engine VM. Please upgrade the cluster level to 3.6 and wait for the hosted engine storage domain to be properly imported.")
+    @DefaultStringValue("Cannot ${action} ${type}. You are using an unmanaged hosted engine VM. Please upgrade the cluster level to 4.2 and wait for the hosted engine storage domain to be properly imported.")
     String ACTION_TYPE_FAILED_UNMANAGED_HOSTED_ENGINE();
 
     @DefaultStringValue("Cannot ${action} ${type}. source and destination is the same.")
@@ -1306,7 +1306,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("User does not have a valid e-mail address.")
     String USER_DOES_NOT_HAVE_A_VALID_EMAIL();
 
-    @DefaultStringValue("Native USB support is only available on cluster level 3.1 or higher.")
+    @DefaultStringValue("Native USB support is only available on cluster level 4.0 or higher.")
     String USB_NATIVE_SUPPORT_ONLY_AVAILABLE_ON_CLUSTER_LEVEL();
 
     @DefaultStringValue("Legacy USB support is not available on Linux VMs.")
@@ -2041,7 +2041,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. The selected Template has undefined architecture")
     String ACTION_TYPE_FAILED_VM_CANNOT_IMPORT_TEMPLATE_WITH_NOT_SUPPORTED_ARCHITECTURE();
 
-    @DefaultStringValue("Cannot ${action} ${type}. Setting hosted engine maintenance mode is only supported on cluster version 3.4 and above.")
+    @DefaultStringValue("Cannot ${action} ${type}. Setting hosted engine maintenance mode is only supported on cluster version 4.1 and above.")
     String ACTION_TYPE_FAILED_VDS_HA_MAINT_NOT_SUPPORTED();
 
     @DefaultStringValue("Cannot ${action} ${type}. Hosted Engine is not configured on this host.")
@@ -2735,7 +2735,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. The following VMs are set to run specifically only on this Host: ${VmNames}.\nIn order to ${action} ${type}, you need to remove the association between the VMs and the Host (Using Edit VM properties).")
     String ACTION_TYPE_FAILED_DETECTED_PINNED_VMS();
 
-    @DefaultStringValue("Activate/Deactivate while VM is running, is only supported for Clusters of version 3.1 and above.")
+    @DefaultStringValue("Activate/Deactivate while VM is running, is only supported for Clusters of version 4.0 and above.")
     String HOT_PLUG_IS_NOT_SUPPORTED();
 
     @DefaultStringValue("Hot plugging a CPU is not supported for cluster version ${clusterVersion} and architecture ${architecture}.")
@@ -2846,7 +2846,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. SCSI device pass-throguh is not supported for a read-only disk.")
     String SCSI_PASSTHROUGH_IS_NOT_SUPPORTED_FOR_READ_ONLY_DISK();
 
-    @DefaultStringValue("VirtIO-SCSI interface is only available on cluster level 3.3 or higher.")
+    @DefaultStringValue("VirtIO-SCSI interface is only available on cluster level 4.0 or higher.")
     String VIRTIO_SCSI_INTERFACE_IS_NOT_AVAILABLE_FOR_CLUSTER_LEVEL();
 
     @DefaultStringValue("Cannot ${action} ${type}. VirtIO-SCSI is disabled for the VM")
@@ -3539,7 +3539,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. Policy unit is attached to the following cluster policies: ${cpNames}.")
     String ACTION_TYPE_FAILED_CANNOT_REMOVE_POLICY_UNIT_ATTACHED_TO_CLUSTER_POLICY();
 
-    @DefaultStringValue("Cannot ${action} ${type}. Cloud-Init is only supported on cluster compatibility version 3.3 and higher.")
+    @DefaultStringValue("Cannot ${action} ${type}. Cloud-Init is only supported on cluster compatibility version 4.0 and higher.")
     String ACTION_TYPE_FAILED_CLOUD_INIT_IS_NOT_SUPPORTED();
 
     @DefaultStringValue("Cannot ${action} ${type}. Alignment scan of a disk attached to a running VM is not supported.")
@@ -3778,7 +3778,7 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. The specified iSCSI bond does not exist.")
     String ISCSI_BOND_NOT_EXIST();
 
-    @DefaultStringValue("Cannot ${action} ${type}. iSCSI Bond is only supported on Data Center compatibility versions 3.4 and higher.")
+    @DefaultStringValue("Cannot ${action} ${type}. iSCSI Bond is only supported on Data Center compatibility versions 4.1 and higher.")
     String ISCSI_BOND_NOT_SUPPORTED();
 
     @DefaultStringValue("Cannot ${action} ${type}. An IDE disk can't be read-only.")
@@ -3983,10 +3983,10 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. Host ${VdsName} cannot connect to Glusterfs. Verify that glusterfs-cli package is installed on the host.")
     String ACTION_TYPE_FAIL_VDS_CANNOT_CONNECT_TO_GLUSTERFS();
 
-    @DefaultStringValue("XML protocol not supported by cluster 3.6 or higher")
+    @DefaultStringValue("XML protocol not supported by cluster 4.2 or higher")
     String NOT_SUPPORTED_PROTOCOL_FOR_CLUSTER_VERSION();
 
-    @DefaultStringValue("Some of the hosts still use legacy protocol which is not supported by cluster 3.6 or higher. In order to change it a host needs to be put to maintenance and edited in advanced options section")
+    @DefaultStringValue("Some of the hosts still use legacy protocol which is not supported by cluster 4.2 or higher. In order to change it a host needs to be put to maintenance and edited in advanced options section")
     String ACTION_TYPE_FAILED_WRONG_PROTOCOL_FOR_CLUSTER_VERSION();
 
     @DefaultStringValue("Cannot ${action} ${type}. Host ${vdsName} cannot serve as proxy. Verify its cluster architecture and compatibility version are supported.")

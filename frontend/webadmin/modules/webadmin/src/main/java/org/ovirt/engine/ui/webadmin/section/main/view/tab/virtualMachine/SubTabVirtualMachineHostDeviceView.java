@@ -9,6 +9,7 @@ import org.ovirt.engine.ui.common.view.AbstractSubTabTableWidgetView;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VmListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.VmHostDeviceListModel;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.virtualMachine.SubTabVirtualMachineHostDevicePresenter;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
@@ -27,6 +28,7 @@ public class SubTabVirtualMachineHostDeviceView
             EventBus eventBus, ClientStorage clientStorage) {
         super(new VmHostDeviceModelTable(modelProvider, eventBus, clientStorage));
         ViewIdHandler.idHandler.generateAndSetIds(this);
+        modelProvider.getModel().getFilter().setUseFilter(false);
         initTable();
         initWidget(getModelBoundTableWidget());
     }

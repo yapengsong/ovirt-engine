@@ -180,7 +180,8 @@ public enum ConfigurationValues {
     UploadImageXhrMaxRetries,
     RefreshLunSupported,
     HostDeviceBlackList,
-    HostDeviceWhiteList;
+    HostDeviceWhiteList,
+    EayunOSVersion;
 
     public static enum ConfigAuthType {
         Admin,

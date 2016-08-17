@@ -137,7 +137,7 @@ public abstract class BaseApplicationInit<T extends LoginModel> implements Boots
                 rootLogger.log(Level.SEVERE, "Uncaught exception: ", t); //$NON-NLS-1$
                 remoteLogger.log(Level.SEVERE, "Uncaught exception: ", t); //$NON-NLS-1$
                 if (DisplayUncaughtUIExceptions.getValue()) {
-                    alertManager.showUncaughtExceptionAlert(t);
+                    // alertManager.showUncaughtExceptionAlert(t);
                 }
             }
         });

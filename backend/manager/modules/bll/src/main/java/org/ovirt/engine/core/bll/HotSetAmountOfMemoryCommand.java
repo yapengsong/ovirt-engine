@@ -26,6 +26,7 @@ import org.ovirt.engine.core.common.utils.VmDeviceType;
 import org.ovirt.engine.core.common.vdscommands.VDSCommandType;
 import org.ovirt.engine.core.common.vdscommands.VDSReturnValue;
 import org.ovirt.engine.core.compat.Guid;
+import org.ovirt.engine.core.compat.VersionTransform;
 import org.ovirt.engine.core.vdsbroker.SetAmountOfMemoryVDSCommand;
 
 @NonTransactiveCommandAttribute
@@ -52,7 +53,7 @@ public class HotSetAmountOfMemoryCommand<T extends HotSetAmountOfMemoryParameter
     protected void setActionMessageParameters() {
         addCanDoActionMessage(EngineMessage.VAR__ACTION__HOT_SET_MEMORY);
         addCanDoActionMessage(EngineMessage.VAR__TYPE__VM);
-        addCanDoActionMessageVariable("clusterVersion", getVm().getVdsGroupCompatibilityVersion());
+        addCanDoActionMessageVariable("clusterVersion", VersionTransform.getEayunVersion(getVm().getVdsGroupCompatibilityVersion()));
         addCanDoActionMessageVariable("architecture", getVm().getClusterArch());
     }
 
