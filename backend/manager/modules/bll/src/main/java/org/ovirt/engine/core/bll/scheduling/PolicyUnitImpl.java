@@ -27,8 +27,8 @@ import org.ovirt.engine.core.bll.scheduling.policyunits.InClusterUpgradeWeightPo
 import org.ovirt.engine.core.bll.scheduling.policyunits.MemoryPolicyUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.MigrationPolicyUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.NetworkPolicyUnit;
+import org.ovirt.engine.core.bll.scheduling.policyunits.NonMigratableUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.NoneBalancePolicyUnit;
-import org.ovirt.engine.core.bll.scheduling.policyunits.PinToHostPolicyUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.PowerSavingBalancePolicyUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.PowerSavingCPUWeightPolicyUnit;
 import org.ovirt.engine.core.bll.scheduling.policyunits.PowerSavingMemoryWeightPolicyUnit;
@@ -62,8 +62,8 @@ public class PolicyUnitImpl {
         switch (policyUnit.getName()) {
         case "Migration":
             return new MigrationPolicyUnit(policyUnit, pendingResourceManager);
-        case "PinToHost":
-            return new PinToHostPolicyUnit(policyUnit, pendingResourceManager);
+        case "PinToHostOrImplicityNonMigratable":
+            return new NonMigratableUnit(policyUnit, pendingResourceManager);
         case "CPU":
             return new CPUPolicyUnit(policyUnit, pendingResourceManager);
         case "Memory":
