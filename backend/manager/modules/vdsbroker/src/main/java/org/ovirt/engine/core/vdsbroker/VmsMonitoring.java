@@ -240,7 +240,9 @@ public class VmsMonitoring {
                 }
             }
         }
-
+        List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
+        String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
+        log.info("-----------------------------------" + cluster_id_from_vm + "-----------------------------------");
         processExternallyManagedVms();
         processVmsWithDevicesChange();
         saveVmsToDb();
