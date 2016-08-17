@@ -123,7 +123,6 @@ public class VmsMonitoring {
 
     private static final String EXTERNAL_VM_NAME_FORMAT = "external-%1$s";
     private static final Logger log = LoggerFactory.getLogger(VmsMonitoring.class);
-    private DbFacade dbFacade;
 
     /**
      *  @param vdsManager the host manager related to this cycle.
