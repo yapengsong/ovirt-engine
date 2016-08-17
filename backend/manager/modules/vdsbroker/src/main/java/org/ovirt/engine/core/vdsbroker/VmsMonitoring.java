@@ -426,7 +426,7 @@ public class VmsMonitoring {
     }
 
     protected void updateHEcluster() {
-    	List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
+        List<VmStatic> byName = dbFacade.getVmStaticDao().getAllByName(Config.<String>getValue(ConfigValues.HostedEngineVmName));
         String cluster_id_from_vm = byName.get(0).getVdsGroupId().toString();
         Guid host_id = dbFacade.getVmDynamicDao().get(byName.get(0).getId()).getRunOnVds();
         if (null != host_id) {
@@ -435,9 +435,9 @@ public class VmsMonitoring {
               byName.get(0).setVdsGroupId(cluster_id_from_host);
               dbFacade.getVmStaticDao().update(byName.get(0));
            }
-	        else{
-	           log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
-	        }
+           else{
+               log.info("根据 hostedEngine 虚拟机找到的附属主机为空");
+           }
         }
     }
     protected void processExternallyManagedVms() {
