@@ -10,7 +10,9 @@ import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.core.common.businessentities.StoragePoolStatus;
 import org.ovirt.engine.core.common.businessentities.VDS;
 import org.ovirt.engine.core.common.businessentities.storage.StorageType;
+import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.ui.uicommonweb.Linq;
+import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.Model;
 
@@ -34,9 +36,13 @@ public abstract class StorageModelBehavior extends Model {
     public void setStorageTypeItems() {
         ArrayList<IStorageModel> filteredItems = getSelectableModelsByRole();
         Set<StorageType> storageTypeItems = new LinkedHashSet<StorageType>();
+        String eayunOSVersion = (String) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.EayunOSVersion);
 
         for (IStorageModel model : filteredItems) {
             storageTypeItems.add(model.getType());
+            if(StorageType.GLUSTERFS.equals(model.getType()) && !("AdvancedVersion".equals(eayunOSVersion))){//$NON-NLS-1$
+                storageTypeItems.remove(model.getType());
+            }
         }
         getModel().getAvailableStorageTypeItems().setItems(storageTypeItems);
         getModel().storageItemsChanged();
