@@ -969,7 +969,6 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Override
     protected boolean canDoAction() {
         VM vm = getVm();
-        int totalUpVm = 0;
         String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
         if (vm == null) {
@@ -990,34 +989,27 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         int vmMemSize = vm.getVmMemSizeMb();
 
-        List<VM> vms = getVmDao().getAll();
-
-        if(version.equals("BaseVersion")){
-            if(cpuNums > 2 && !vmName.equals("HostedEngine")){
+        if(version.equals("BaseVersion")) {
+            if(cpuNums > 2 && !vmName.equals("HostedEngine")) {
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
             }
 
-            if(vmMemSize > 8192){
+            if(vmMemSize > 8192) {
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
             }
 
-            for (VM tmpVm : vms){
-                    if (tmpVm.getStatus() == VMStatus.Up){
-                                   totalUpVm++;
-                    }
-                    if (totalUpVm >= 8){
-                        return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
-                    }
+            if (getVmDao().getAllRunning().size() >= 8) {
+                return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
             }
         }
 
 
-        if(version.equals("HigherVersion")){
-            if(cpuNums > 8 && !vmName.equals("HostedEngine")){
+        if(version.equals("HigherVersion")) {
+            if(cpuNums > 8 && !vmName.equals("HostedEngine")) {
                 return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
             }
 
-            if(vmMemSize > 16384){
+            if(vmMemSize > 16384) {
                 return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
             }
         }

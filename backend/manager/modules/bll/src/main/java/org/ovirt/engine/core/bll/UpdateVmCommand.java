@@ -737,36 +737,33 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
-        int numOfSockets = vmFromParams.getNumOfSockets();
-
-        int cpuPerSocket = vmFromParams.getCpuPerSocket();
-
-        int threadsPerCpu = vmFromParams.getThreadsPerCpu();
-
-        int totalCpus = numOfSockets * cpuPerSocket * threadsPerCpu;
+        int totalCpus = vmFromParams.getNumOfCpus();
 
         int memSizeMb = vmFromParams.getMemSizeMb();
 
         String vmName = getVm().getName();
 
-        if(version.equals("BaseVersion")){
-            if(getVm().getStatus() == VMStatus.Up){
-                if(memSizeMb > 8192){
+        if(version.equals("BaseVersion")) {
+            if(getVm().getStatus() == VMStatus.Up) {
+                if(memSizeMb > 8192) {
                     return  failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
                 }
-                if(totalCpus > 2 && !vmName.equals("HostedEngine")){
+                if(totalCpus > 2 && !vmName.equals("HostedEngine")) {
                     return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
+                }
+                if(totalCpus > vmFromDB.getNumOfCpus()) {
+                    return  failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU_HOTPLUG);
                 }
             }
         }
 
 
-        if(version.equals("HigherVersion")){
-            if(getVm().getStatus() == VMStatus.Up){
-                if(memSizeMb > 16384){
+        if(version.equals("HigherVersion")) {
+            if(getVm().getStatus() == VMStatus.Up) {
+                if(memSizeMb > 16384) {
                     return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
                 }
-                if(totalCpus > 8 && !vmName.equals("HostedEngine")){
+                if(totalCpus > 8 && !vmName.equals("HostedEngine")) {
                     return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
                 }
             }

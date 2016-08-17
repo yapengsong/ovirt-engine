@@ -143,6 +143,13 @@ public interface VmDao extends Dao {
     List<VM> getAllRunningForVds(Guid vds);
 
     /**
+     * Gets the list of virtual machines running.
+     *
+     * @return the list of VMs
+     */
+    List<VM> getAllRunning();
+
+    /**
      * Gets the list of virtual machines running on or migrating to the specified VDS instance.
      *
      * @param vds
