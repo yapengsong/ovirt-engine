@@ -146,9 +146,11 @@ public class RolePermissionListModel extends SearchableListModel<Role, Permissio
 
         if (command == getRemoveCommand()) {
             remove();
+            this.refresh();
         }
         else if ("OnRemove".equals(command.getName())) { //$NON-NLS-1$
             onRemove();
+            this.refresh();
         }
         else if ("Cancel".equals(command.getName())) { //$NON-NLS-1$
             cancel();
