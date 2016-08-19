@@ -25,6 +25,7 @@ import org.ovirt.engine.ui.webadmin.ApplicationResources;
 import org.ovirt.engine.ui.webadmin.ApplicationTemplates;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.provider.ImportNetworksPopupPresenterWidget;
+
 import com.google.gwt.cell.client.Cell.Context;
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
@@ -52,6 +53,7 @@ public class ImportNetworksPopupView extends AbstractModelBoundPopupView<BaseImp
 
     interface Style extends CssResource {
         String providersStyle();
+        String dcStyle();
     }
 
     @UiField
@@ -144,6 +146,7 @@ public class ImportNetworksPopupView extends AbstractModelBoundPopupView<BaseImp
             }
         };
         importedNetworks.addColumn(dcColumn, constants.dcNetworkHeader());
+        dcColumn.setCellStyleNames(style.dcStyle());
 
         AbstractCheckboxHeader publicAllHeader =
                 new AbstractCheckboxHeader() {
