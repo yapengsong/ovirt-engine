@@ -339,7 +339,7 @@ public class DataCenterModel extends Model implements HasValidatedTabs {
 
         getVersion().validateSelectedItem(new IValidation[] { new NotEmptyValidation() });
 
-        getDescription().validateEntity(new IValidation[] { new AsciiOrNoneValidation() });
+        getDescription().validateEntity(new IValidation[] { new AsciiOrNoneValidation(), new LengthValidation(4000) });
 
         getComment().validateEntity(new IValidation[] { new SpecialAsciiI18NOrNoneValidation() });
 
