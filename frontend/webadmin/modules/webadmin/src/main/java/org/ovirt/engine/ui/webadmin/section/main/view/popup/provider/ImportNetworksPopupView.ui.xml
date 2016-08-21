@@ -12,6 +12,10 @@
 		.section {
 			margin-bottom: 5px;
 		}
+
+		.dcStyle{
+			color: #000000;
+		}
 	</ui:style>
 
 	<d:SimpleDialogPanel ui:field="mainPanel" width="600px" height="625px">
