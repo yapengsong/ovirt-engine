@@ -106,6 +106,22 @@ public class VdsDeployOpenStackUnit implements VdsDeployUnit {
         new Callable<Boolean>() {@VdsDeployUnit.CallWhen(COND_NEUTRON_OPEN_VSWITCH_SETUP)
         public Boolean call() throws Exception {
             _setCliEnvironmentIfNecessary(
+                OpenStackEnv.NEUTRON_OPENVSWITCH_CONFIG_PREFIX + "securitygroup/enable_security_group",
+                true
+            );
+            return true;
+        }},
+        new Callable<Boolean>() {@VdsDeployUnit.CallWhen(COND_NEUTRON_OPEN_VSWITCH_SETUP)
+        public Boolean call() throws Exception {
+            _setCliEnvironmentIfNecessary(
+                OpenStackEnv.NEUTRON_OPENVSWITCH_CONFIG_PREFIX + "securitygroup/firewall_driver",
+                "neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver"
+            );
+            return true;
+        }},
+        new Callable<Boolean>() {@VdsDeployUnit.CallWhen(COND_NEUTRON_OPEN_VSWITCH_SETUP)
+        public Boolean call() throws Exception {
+            _setCliEnvironmentIfNecessary(
                 OpenStackEnv.NEUTRON_OPENVSWITCH_CONFIG_PREFIX + "OVS/bridge_mappings",
                 _openStackAgentProperties.getAgentConfiguration().getNetworkMappings()
             );
