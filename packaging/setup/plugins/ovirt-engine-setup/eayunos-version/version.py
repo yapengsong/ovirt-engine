@@ -15,6 +15,10 @@ class Plugin(plugin.PluginBase):
 
     def __init__(self, context):
         super(Plugin, self).__init__(context=context)
+        self.environment.setdefault(
+            oenginecons.ConfigEnv.EAYUNOS_VERSION,
+            'BaseVersion'
+        )
 
     @plugin.event(
         stage=plugin.Stages.STAGE_CUSTOMIZATION,
