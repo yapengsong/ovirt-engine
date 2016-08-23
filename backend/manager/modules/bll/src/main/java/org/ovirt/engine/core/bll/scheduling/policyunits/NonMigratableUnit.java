@@ -23,7 +23,8 @@ public class NonMigratableUnit extends PolicyUnitImpl {
 
     @Override
     public List<VDS> filter(VDSGroup cluster, List<VDS> hosts, VM vm, Map<String, String> parameters, PerHostMessages messages) {
-        if (vm.getMigrationSupport() == MigrationSupport.PINNED_TO_HOST || vm.getMigrationSupport() == MigrationSupport.IMPLICITLY_NON_MIGRATABLE) {
+        if (vm.getMigrationSupport() == MigrationSupport.PINNED_TO_HOST
+                || (vm.getRunOnVds() == null && vm.getMigrationSupport() == MigrationSupport.IMPLICITLY_NON_MIGRATABLE)) {
             // host has been specified for pin to host.
             if(vm.getDedicatedVmForVdsList().size() > 0) {
                 List<VDS> dedicatedHostsList = new LinkedList<>();
