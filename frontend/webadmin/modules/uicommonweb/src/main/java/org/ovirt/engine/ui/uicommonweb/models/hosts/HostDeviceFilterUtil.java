@@ -27,10 +27,9 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
     }
 
     private void initMapAndKeys(){
-        keys = new String[3];
-        keys[0] = "name";//$NON-NLS-1$
-        keys[1] = "vendor";//$NON-NLS-1$
-        keys[2] = "product";//$NON-NLS-1$
+        keys = new String[2];
+        keys[0] = "vendor";//$NON-NLS-1$
+        keys[1] = "product";//$NON-NLS-1$
         blackList = (Map<String, String>) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.HostDeviceBlackList);
         whiteList = (Map<String, String>) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.HostDeviceWhiteList);
     }
@@ -44,8 +43,8 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
         return origineItem;
     }
 
-    // Filter the host devices from name, vendor, product
-    // The JSON content's format: {"name":"regexp1","vendor":"regexp2","product":"regexp3"}
+    // Filter the host devices from vendor, product
+    // The JSON content's format: {"vendor":"regexp1","product":"regexp2"}
     public void initItemAfterFilter() {
         itemAfterFilter = new ArrayList<T>();
         if (origineItem != null) {
@@ -82,10 +81,9 @@ public class HostDeviceFilterUtil<T extends HostDevice> {
 
     private boolean rowMatch(T item, Map<String, String> filterList, String[] keys) {
         if (filterList != null) {
-            boolean nameMatch = cellPattern(item.getName(), getValueFromFilterList(filterList, keys[0]));
-            boolean vendorMatch = cellPattern(item.getVendorName(), getValueFromFilterList(filterList, keys[1]));
-            boolean productMatch = cellPattern(item.getProductName(), getValueFromFilterList(filterList, keys[2]));
-            if (nameMatch || vendorMatch || productMatch) {
+            boolean vendorMatch = cellPattern(item.getVendorName(), getValueFromFilterList(filterList, keys[0]));
+            boolean productMatch = cellPattern(item.getProductName(), getValueFromFilterList(filterList, keys[1]));
+            if (vendorMatch || productMatch) {
                 return true;
             }
         }
