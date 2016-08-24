@@ -779,7 +779,7 @@ select fn_db_add_config_value('AllowEditingHostedEngine','true','general');
 
 -- Host Device filter list
 select fn_db_add_config_value('HostDeviceBlackList','{}','general');
-select fn_db_add_config_value('HostDeviceWhiteList','{"name":"(ether)|(radeon)","vendor":"(ether)|(radeon)","product":"(a727)|(0cf3)|(1186)|(10ec)|(10de)|(ether)|(radeon)|(network)"}','general');
+select fn_db_add_config_value('HostDeviceWhiteList','{"vendor":"(SanDisk)|(Kingston)|(Sony)|(HP)|(Transcend)|(Toshiba)|(Verbatim)|(Corsair)|(PNY)|(Lexar)|(Seagate)|(Biig)|(OCZ)|(IronKey)|(Netac)|(Crucial)|(ORCHID)|(Konami)|(Imation)|(aigo)|(Umax)|(Super Talent)|(Silicon Power)|(Quantum)|(Memorex)|(Frohne)|(Gifts)|(Iball)","product":"(ether)|(radeon)|(network)"}','general');
 
 select fn_db_add_config_value_for_versions_up_to('ChangeNetworkUnderBridgeInUseSupported','false','3.5');
 
