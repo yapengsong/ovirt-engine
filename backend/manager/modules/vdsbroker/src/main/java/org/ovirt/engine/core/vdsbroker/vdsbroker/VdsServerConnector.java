@@ -128,6 +128,8 @@ public interface VdsServerConnector {
 
     public Map<String, Object> getStorageDomainsList(String spUUID, int domainType, String poolType, String path);
 
+    public Map<String, Object> getHostedStorageID();
+
     public Map<String, Object> getIsoList(String spUUID);
 
     public Map<String, Object> createVG(String sdUUID, String[] deviceList);

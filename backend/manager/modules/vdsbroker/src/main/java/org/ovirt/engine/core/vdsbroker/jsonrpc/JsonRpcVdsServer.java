@@ -794,6 +794,15 @@ public class JsonRpcVdsServer implements IVdsServer {
     }
 
     @Override
+    public OneUuidReturnForXmlRpc getHostedStorageID() {
+        JsonRpcRequest request =
+                new RequestBuilder("Host.getHostedStorageID").build();
+        Map<String, Object> response =
+                new FutureMap(this.client, request).withResponseKey("uuid");
+        return new OneUuidReturnForXmlRpc(response);
+    }
+
+    @Override
     public FileStatsReturnForXmlRpc getIsoList(String spUUID) {
         JsonRpcRequest request =
                 new RequestBuilder("StoragePool.getIsoList").withParameter("storagepoolID", spUUID).build();

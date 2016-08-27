@@ -51,6 +51,7 @@ import org.ovirt.engine.core.common.businessentities.storage.LUNs;
 import org.ovirt.engine.core.common.businessentities.storage.StorageType;
 import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineMessage;
+import org.ovirt.engine.core.common.queries.IdQueryParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryParametersBase;
 import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
@@ -155,6 +156,7 @@ public class ImportHostedEngineStorageDomainCommandTest {
         StorageDomain sd = mockGetExistingDomain(true);
         sd.setStorageType(StorageType.CINDER);
         sd.setStorageName(HOSTED_STORAGE_NAME);
+        sd.setId(HE_SD_ID);
 
         cmd.init();
         CanDoActionTestUtils.runAndAssertCanDoActionFailure(
@@ -174,6 +176,7 @@ public class ImportHostedEngineStorageDomainCommandTest {
         int i = new Random().nextInt(SUPPORTED_DOMAIN_TYPES.length);
         sd.setStorageType(SUPPORTED_DOMAIN_TYPES[i]);
         sd.setStorageName(HOSTED_STORAGE_NAME);
+        sd.setId(HE_SD_ID);
 
         cmd.init();
         assertTrue(cmd.canDoAction());
@@ -184,6 +187,7 @@ public class ImportHostedEngineStorageDomainCommandTest {
         when(hostedEngineHelper.getStorageDomain()).thenReturn(null);
         StorageDomain sd = mockGetExistingDomain(true);
         sd.setStorageName(HOSTED_STORAGE_NAME);
+        sd.setId(HE_SD_ID);
         sd.setStorageType(StorageType.NFS);
         mockCommandCall(VdcActionType.AddExistingFileStorageDomain, true);
         mockCommandCall(VdcActionType.AttachStorageDomainToPool, true);
@@ -300,6 +304,11 @@ public class ImportHostedEngineStorageDomainCommandTest {
         when(backend.runInternalAction(
                 eq(VdcActionType.RemoveDisk),
                 any(VdsActionParameters.class))).thenReturn(successfulReturnValue());
+        VdcQueryReturnValue hostedStorageIDReturnValue = new VdcQueryReturnValue();
+        hostedStorageIDReturnValue.setReturnValue(HE_SD_ID);
+        when(backend.runInternalQuery(
+                eq(VdcQueryType.GetHostedStorageID),
+                any(IdQueryParameters.class))).thenReturn(hostedStorageIDReturnValue);
         // Data center
         StoragePool pool = new StoragePool();
         pool.setStatus(StoragePoolStatus.Up);
