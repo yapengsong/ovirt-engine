@@ -165,6 +165,8 @@ public interface IVdsServer {
 
     StorageDomainListReturnForXmlRpc getStorageDomainsList(String spUUID, int domainType, String poolType, String path);
 
+    OneUuidReturnForXmlRpc getHostedStorageID();
+
     FileStatsReturnForXmlRpc getIsoList(String spUUID);
 
     OneUuidReturnForXmlRpc createVG(String sdUUID, String[] deviceList);

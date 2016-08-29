@@ -608,6 +608,18 @@ public class VdsServerWrapper implements IVdsServer {
     }
 
     @Override
+    public OneUuidReturnForXmlRpc getHostedStorageID() {
+        try {
+            Map<String, Object> xmlRpcReturnValue = vdsServer.getHostedStorageID();
+            OneUuidReturnForXmlRpc wrapper = new OneUuidReturnForXmlRpc(xmlRpcReturnValue);
+            return wrapper;
+        } catch (UndeclaredThrowableException ute) {
+            throw new XmlRpcRunTimeException(ute);
+        }
+
+    }
+
+    @Override
     public FileStatsReturnForXmlRpc getIsoList(String spUUID) {
         try {
             Map<String, Object> xmlRpcReturnValue = vdsServer.getIsoList(spUUID);

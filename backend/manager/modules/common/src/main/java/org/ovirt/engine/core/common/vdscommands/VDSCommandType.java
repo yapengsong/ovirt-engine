@@ -58,6 +58,7 @@ public enum VDSCommandType {
     GetVmsInfo("org.ovirt.engine.core.vdsbroker.irsbroker"),
     HSMGetStorageDomainInfo("org.ovirt.engine.core.vdsbroker.vdsbroker"),
     HSMGetStorageDomainsList("org.ovirt.engine.core.vdsbroker.vdsbroker"),
+    HSMGetHostedStorageID("org.ovirt.engine.core.vdsbroker.vdsbroker"),
     CreateImage("org.ovirt.engine.core.vdsbroker.irsbroker"),
     PrepareImage("org.ovirt.engine.core.vdsbroker.vdsbroker"),
     TeardownImage("org.ovirt.engine.core.vdsbroker.vdsbroker"),

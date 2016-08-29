@@ -15,10 +15,6 @@ class Plugin(plugin.PluginBase):
 
     def __init__(self, context):
         super(Plugin, self).__init__(context=context)
-        self.environment.setdefault(
-            oenginecons.ConfigEnv.EAYUNOS_VERSION,
-            'BaseVersion'
-        )
 
     @plugin.event(
         stage=plugin.Stages.STAGE_CUSTOMIZATION,
@@ -30,9 +26,9 @@ class Plugin(plugin.PluginBase):
         ),
     )
     def _customization(self):
-        version = self.environment[
-                oenginecons.ConfigEnv.EAYUNOS_VERSION
-            ]
+        version = self.environment.get(
+            oenginecons.ConfigEnv.EAYUNOS_VERSION
+        )
         if version == 'BaseVersion':
             self.base_version_setup()
             self.dialog.note(text="EayunOS version: Basic")
