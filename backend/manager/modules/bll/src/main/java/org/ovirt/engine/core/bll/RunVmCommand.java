@@ -136,6 +136,8 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Inject
     private HostDeviceManager hostDeviceManager;
 
+    private boolean versionValidated = true;
+
     protected RunVmCommand(Guid commandId) {
         super(commandId);
     }
@@ -360,6 +362,9 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
     @Override
     protected void executeVmCommand() {
         setActionReturnValue(VMStatus.Down);
+        if (!versionValidated) {
+            return;
+        }
         initVm();
         perform();
     }
@@ -991,14 +996,17 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         if(version.equals("BaseVersion")) {
             if(cpuNums > 2 && !vmName.equals("HostedEngine")) {
+                versionValidated = false;
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
             }
 
             if(vmMemSize > 8192) {
+                versionValidated = false;
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
             }
 
             if (getVmDao().getAllRunning().size() >= 8) {
+                versionValidated = false;
                 return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
             }
         }
@@ -1006,10 +1014,12 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         if(version.equals("HigherVersion")) {
             if(cpuNums > 8 && !vmName.equals("HostedEngine")) {
+                versionValidated = false;
                 return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
             }
 
             if(vmMemSize > 16384) {
+                versionValidated = false;
                 return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
             }
         }
