@@ -48,6 +48,8 @@ public class RemoveStoragePoolCommand<T extends StoragePoolParametersBase> exten
 
     private Map<String, Pair<String, String>> sharedLocks;
 
+    private boolean deleteMacPool = false;
+
     public RemoveStoragePoolCommand(T parameters) {
         super(parameters);
     }
@@ -83,7 +85,11 @@ public class RemoveStoragePoolCommand<T extends StoragePoolParametersBase> exten
             }
         }
 
-        getMacPool().freeMacs(macsToRemove);
+        if (macsToRemove.size() > 0) {
+            getMacPool().freeMacs(macsToRemove);
+        }
+        deleteMacPool = getDbFacade().getStoragePoolDao().getAllDataCentersByMacPoolId(
+                getStoragePool().getMacPoolId()).size() < 2;
         removeDataCenter();
 
         setSucceeded(true);
@@ -96,7 +102,9 @@ public class RemoveStoragePoolCommand<T extends StoragePoolParametersBase> exten
             public Void runInTransaction() {
                 getCompensationContext().snapshotEntity(getStoragePool());
                 getStoragePoolDao().remove(getStoragePool().getId());
-                getDbFacade().getMacPoolDao().remove(getStoragePool().getMacPoolId());
+                if (deleteMacPool) {
+                    getDbFacade().getMacPoolDao().remove(getStoragePool().getMacPoolId());
+                }
                 getCompensationContext().stateChanged();
 
                 return null;

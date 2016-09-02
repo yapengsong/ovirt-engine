@@ -1,6 +1,7 @@
 package org.ovirt.engine.core.bll;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,6 +14,10 @@ import org.ovirt.engine.core.common.action.VdcActionParametersBase;
 import org.ovirt.engine.core.common.action.VdcActionType;
 import org.ovirt.engine.core.common.action.VdcReturnValueBase;
 import org.ovirt.engine.core.common.businessentities.aaa.DbUser;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
+import org.ovirt.engine.core.common.errors.EngineMessage;
+import org.ovirt.engine.core.dal.dbbroker.DbFacade;
 import org.ovirt.engine.core.utils.CorrelationIdTracker;
 import org.ovirt.engine.core.utils.threadpool.ThreadPoolUtil;
 import org.slf4j.Logger;
@@ -60,6 +65,20 @@ public class MultipleActionsRunner {
 
         ArrayList<VdcReturnValueBase> returnValues = new ArrayList<>();
         try {
+            if (actionType == VdcActionType.RunVm) {
+                int runningVmsCount = DbFacade.getInstance().getVmDao().getAllRunning().size();
+                String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
+                if(version.equals("BaseVersion")) {
+                    if (runningVmsCount > 8) {
+                        returnValues.add(addEayunOSVersionValidationMsg());
+                        return returnValues;
+                    } else if (runningVmsCount+parameters.size() >= 8) {
+                        returnValues.add(addEayunOSVersionValidationMsg());
+                        delTialNfromParameters(runningVmsCount + parameters.size() - 8);
+                    }
+                }
+            }
+
             initCommandsAndReturnValues(returnValues);
 
             invokeCommands(returnValues);
@@ -68,6 +87,26 @@ public class MultipleActionsRunner {
             log.error("Exception", e);
         }
         return returnValues;
+    }
+
+    private VdcReturnValueBase addEayunOSVersionValidationMsg() {
+        VdcReturnValueBase valueToAdd = new VdcReturnValueBase();
+        valueToAdd.getCanDoActionMessages().add(EngineMessage.USE_BASE_VERSION.name());
+        return valueToAdd;
+    }
+
+    private void delTialNfromParameters(int n) {
+        int index = 0;
+        Iterator<VdcActionParametersBase> iterator = parameters.iterator();
+        while (iterator.hasNext()) {
+            iterator.next();
+            if (index < n) {
+                iterator.remove();
+            } else {
+                break;
+            }
+            index++;
+        }
     }
 
     private void initCommandsAndReturnValues(ArrayList<VdcReturnValueBase> returnValues) {
