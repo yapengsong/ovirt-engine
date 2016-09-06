@@ -164,6 +164,9 @@ public class NetworkQosWidget extends AbstractModelBoundPopupWidget<BaseNetworkQ
                     int inboundAverage = inboundAverageEditor.asValueBox().getValue();
                     inboundPeakEditor.asValueBox().setValue(calcBoundPeak(inboundAverage));
                     inboundBurstEditor.asValueBox().setValue(calcBoundBurst(inboundAverage));
+                    model.getInbound().getAverage().setEntity(inboundAverage);
+                    model.getInbound().getPeak().setEntity(inboundPeakEditor.asValueBox().getValue());
+                    model.getInbound().getBurst().setEntity(inboundBurstEditor.asValueBox().getValue());
                 }
             }});
         outboundAverageEditor.asValueBox().addBlurHandler(new BlurHandler(){
@@ -173,6 +176,9 @@ public class NetworkQosWidget extends AbstractModelBoundPopupWidget<BaseNetworkQ
                     int outboundAverage = outboundAverageEditor.asValueBox().getValue();
                     outboundPeakEditor.asValueBox().setValue(calcBoundPeak(outboundAverage));
                     outboundBurstEditor.asValueBox().setValue(calcBoundBurst(outboundAverage));
+                    model.getOutbound().getAverage().setEntity(outboundAverage);
+                    model.getOutbound().getPeak().setEntity(outboundPeakEditor.asValueBox().getValue());
+                    model.getOutbound().getBurst().setEntity(outboundBurstEditor.asValueBox().getValue());
                 }
             }});
     }
