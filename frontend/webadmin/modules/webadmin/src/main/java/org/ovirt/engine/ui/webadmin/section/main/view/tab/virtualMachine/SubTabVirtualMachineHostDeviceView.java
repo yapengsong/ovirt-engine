@@ -28,7 +28,7 @@ public class SubTabVirtualMachineHostDeviceView
             EventBus eventBus, ClientStorage clientStorage) {
         super(new VmHostDeviceModelTable(modelProvider, eventBus, clientStorage));
         ViewIdHandler.idHandler.generateAndSetIds(this);
-        modelProvider.getModel().getFilter().setUseFilter(false);
+        modelProvider.getModel().getFilterModel().getEnableFilter().setEntity(false);
         initTable();
         initWidget(getModelBoundTableWidget());
     }

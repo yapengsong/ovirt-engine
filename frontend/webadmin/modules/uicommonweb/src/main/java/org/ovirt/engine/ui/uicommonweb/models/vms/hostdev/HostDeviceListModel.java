@@ -27,4 +27,9 @@ public class HostDeviceListModel extends HostDeviceListModelBase<VDS> {
             syncSearch(VdcQueryType.GetExtendedHostDevicesByHostId, new IdQueryParameters(getEntity().getId()));
         }
     }
+
+    public void setFilter(boolean enableFilter){
+        getFilterModel().getEnableFilter().setEntity(enableFilter);
+        syncSearch();
+    }
 }
