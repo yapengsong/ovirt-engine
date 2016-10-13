@@ -11,7 +11,7 @@ import org.ovirt.engine.ui.common.widget.editor.EntityModelCellTable;
 import org.ovirt.engine.ui.common.widget.editor.ListModelListBoxEditor;
 import org.ovirt.engine.ui.common.widget.renderer.NameRenderer;
 import org.ovirt.engine.ui.common.widget.table.column.AbstractTextColumn;
-import org.ovirt.engine.ui.common.widget.uicommon.hosts.HostDeviceFilterView;
+import org.ovirt.engine.ui.common.widget.uicommon.hosts.hostdev.HostDeviceFilterWidget;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.SortedListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.AddVmHostDevicesModel;
@@ -19,6 +19,7 @@ import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.hostdev.AddVmHostDevicePopupPresenterWidget;
 
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -51,7 +52,7 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
     ListModelListBoxEditor<String> capabilityEditor;
 
     @UiField(provided = true)
-    HostDeviceFilterView hostDeviceFilter;
+    HostDeviceFilterWidget filterWidget;
 
     @UiField(provided = true)
     HorizontalSplitTable<SortedListModel<EntityModel<HostDeviceView>>, EntityModel<HostDeviceView>> splitTable;
@@ -81,10 +82,6 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
         availableHostDevices = new EntityModelCellTable<>(true, false, true);
         selectedHostDevices = new EntityModelCellTable<>(true, false, true);
 
-        hostDeviceFilter = new HostDeviceFilterView();
-        hostDeviceFilter.removeEditButton(); //remove edit-button, later will add this function
-        hostDeviceFilter.getFilterCheckBox().setValue(true);
-
         splitTable = new HorizontalSplitTable<>(availableHostDevices,
                 selectedHostDevices,
                 constants.availableHostDevices(),
@@ -94,6 +91,14 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
         initHostDeviceCellTable(selectedHostDevices);
 
         splitTable.enableDoubleClickItemMoving();
+
+        filterWidget = new HostDeviceFilterWidget();
+        setFilterPanelStyle();
+    }
+
+    private void setFilterPanelStyle() {
+        splitTable.getElement().getStyle().setMarginTop(25, Style.Unit.PX);
+        filterWidget.getCheckBox().asWidget().getElement().setPropertyString("margin-top", "5px"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     private void initHostDeviceCellTable(EntityModelCellTable<SortedListModel<EntityModel<HostDeviceView>>> hostDeviceTable) {
@@ -160,6 +165,7 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
                 model.getAddDeviceCommand(),
                 model.getRemoveDeviceCommand());
         driver.edit(model);
+        initTableOverhead(model);
     }
 
     @Override
@@ -171,15 +177,15 @@ public class AddVmHostDevicePopupView extends AbstractModelBoundPopupView<AddVmH
     public void init(AddVmHostDevicesModel model) {
         availableHostDevices.initModelSortHandler((SortedListModel) model.getAvailableHostDevices());
         selectedHostDevices.initModelSortHandler((SortedListModel) model.getSelectedHostDevices());
-        initFilterHandler(model);
+        initTableOverhead(model);
     }
 
-    public void initFilterHandler(final AddVmHostDevicesModel model){
-        hostDeviceFilter.getFilterCheckBox().addValueChangeHandler(new ValueChangeHandler<Boolean>(){
+    private void initTableOverhead(final AddVmHostDevicesModel model) {
+        filterWidget.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
             @Override
-            public void onValueChange(ValueChangeEvent event) {
-                model.getFilter().setUseFilter(hostDeviceFilter.getFilterCheckBox().getValue());
-                model.updateHostDeviceWidget();
-            }});
+            public void onValueChange(ValueChangeEvent<Boolean> event) {
+                model.updataHostDevices(filterWidget.getCheckBox().getValue());
+            }
+        });
     }
 }
