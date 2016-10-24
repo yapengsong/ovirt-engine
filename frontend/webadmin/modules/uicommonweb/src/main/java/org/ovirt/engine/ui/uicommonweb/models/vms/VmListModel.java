@@ -28,6 +28,7 @@ import org.ovirt.engine.core.common.action.VmManagementParametersBase;
 import org.ovirt.engine.core.common.action.VmOperationParameterBase;
 import org.ovirt.engine.core.common.businessentities.HaMaintenanceMode;
 import org.ovirt.engine.core.common.businessentities.MigrationSupport;
+import org.ovirt.engine.core.common.businessentities.Snapshot;
 import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.core.common.businessentities.Tags;
 import org.ovirt.engine.core.common.businessentities.VDSGroup;
@@ -1997,10 +1998,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.RunVmOnce));
         getExportCommand().setIsExecutionAllowed(vmsSelected
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.ExportVm));
-        getCreateSnapshotCommand().setIsExecutionAllowed(singleVmSelected
-                && !getSelectedItem().isStateless()
-                && (indexOfVmSnapshotListModel == -1) ? true : ((VmSnapshotListModel)getDetailModels().get(indexOfVmSnapshotListModel)).getNewCommand().getIsExecutionAllowed()
-                && VdcActionUtils.canExecute(items, VM.class, VdcActionType.CreateAllSnapshotsFromVm));
+        updateCreateSnapshotCommandAvailability(singleVmSelected, items);
         getRetrieveIsoImagesCommand().setIsExecutionAllowed(singleVmSelected
                 && VdcActionUtils.canExecute(items, VM.class, VdcActionType.ChangeDisk));
         getChangeCdCommand().setIsExecutionAllowed(singleVmSelected
@@ -2014,6 +2012,31 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         getConsoleConnectCommand().setIsExecutionAllowed(isConsoleCommandsExecutionAllowed());
         getEditConsoleCommand().setIsExecutionAllowed(singleVmSelected && isConsoleEditEnabled());
         getCancelConvertCommand().setIsExecutionAllowed(isSelectedVmBeingConverted());
+    }
+
+    private void updateCreateSnapshotCommandAvailability(boolean singleVmSelected, List items) {
+
+        getCreateSnapshotCommand().setIsExecutionAllowed(singleVmSelected && !getSelectedItem().isStateless()
+                && getNewCommandAvailability(singleVmSelected)
+                && VdcActionUtils.canExecute(items, VM.class, VdcActionType.CreateAllSnapshotsFromVm));
+        if (indexOfVmSnapshotListModel != -1) {
+            ((VmSnapshotListModel)getDetailModels().get(indexOfVmSnapshotListModel)).getNewCommand().setIsExecutionAllowed(getCreateSnapshotCommand().getIsExecutionAllowed());
+        }
+    }
+
+    private boolean getNewCommandAvailability(boolean singleVmSelected) {
+        if (indexOfVmSnapshotListModel == -1) {
+            return true;
+        } else {
+            //!isPreviewing && !isLocked && !isVmImageLocked && !isStateless
+            boolean isVmImageLocked = singleVmSelected && (getSelectedItem().getStatus() == VMStatus.ImageLocked);
+            VmSnapshotListModel vmSnapshotListModel = (VmSnapshotListModel) getDetailModels().get(indexOfVmSnapshotListModel);
+            if (vmSnapshotListModel.getItems() == null) {
+                vmSnapshotListModel.setItems(new ArrayList<Snapshot>());
+            }
+            return (!isVmImageLocked && (vmSnapshotListModel.getInPreview() == null)
+                        && (vmSnapshotListModel.getLocked() == null) && !vmSnapshotListModel.getIsStateless());
+        }
     }
 
     private boolean isSelectedVmBeingConverted() {
