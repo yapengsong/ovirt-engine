@@ -86,6 +86,7 @@ import org.ovirt.engine.ui.uicommonweb.models.templates.VmBaseListModel;
 import org.ovirt.engine.ui.uicommonweb.models.userportal.AttachCdModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.hostdev.VmHostDeviceListModel;
 import org.ovirt.engine.ui.uicommonweb.place.WebAdminApplicationPlaces;
+import org.ovirt.engine.ui.uicompat.CommonApplicationConstantsWithLookupManager;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.EventArgs;
@@ -99,12 +100,14 @@ import org.ovirt.engine.ui.uicompat.IFrontendMultipleQueryAsyncCallback;
 import org.ovirt.engine.ui.uicompat.ObservableCollection;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
 import org.ovirt.engine.ui.uicompat.UIConstants;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSystemTreeContext, ICancelable {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(VmListModel.class);
     public static final String CMD_CONFIGURE_VMS_TO_IMPORT = "ConfigureVmsToImport"; //$NON-NLS-1$
     public static final String CMD_CANCEL = "Cancel"; //$NON-NLS-1$
     private static final String CMD_BACK = "Back"; //$NON-NLS-1$
@@ -730,7 +733,6 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         VmBasedWidgetSwitchModeCommand switchModeCommand = new VmBasedWidgetSwitchModeCommand();
         switchModeCommand.init(model);
         model.getCommands().add(switchModeCommand);
-
         model.getCommands().add(UICommand.createDefaultOkUiCommand("OnSave", this)); //$NON-NLS-1$
 
         model.getCommands().add(UICommand.createCancelUiCommand("Cancel", this)); //$NON-NLS-1$
@@ -1768,6 +1770,15 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
                 @Override
                 public void onSuccess(Object thisModel, Object returnValue) {
                     List<String> changedFields = ((VdcQueryReturnValue)returnValue).<List<String>> getReturnValue();
+                    List<String> list=new ArrayList<String>();
+                    for (String field : changedFields) {
+                        try {
+                            list.add(CommonApplicationConstantsWithLookupManager.getInstance().getCommonApplicationConstantsWithLookup().getString(field));
+                        } catch (Exception e) {
+                            list.add(field);
+                        }
+                    }
+                    changedFields=list;
                     // provide warnings if isVmUnpinned()
                     if (!changedFields.isEmpty() || isVmUnpinned()) {
                         VmNextRunConfigurationModel confirmModel = new VmNextRunConfigurationModel();
@@ -1827,7 +1838,6 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         if (oldClusterID.equals(newClusterID) == false) {
             ChangeVMClusterParameters parameters =
                     new ChangeVMClusterParameters(newClusterID, getcurrentVm().getId());
-
             model.startProgress(null);
 
             Frontend.getInstance().runAction(VdcActionType.ChangeVMCluster, parameters,
