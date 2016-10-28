@@ -42,6 +42,7 @@ import org.ovirt.engine.ui.webadmin.widget.table.column.HostAdditionalStatusColu
 import org.ovirt.engine.ui.webadmin.widget.table.column.HostStatusColumn;
 import org.ovirt.engine.ui.webadmin.widget.table.column.ReasonColumn;
 import org.ovirt.engine.ui.webadmin.widget.table.column.VmCountColumn;
+
 import com.google.gwt.cell.client.HasCell;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.safehtml.shared.SafeHtml;
@@ -317,12 +318,12 @@ public class MainTabHostView extends AbstractMainTabWithDetailsTableView<VDS, Ho
                 return getMainModel().getInstallCommand();
             }
         });
-        getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.upgradeHost()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getUpgradeCommand();
-            }
-        });
+        // getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.upgradeHost()) {
+        // @Override
+        // protected UICommand resolveCommand() {
+        // return getMainModel().getUpgradeCommand();
+        // }
+        // });
         getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.configureLocalStorageHost()) {
             @Override
             protected UICommand resolveCommand() {
