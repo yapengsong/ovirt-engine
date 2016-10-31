@@ -1,9 +1,5 @@
 package org.ovirt.engine.ui.webadmin.section.main.presenter.tab.host;
 
-import java.util.Arrays;
-
-import org.ovirt.engine.core.common.VdcActionUtils;
-import org.ovirt.engine.core.common.action.VdcActionType;
 import org.ovirt.engine.core.common.businessentities.VDS;
 import org.ovirt.engine.core.common.mode.ApplicationMode;
 import org.ovirt.engine.ui.common.place.PlaceRequestFactory;
@@ -24,6 +20,7 @@ import org.ovirt.engine.ui.webadmin.ApplicationMessages;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.tab.HostSelectionChangeEvent;
 import org.ovirt.engine.ui.webadmin.widget.alert.InLineAlertWidget.AlertType;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -127,16 +124,16 @@ public class SubTabHostGeneralInfoPresenter extends AbstractSubTabPresenter<VDS,
         view.clearAlerts();
 
         // Review the alerts and add those that are active:
-        if (model.getHasUpgradeAlert()) {
-            if (VdcActionUtils.canExecute(Arrays.asList(model.getEntity()), VDS.class, VdcActionType.UpgradeHost)) {
-                addTextAndLinkAlert(view,
-                        messages.hostInSupportedStatusHasUpgradeAlert(),
-                        model.getUpgradeHostCommand(),
-                        AlertType.UPDATE_AVAILABLE);
-            } else {
-                addTextAlert(view, messages.hostHasUpgradeAlert(), AlertType.UPDATE_AVAILABLE);
-            }
-        }
+        // if (model.getHasUpgradeAlert()) {
+        // if (VdcActionUtils.canExecute(Arrays.asList(model.getEntity()), VDS.class, VdcActionType.UpgradeHost)) {
+        // addTextAndLinkAlert(view,
+        // messages.hostInSupportedStatusHasUpgradeAlert(),
+        // model.getUpgradeHostCommand(),
+        // AlertType.UPDATE_AVAILABLE);
+        // } else {
+        // addTextAlert(view, messages.hostHasUpgradeAlert(), AlertType.UPDATE_AVAILABLE);
+        // }
+        // }
 
         if (model.getHasReinstallAlertNonResponsive()) {
             addTextAlert(view, messages.hostHasReinstallAlertNonResponsive());
