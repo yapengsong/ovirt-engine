@@ -3,12 +3,12 @@ package org.ovirt.engine.ui.uicommonweb.models.vms.hostdev;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.ovirt.engine.core.common.action.VdcActionType;
 import org.ovirt.engine.core.common.action.VmHostDevicesParameters;
 import org.ovirt.engine.core.common.action.VmManagementParametersBase;
 import org.ovirt.engine.core.common.businessentities.HostDevice;
 import org.ovirt.engine.core.common.businessentities.HostDeviceView;
+import org.ovirt.engine.core.common.businessentities.MigrationSupport;
 import org.ovirt.engine.core.common.businessentities.VM;
 import org.ovirt.engine.core.common.queries.IdQueryParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
@@ -18,10 +18,13 @@ import org.ovirt.engine.ui.uicommonweb.UICommand;
 import org.ovirt.engine.ui.uicommonweb.help.HelpTag;
 import org.ovirt.engine.ui.uicommonweb.models.ConfirmationModel;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
+import org.ovirt.engine.ui.uicommonweb.models.vms.VmNextRunConfigurationModel;
+import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.FrontendActionAsyncResult;
 import org.ovirt.engine.ui.uicompat.IFrontendActionAsyncCallback;
 import org.ovirt.engine.ui.uicompat.UIConstants;
 import com.google.inject.Inject;
+
 
 public class VmHostDeviceListModel extends HostDeviceListModelBase<VM> {
 
@@ -89,10 +92,49 @@ public class VmHostDeviceListModel extends HostDeviceListModelBase<VM> {
         } else if ("OnRemove".equals(command.getName())) { //$NON-NLS-1$
             onRemove();
         } else if ("OnRepin".equals(command.getName())) { //$NON-NLS-1$
+            final VM vm=getEntity();
+            if(vm.isRunningOrPaused() && !vm.isHostedEngine()){
+                preSave();
+            }
+
             onRepin();
+
+
         } else if ("Cancel".equals(command.getName())) { //$NON-NLS-1$
             cancel();
+        }else if ("CancelConfirmation".equals(command.getName())) { //$NON-NLS-1$
+            cancelConfirmation();
         }
+    }
+
+    public void preSave(){
+        VmNextRunConfigurationModel confirmModel = new VmNextRunConfigurationModel();
+        if(isVmUnpinned()){
+            confirmModel.setVmUnpinned();
+        }
+        confirmModel.setTitle(ConstantsManager.getInstance().getConstants().editNextRunConfigurationTitle());
+        confirmModel.setHelpTag(HelpTag.edit_next_run_configuration);
+        confirmModel.setHashName("edit_next_run_configuration"); //$NON-NLS-1$
+
+        confirmModel.setMessage(ConstantsManager.getInstance().getConstants().nextBootEntry());
+
+        confirmModel.getCommands().add(UICommand.createCancelUiCommand("CancelConfirmation", VmHostDeviceListModel.this).setTitle(ConstantsManager.getInstance().getConstants().close())); //$NON-NLS-1$
+
+        setConfirmWindow(confirmModel);
+    }
+
+    private boolean isVmUnpinned() {
+        if (getEntity().isRunning()) {
+            if (getEntity().getMigrationSupport() == MigrationSupport.PINNED_TO_HOST
+                    && getEntity().getMigrationSupport() != MigrationSupport.PINNED_TO_HOST) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void cancelConfirmation() {
+        setConfirmWindow(null);
     }
 
     @Override
