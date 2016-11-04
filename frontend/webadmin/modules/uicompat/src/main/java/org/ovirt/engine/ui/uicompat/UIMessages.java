@@ -536,7 +536,7 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
     @DefaultMessage("Test successful: {0}")
     String testSuccessfulWithPowerStatus(String powerStatus);
 
-    @DefaultMessage("Test failed: {0}")
+    @DefaultMessage("Test failed, return error message when executing test command: {0}")
     String testFailedWithErrorMsg(String errorMessage);
 
     @DefaultMessage("Error while executing at least some of the action tasks: {0}")
