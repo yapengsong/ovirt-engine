@@ -17,6 +17,7 @@
             line-height: 20px;
             color: red;
             font-size: 12px;
+	    font-weight:bold;
         }
 
         .panelPadding {
