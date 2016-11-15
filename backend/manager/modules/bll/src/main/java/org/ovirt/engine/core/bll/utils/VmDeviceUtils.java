@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.ovirt.engine.core.bll.UpdateVmCommand;
 import org.ovirt.engine.core.bll.VmHandler;
 import org.ovirt.engine.core.bll.network.VmInterfaceManager;
 import org.ovirt.engine.core.bll.validator.VirtIoRngValidator;
@@ -27,6 +28,7 @@ import org.ovirt.engine.core.common.businessentities.VmRngDevice;
 import org.ovirt.engine.core.common.businessentities.VmStatic;
 import org.ovirt.engine.core.common.businessentities.VmTemplate;
 import org.ovirt.engine.core.common.businessentities.VmType;
+import org.ovirt.engine.core.common.businessentities.VmWatchdog;
 import org.ovirt.engine.core.common.businessentities.network.VmNic;
 import org.ovirt.engine.core.common.businessentities.storage.BaseDisk;
 import org.ovirt.engine.core.common.businessentities.storage.Disk;
@@ -45,7 +47,6 @@ import org.ovirt.engine.core.dao.VmDeviceDao;
 import org.ovirt.engine.core.vdsbroker.vdsbroker.VdsProperties;
 
 public class VmDeviceUtils {
-
     private final static String EHCI_MODEL = "ich9-ehci";
     private final static String UHCI_MODEL = "ich9-uhci";
     private final static int SLOTS_PER_CONTROLLER = 6;
@@ -1819,6 +1820,49 @@ public class VmDeviceUtils {
                 }
             }
         }
+
+        return false;
+    }
+
+
+    public static boolean vmDeviceChanged(Guid vmId, VmDeviceGeneralType deviceGeneralType, String deviceTypeName,
+                                          VmWatchdog watchdog) {
+
+        List<VmDevice> vmDevices = deviceTypeName != null ?
+                dao.getVmDeviceByVmIdTypeAndDevice(vmId, deviceGeneralType, deviceTypeName):
+                dao.getVmDeviceByVmIdAndType(vmId, deviceGeneralType);
+
+        if (watchdog == null) {
+            return !vmDevices.isEmpty();
+        }
+        if (vmDevices.isEmpty()) { // && device != null
+            return true;
+        }
+
+
+
+        HashMap<String, Object> specParams = new HashMap<>();
+        specParams.put("action", watchdog.getAction());
+        specParams.put("model", watchdog.getModel());
+
+        if (watchdog != null) { // if device.getSpecParams() == null, it is not used for comparison
+            for (VmDevice vmDevice : vmDevices) {
+                if(watchdog.getAction()==null && vmDevice.getSpecParams().get("action")!=null){
+                    return true;
+                }
+                if(watchdog.getAction()!=null && vmDevice.getSpecParams().get("action")==null){
+                    return true;
+                }
+                boolean flagaction=vmDevice.getSpecParams().get("action").toString().toUpperCase().equals(watchdog.getAction().toString());
+                boolean flagmodel=vmDevice.getSpecParams().get("model").toString().equals(watchdog.getModel().toString());
+
+                if (!(flagaction && flagmodel)) {
+                    return true;
+                }
+            }
+        }
+
+
 
         return false;
     }

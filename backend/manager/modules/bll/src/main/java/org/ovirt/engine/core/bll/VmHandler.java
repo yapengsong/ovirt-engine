@@ -53,6 +53,7 @@ import org.ovirt.engine.core.common.businessentities.VmDynamic;
 import org.ovirt.engine.core.common.businessentities.VmInit;
 import org.ovirt.engine.core.common.businessentities.VmNumaNode;
 import org.ovirt.engine.core.common.businessentities.VmStatic;
+import org.ovirt.engine.core.common.businessentities.VmWatchdog;
 import org.ovirt.engine.core.common.businessentities.network.VmNetworkInterface;
 import org.ovirt.engine.core.common.businessentities.network.VmNic;
 import org.ovirt.engine.core.common.businessentities.storage.CinderDisk;
@@ -819,6 +820,10 @@ public class VmHandler {
                         if (!success)
                             break;
                     }
+                }else if(value instanceof VmWatchdog){
+                    VmWatchdog watchdog=(VmWatchdog) value;
+                    addDeviceUpdateOnNextRun(vmId, annotation, null, value, fieldList);
+
                 } else {
                     log.warn("getVmDevicesFieldsToUpdateOnNextRun: Unsupported field type: " +
                             value.getClass().getName());
@@ -830,6 +835,7 @@ public class VmHandler {
         }
 
         return fieldList;
+
     }
 
     private static boolean addDeviceUpdateOnNextRun(Guid vmId, EditableDeviceOnVmStatusField annotation,
@@ -880,6 +886,10 @@ public class VmHandler {
         } else if (value instanceof VmDevice) {
             if (VmDeviceUtils.vmDeviceChanged(vmId, generalType, typeName, (VmDevice) value)) {
                 updates.add(new VmDeviceUpdate(generalType, type, readOnly, name, (VmDevice) value));
+            }
+        } else if(value instanceof VmWatchdog){
+            if (VmDeviceUtils.vmDeviceChanged(vmId, generalType, typeName, (VmWatchdog) value)) {
+                updates.add(new VmDeviceUpdate(generalType, type, readOnly, name, true));
             }
         } else {
             log.warn("addDeviceUpdateOnNextRun: Unsupported value type: " +

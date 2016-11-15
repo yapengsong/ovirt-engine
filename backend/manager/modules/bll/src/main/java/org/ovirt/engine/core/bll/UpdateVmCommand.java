@@ -163,6 +163,14 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
             updateVmTemplateVersion();
             return; // template version was changed, no more work is required
         }
+
+        if (getParameters().isUpdateWatchdog()) {
+            VdcQueryReturnValue query =
+                    runInternalQuery(VdcQueryType.GetWatchdog, new IdQueryParameters(getParameters().getVmId()));
+
+
+        }
+
         if (isRunningConfigurationNeeded()) {
             createNextRunSnapshot();
         }
@@ -207,10 +215,11 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
         final List<Guid> oldIconIds = IconUtils.updateVmIcon(
                 oldVm.getStaticData(), newVmStatic, getParameters().getVmLargeIcon());
         getVmStaticDao().update(newVmStatic);
+
+        updateWatchdog();
         if (getVm().isNotRunning()) {
             updateVmPayload();
             VmDeviceUtils.updateVmDevices(getParameters(), oldVm);
-            updateWatchdog();
             updateRngDevice();
             updateGraphicsDevices();
             updateVmHostDevices();
