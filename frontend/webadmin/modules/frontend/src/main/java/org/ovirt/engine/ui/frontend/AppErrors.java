@@ -3464,14 +3464,16 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. Disk Profile ${diskProfile} with id ${diskProfileId} is not assigned to Storage Domain ${storageDomain}.")
     String ACTION_TYPE_DISK_PROFILE_NOT_MATCH_STORAGE_DOMAIN();
 
+    String ACTION_TYPE_DISK_PROFILE_NOT_FOUND_FOR_STORAGE_DOMAIN();
+
     @DefaultStringValue("Cannot ${action} ${type}. CPU Profile doesn't match provided Cluster.")
     String ACTION_TYPE_CPU_PROFILE_NOT_MATCH_CLUSTER();
 
     @DefaultStringValue("Cannot ${action} ${type}. Cannot remove last CPU profile in Cluster.")
     String ACTION_TYPE_CANNOT_REMOVE_LAST_CPU_PROFILE_IN_CLUSTER();
 
-    @DefaultStringValue("Can't assign CPU profile. CPU profile with id ${cpuProfileId} doesn't exist.")
-    String ACTION_TYPE_NO_CPU_PROFILE_WITH_THAT_ID();
+    @DefaultStringValue("Cannot ${action} ${type}. CPU profile with id ${cpuProfileId} doesn't exist.")
+    String ACTION_TYPE_FAILED_CPU_PROFILE_NOT_FOUND();
 
     @DefaultStringValue("No CPU profile exist.")
     String ACTION_TYPE_CPU_PROFILE_EMPTY();
