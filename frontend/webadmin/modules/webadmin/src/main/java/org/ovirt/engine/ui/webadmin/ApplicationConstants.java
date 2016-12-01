@@ -621,10 +621,10 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Concurrent Agents Group")
     String concurrentAgentGroupLabel();
 
-    @DefaultStringValue("Agents by Sequential Order")
+    @DefaultStringValue("Power Management Execution Order ")
     String agentsBySequentialOrder();
 
-    @DefaultStringValue("Add Fence Agent")
+    @DefaultStringValue("Add Power Management ")
     String addNewFenceAgent();
 
     @DefaultStringValue("Memory Optimization")
