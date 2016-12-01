@@ -175,7 +175,7 @@ public class UploadImagePopupView extends AbstractModelBoundPopupView<UploadImag
                         setSourceVisibility(model);
                     }
                 });
-        imageSourcePanel.addRadioButton(
+/*        imageSourcePanel.addRadioButton(
                 constants.uploadImageSourceRemote(),
                 !model.getImageSourceLocalEnabled().getEntity(),
                 true,
@@ -186,7 +186,7 @@ public class UploadImagePopupView extends AbstractModelBoundPopupView<UploadImag
                         setSourceVisibility(model);
                     }
                 });
-
+*/
         setSourceVisibility(model);
 
         vmDiskPopupWidget.edit(model.getDiskModel());
