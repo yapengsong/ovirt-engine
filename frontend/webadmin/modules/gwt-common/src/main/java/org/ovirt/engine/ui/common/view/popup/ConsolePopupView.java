@@ -388,6 +388,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         spiceInvocationLabel.addStyleName(style.labelStyle());
         vncInvocationLabel.addStyleName(style.labelStyle());
         rdpInvocationLabel.addStyleName(style.labelStyle());
+        spicePluginImplRadioButton.removeFromParent();
     }
 
     private String createSpiceInvocationInfo() {
