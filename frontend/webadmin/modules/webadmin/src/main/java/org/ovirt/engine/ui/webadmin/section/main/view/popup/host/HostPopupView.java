@@ -768,7 +768,7 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
     private void initExternalHostProviderWidgets(boolean isAvailable) {
         // When the widgets should be enabled, only the "enable/disable" one should appear.
         // All the rest shouldn't be visible
-        externalHostProviderEnabledEditor.setVisible(isAvailable);
+        externalHostProviderEnabledEditor.setVisible(false);
         provisionedHostSection.setVisible(false);
         discoveredHostSection.setVisible(false);
         providersEditor.setVisible(false);
