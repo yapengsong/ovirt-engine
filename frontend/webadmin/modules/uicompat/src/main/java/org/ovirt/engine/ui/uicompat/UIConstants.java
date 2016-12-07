@@ -42,6 +42,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Hide Advanced Options")
     String hideAdvancedOptions();
 
+    @DefaultStringValue("Console Client Resources")
+    String clientConsoleResources();
+
     @DefaultStringValue(" ")
     String space();
 
