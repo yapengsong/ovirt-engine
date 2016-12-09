@@ -13,6 +13,7 @@ import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.core.compat.Version;
+import org.ovirt.engine.core.compat.VersionTransform;
 import org.ovirt.engine.ui.frontend.AsyncQuery;
 import org.ovirt.engine.ui.frontend.Frontend;
 import org.ovirt.engine.ui.frontend.INewAsyncCallback;
@@ -246,6 +247,7 @@ public class DataCenterModel extends Model implements HasValidatedTabs {
             public void onSuccess(Object model, Object result) {
                 DataCenterModel dataCenterModel = (DataCenterModel) model;
                 ArrayList<Version> versions = (ArrayList<Version>) result;
+                versions = VersionTransform.cutVersionList(versions);
 
                 // Rebuild version items.
                 ArrayList<Version> list = new ArrayList<Version>();

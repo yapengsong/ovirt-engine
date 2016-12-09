@@ -46,11 +46,12 @@ public class VersionTransform {
             for (Version version : versionList) {
                 if (Version.v3_6.equals(version)) {
                     resList.add(version);
-                } else if (Version.v3_5.equals(version)) {
-                    resList.add(version);
-                } else if (Version.v3_3.equals(version)) {
-                    resList.add(version);
                 }
+                // } else if (Version.v3_5.equals(version)) {
+                // resList.add(version);
+                // } else if (Version.v3_3.equals(version)) {
+                // resList.add(version);
+                // }
             }
             return resList;
         }

@@ -1890,11 +1890,11 @@ public enum ConfigValues {
 
     //Host device list filter
     @TypeConverterAttribute(Map.class)
-    @DefaultValueAttribute("{\"name\":\"\",\"vendor\":\"\",\"product\":\"\"}")
+    @DefaultValueAttribute("{\"vendor\":\"\",\"product\":\"\"}")
     HostDeviceBlackList,
 
     @TypeConverterAttribute(Map.class)
-    @DefaultValueAttribute("{\"name\":\"\",\"vendor\":\"\",\"product\":\"\"}")
+    @DefaultValueAttribute("{\"vendor\":\"\",\"product\":\"\"}")
     HostDeviceWhiteList,
 
     /**
