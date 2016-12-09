@@ -1,16 +1,18 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
              xmlns:g="urn:import:com.google.gwt.user.client.ui"
+             xmlns:v="urn:import:org.ovirt.engine.ui.common.widget"
              xmlns:b="urn:import:org.gwtbootstrap3.client.ui">
 
     <ui:style>
         .filterPanel{padding-left: 10px; font-size: small;}
-        .filterCheckBox{float: left; margin-top: 5px;}
+        .filterCheckBox{float: left; margin-top: -2px;}
     </ui:style>
     <g:FlowPanel ui:field="filterPanel" styleName="{style.filterPanel}">
         <g:SimplePanel ui:field="checkBoxContainer">
             <b:CheckBox ui:field="enableFilter" styleName="checkbox {style.filterCheckBox}"></b:CheckBox>
         </g:SimplePanel>
+        <v:WidgetWithInfo ui:field="filterline" />
         <g:SimplePanel ui:field="editButtonContainer">
             <b:Button ui:field="editButton"></b:Button>
         </g:SimplePanel>
