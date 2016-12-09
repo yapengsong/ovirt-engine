@@ -102,6 +102,7 @@ import com.google.inject.Inject;
 
 @SuppressWarnings("unchecked")
 public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> implements ISupportSystemTreeContext {
+
     private final HostGeneralModel generalModel;
 
     private UICommand privateNewCommand;
@@ -369,7 +370,6 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
         this.hostVmListModel = hostVmListModel;
         this.privateHostEventListModel = hostEventListModel;
         this.glusterStorageDeviceListModel = glusterStorageDeviceListModel;
-
         setDetailList(hostInterfaceListModel, hostHardwareGeneralModel, hostHooksListModel, permissionListModel, hostDeviceListModel);
 
         setTitle(ConstantsManager.getInstance().getConstants().hostsTitle());
@@ -430,6 +430,7 @@ public class HostListModel<E> extends ListWithDetailsAndReportsModel<E, VDS> imp
         list.add(hostInterfaceListModel);
         list.add(hostDeviceListModel);
         list.add(getHostEventListModel());
+        hostHooksListModel.setIsAvailable(false);
         list.add(hostHooksListModel);
         list.add(getGlusterSwiftModel());
         list.add(getHostBricksListModel());

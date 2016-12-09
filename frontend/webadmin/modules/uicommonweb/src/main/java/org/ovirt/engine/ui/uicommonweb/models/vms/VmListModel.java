@@ -676,11 +676,15 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         final VmConsoles activeVmConsoles = consolesFactory.getVmConsolesForVm(getSelectedItem());
 
         final ConsolePopupModel model = new ConsolePopupModel();
+        UICommand consoleResCommand=new UICommand("consoleRes", this); //$NON-NLS-1$
+        consoleResCommand.setName("consoleRes"); //$NON-NLS-1$
+        consoleResCommand.setTitle(ConstantsManager.getInstance().getConstants().clientConsoleResources());
         model.setVmConsoles(activeVmConsoles);
         model.setHelpTag(HelpTag.editConsole);
         model.setHashName("editConsole"); //$NON-NLS-1$
         setWindow(model);
 
+        model.getCommands().add(consoleResCommand);
         final UICommand saveCommand = UICommand.createDefaultOkUiCommand("OnEditConsoleSave", this); //$NON-NLS-1$
         model.getCommands().add(saveCommand);
         final UICommand cancelCommand = UICommand.createCancelUiCommand("Cancel", this); //$NON-NLS-1$
@@ -2137,8 +2141,11 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         }
         else if (command == getEditConsoleCommand()) {
             editConsole();
+        }else if( "consoleRes".equals(command.getName())){ //$NON-NLS-1$
+            connectToConsoles();
         }
         else if (command == getConsoleConnectCommand()) {
+
             connectToConsoles();
         }
         else if (command == getRemoveCommand()) {

@@ -49,7 +49,6 @@ import org.ovirt.engine.ui.uicompat.IFrontendMultipleActionAsyncCallback;
 import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
 import org.ovirt.engine.ui.uicompat.UIConstants;
 import org.ovirt.engine.ui.uicompat.UIMessages;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -344,7 +343,7 @@ public class UploadImageModel extends Model implements ICommandTarget {
                 public void initialize() {
                     super.initialize();
 
-                    getStorageDomain().setIsChangeable(false);
+                    //getStorageDomain().setIsChangeable(false);
                     getHost().setIsChangeable(false);
                     getStorageType().setIsChangeable(false);
                     getDataCenter().setIsChangeable(false);

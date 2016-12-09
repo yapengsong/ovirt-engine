@@ -78,6 +78,7 @@ import org.ovirt.engine.ui.uicommonweb.validation.NoTrimmingWhitespacesValidatio
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyQuotaValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotNullIntegerValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.RegexValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.SpecialAsciiI18NOrNoneValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.ValidationResult;
 import org.ovirt.engine.ui.uicompat.ConstantsManager;
@@ -2002,8 +2003,8 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
         if (Version.v3_1.compareTo(cluster.getCompatibilityVersion()) > 0) {
             if (AsyncDataProvider.getInstance().isWindowsOsType(osType)) {
                 getUsbPolicy().setItems(Arrays.asList(
-                        UsbPolicy.DISABLED,
-                        UsbPolicy.ENABLED_LEGACY
+                        UsbPolicy.DISABLED
+                        //UsbPolicy.ENABLED_LEGACY
                 ));
             } else {
                 getUsbPolicy().setItems(Arrays.asList(UsbPolicy.DISABLED));
@@ -2014,14 +2015,14 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
         if (Version.v3_1.compareTo(cluster.getCompatibilityVersion()) <= 0) {
             if (AsyncDataProvider.getInstance().isLinuxOsType(osType)) {
                 getUsbPolicy().setItems(Arrays.asList(
-                        UsbPolicy.DISABLED,
-                        UsbPolicy.ENABLED_NATIVE
+                        UsbPolicy.DISABLED
+                        //UsbPolicy.ENABLED_NATIVE
                 ));
             } else {
                 getUsbPolicy().setItems(
                         Arrays.asList(
                                 UsbPolicy.DISABLED,
-                                UsbPolicy.ENABLED_LEGACY,
+                                //UsbPolicy.ENABLED_LEGACY,
                                 UsbPolicy.ENABLED_NATIVE
                         ));
             }
@@ -2830,7 +2831,7 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
         setValidTab(TabName.CUSTOM_PROPERTIES_TAB, customPropertySheetValid);
 
         if (getSerialNumberPolicy().getSelectedSerialNumberPolicy() == SerialNumberPolicy.CUSTOM) {
-            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() });
+            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() , new RegexValidation("^[A-Za-z0-9-]+$", ConstantsManager.getInstance().getConstants().seriaNumberValidationMsg())});//$NON-NLS-1$
         } else {
             getSerialNumberPolicy().getCustomSerialNumber().setIsValid(true);
         }

@@ -42,6 +42,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Hide Advanced Options")
     String hideAdvancedOptions();
 
+    @DefaultStringValue("Console Client Resources")
+    String clientConsoleResources();
+
     @DefaultStringValue(" ")
     String space();
 
@@ -877,6 +880,9 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Name can contain only 'A-Z', 'a-z', '0-9', '_' or '-' characters.")
     String asciiNameValidationMsg();
+
+    @DefaultStringValue("SeriaNumber can contain only 'A-Z', 'a-z', '0-9'or '-' characters.")
+    String seriaNumberValidationMsg();
 
     @DefaultStringValue("Name can contain only 'A-Z', 'a-z', '0-9', '_' or '-' characters, and might be followed by '@' and domain name")
     String asciiNameAndDomainValidationMsg();
@@ -2543,10 +2549,10 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
 
     @DefaultStringValue("Edit vNIC Profile")
     String editVnicProfileTitle();
-    
+
     @DefaultStringValue("New vNIC Profile")
     String newVnicProfileTitle();
-    
+
     @DefaultStringValue("Cannot edit name in tree context")
     String cannotEditNameInTreeContext();
 

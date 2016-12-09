@@ -6,7 +6,9 @@ import org.ovirt.engine.ui.common.gin.AssetProvider;
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
 import org.ovirt.engine.ui.common.idhandler.WithElementId;
 import org.ovirt.engine.ui.common.presenter.popup.ConsolePopupPresenterWidget;
+import org.ovirt.engine.ui.common.widget.AbstractUiCommandButton;
 import org.ovirt.engine.ui.common.widget.Align;
+import org.ovirt.engine.ui.common.widget.LeftAlignedUiCommandButton;
 import org.ovirt.engine.ui.common.widget.WidgetWithInfo;
 import org.ovirt.engine.ui.common.widget.dialog.SimpleDialogPanel;
 import org.ovirt.engine.ui.common.widget.editor.generic.EntityModelRadioButtonEditor;
@@ -23,6 +25,7 @@ import org.ovirt.engine.ui.uicommonweb.models.vms.IVnc;
 import org.ovirt.engine.ui.uicommonweb.models.vms.RdpConsoleModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.SpiceConsoleModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VncConsoleModel;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
@@ -50,6 +53,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         String remapCADContentWidget();
         String consoleResourcesLink();
         String labelStyle();
+        String showConsoleResButton();
     }
 
     @UiField
@@ -381,10 +385,10 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         vncPanel.setVisible(false);
         rdpPanel.setVisible(false);
 
-        clientConsoleResourcesUrl.asWidget().addStyleName(style.consoleResourcesLink());
+        //clientConsoleResourcesUrl.asWidget().addStyleName(style.consoleResourcesLink());
         remapCtrlAltDeleteSpice.getContentWidgetContainer().addStyleName(style.remapCADContentWidget());
         remapCtrlAltDeleteVnc.getContentWidgetContainer().addStyleName(style.remapCADContentWidget());
-        asWidget().addStatusWidget(clientConsoleResourcesUrl);
+        //asWidget().addStatusWidget(clientConsoleResourcesUrl);
         spiceInvocationLabel.addStyleName(style.labelStyle());
         vncInvocationLabel.addStyleName(style.labelStyle());
         rdpInvocationLabel.addStyleName(style.labelStyle());
@@ -869,4 +873,15 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     public HasValueChangeHandlers<Boolean> getVncNativeImplRadioButton() {
         return vncNativeImplRadioButton.asRadioButton();
     }
+
+    @Override
+    protected AbstractUiCommandButton createCommandButton(String label, String uniqueId) {
+        if("consoleRes".equals(uniqueId)){//$NON-NLS-1$
+            LeftAlignedUiCommandButton leftAlignedUiCommandButton = new LeftAlignedUiCommandButton(label);
+            leftAlignedUiCommandButton.setCustomContentStyle(style.showConsoleResButton());
+            return leftAlignedUiCommandButton;
+        }
+        return super.createCommandButton(label, uniqueId);
+    }
+
 }

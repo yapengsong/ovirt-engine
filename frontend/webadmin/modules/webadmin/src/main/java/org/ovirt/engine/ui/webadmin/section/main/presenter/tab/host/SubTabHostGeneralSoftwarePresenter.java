@@ -38,7 +38,7 @@ public class SubTabHostGeneralSoftwarePresenter extends AbstractSubTabPresenter<
     @TabInfo(container = HostGeneralSubTabPanelPresenter.class)
     static TabData getTabData(
             DetailModelProvider<HostListModel<Void>, HostGeneralModel> modelProvider) {
-        return new ModelBoundTabData(constants.hostGeneralSoftwareSubTabLabel(), 0, modelProvider);
+        return new ModelBoundTabData("", 0, modelProvider);
     }
 
     @Inject
