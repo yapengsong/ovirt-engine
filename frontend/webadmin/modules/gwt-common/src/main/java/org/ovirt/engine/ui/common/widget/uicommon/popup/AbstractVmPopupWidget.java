@@ -1639,6 +1639,7 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         isVirtioScsiEnabled.addContentWidgetContainerStyleName(style.isVirtioScsiEnabledEditor());
         vmIdEditor.addTooltipInnerStyleName(style.breakWord());
         applyStylesForDetachableWithInfoIcon();
+        foremanTab.removeFromParent();
     }
 
     protected void applyStylesForDetachableWithInfoIcon() {

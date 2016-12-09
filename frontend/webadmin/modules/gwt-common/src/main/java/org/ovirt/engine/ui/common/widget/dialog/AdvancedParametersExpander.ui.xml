@@ -7,7 +7,7 @@
             background: Transparent;
             border: none;
             padding: 0px;
-            margin: 5px;
+            margin: 5px 5px 5px -15px;
         }
     </ui:style>
 

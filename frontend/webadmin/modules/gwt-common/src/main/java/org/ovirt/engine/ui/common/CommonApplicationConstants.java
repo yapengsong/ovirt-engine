@@ -2307,4 +2307,12 @@ public interface CommonApplicationConstants extends Constants {
 
     @DefaultStringValue("Edit Filter")
     String editFilterOfHostDevice();
+
+    @DefaultStringValue("filter")
+    String filter();
+
+    @DefaultStringValue("Check the \"enable filtering\" option, The filter part of the system default device" +
+            "Only keep The devices of infiltration such as USB, video card, network card. Individual cases, not find " +
+            "through the equipment. Please cancel.")
+    String filterexplain();
 }

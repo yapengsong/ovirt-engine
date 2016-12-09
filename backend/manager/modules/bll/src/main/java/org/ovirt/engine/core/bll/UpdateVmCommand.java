@@ -172,13 +172,17 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         if (isRunningConfigurationNeeded()) {
             createNextRunSnapshot();
+            VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
+            getVmStaticDao().incrementDbGeneration(getVm().getId());
+            newVmStatic = getParameters().getVmStaticData();
+            newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
+        } else {
+            VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
+            getVmStaticDao().incrementDbGeneration(getVm().getId());
+            newVmStatic = getParameters().getVmStaticData();
+            newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
+            newVmStatic.setCpuShares(oldVm.getStaticData().getCpuShares());
         }
-
-        VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
-        getVmStaticDao().incrementDbGeneration(getVm().getId());
-        newVmStatic = getParameters().getVmStaticData();
-        newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
-
         // Trigger OVF update for hosted engine VM only
         if (getVm().isHostedEngine()) {
             registerRollbackHandler(new TransactionCompletionListener() {

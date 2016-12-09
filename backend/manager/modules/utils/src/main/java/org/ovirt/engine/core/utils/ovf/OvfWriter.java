@@ -332,6 +332,10 @@ public abstract class OvfWriter implements IOvfBuilder {
             _writer.WriteEndElement();
         }
 
+        _writer.WriteStartElement(OvfProperties.CPU_SHARE);
+        _writer.WriteRaw(String.valueOf(vmBase.getCpuShares()));
+        _writer.WriteEndElement();
+
         _writer.WriteStartElement(OvfProperties.MIN_ALLOCATED_MEMORY);
         _writer.WriteRaw(String.valueOf(vmBase.getMinAllocatedMem()));
         _writer.WriteEndElement();

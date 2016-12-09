@@ -2849,9 +2849,9 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
         setValidTab(TabName.TAB_RNG, getRngBytes().getIsValid() && getRngPeriod().getIsValid());
 
         // Minimum 'Physical Memory Guaranteed' is 1MB
-        validateMemorySize(getMemSize(), Integer.MAX_VALUE, 1);
+        validateMemorySize(getMemSize(), Integer.MAX_VALUE, 3);
         if (getMemSize().getIsValid()) {
-            validateMemorySize(getMinAllocatedMemory(), getMemSize().getEntity(), 1);
+            validateMemorySize(getMinAllocatedMemory(), getMemSize().getEntity(), 3);
         }
 
         if (getIoThreadsEnabled().getEntity()) {
