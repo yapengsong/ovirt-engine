@@ -682,9 +682,9 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
     }
 
     private void initInfoIcons() {
-        memoryOptimizationInfo = new InfoIcon(templates.italicText(constants.clusterPopupMemoryOptimizationInfo()));
+        memoryOptimizationInfo = new InfoIcon(constants.clusterPopupMemoryOptimizationInfo());
 
-        cpuThreadsInfo = new InfoIcon(templates.italicText(constants.clusterPopupCpuThreadsInfo()));
+        cpuThreadsInfo = new InfoIcon(constants.clusterPopupCpuThreadsInfo());
 
         schedulerOptimizationInfoIcon = new InfoIcon(SafeHtmlUtils.EMPTY_SAFE_HTML);
         allowOverbookingInfoIcon = new InfoIcon(SafeHtmlUtils.EMPTY_SAFE_HTML);
@@ -705,7 +705,7 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
 
     @Override
     public void setSpiceProxyOverrideExplanation(String explanation) {
-        spiceProxyEnabledCheckboxWithInfoIcon.setExplanation(templates.italicText(explanation));
+        spiceProxyEnabledCheckboxWithInfoIcon.setExplanation(explanation);
     }
 
     private void applyModeCustomizations() {
@@ -787,12 +787,8 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
             }
         });
 
-        schedulerOptimizationInfoIcon.setText(SafeHtmlUtils.fromTrustedString(
-                templates.italicText(object.getSchedulerOptimizationInfoMessage()).asString()
-                        .replaceAll("(\r\n|\n)", "<br />"))); //$NON-NLS-1$ //$NON-NLS-2$
-        allowOverbookingInfoIcon.setText(SafeHtmlUtils.fromTrustedString(
-                templates.italicText(object.getAllowOverbookingInfoMessage()).asString()
-                        .replaceAll("(\r\n|\n)", "<br />"))); //$NON-NLS-1$ //$NON-NLS-2$
+        schedulerOptimizationInfoIcon.setTitle(object.getSchedulerOptimizationInfoMessage());
+        allowOverbookingInfoIcon.setTitle(object.getAllowOverbookingInfoMessage());
         allowOverbookingPanel.setVisible(allowOverbookingEditor.isVisible());
 
         object.getVersion().getPropertyChangedEvent().addListener(new IEventListener<PropertyChangedEventArgs>() {
