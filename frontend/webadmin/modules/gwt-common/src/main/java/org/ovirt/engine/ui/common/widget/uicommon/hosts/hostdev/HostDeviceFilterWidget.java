@@ -84,7 +84,7 @@ public class HostDeviceFilterWidget extends Composite {
         private String html;
 
         private KeyValueHtmlRowMaker(String key, String val) {
-            html = "<b>" + key + "</b>: " + val; //$NON-NLS-1$ //$NON-NLS-2$
+            html = "" + key + ":" + val; //$NON-NLS-1$ //$NON-NLS-2$
         }
         //可以在以后添加新的解释
         public KeyValueHtmlRowMaker append(String key, String val) {
