@@ -207,6 +207,8 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         int memSizeMb = newVmStatic.getMemSizeMb();
 
+        int cpuShare = newVmStatic.getCpuShares();
+
         if (newVmStatic.getCreationDate().equals(DateTime.getMinValue())) {
             newVmStatic.setCreationDate(new Date());
         }
@@ -219,6 +221,7 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         }
 
+        newVmStatic.setCpuShares(cpuShare);
         UpdateVmNetworks();
         updateVmNumaNodes();
         if (isHotSetEnabled()) {
