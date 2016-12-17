@@ -59,7 +59,7 @@ public class SubTabHostGeneralHostErrataPresenter extends
 
     @TabInfo(container = HostGeneralSubTabPanelPresenter.class)
     static TabData getTabData(DetailTabModelProvider<HostListModel<Void>, HostErrataCountModel> errataCountModelProvider) {
-        return new ModelBoundTabData(constants.hostGeneralErrataSubTabLabel(), 7, errataCountModelProvider);
+        return new ModelBoundTabData("", 7, errataCountModelProvider);
     }
 
     private final HostErrataCountModel errataCountModel;
