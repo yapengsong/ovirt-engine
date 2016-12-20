@@ -3,6 +3,8 @@ package org.ovirt.engine.ui.webadmin.section.main.view.popup.host.panels;
 import java.util.List;
 
 import org.ovirt.engine.ui.uicommonweb.models.hosts.HostSetupNetworksModel;
+import org.ovirt.engine.ui.uicommonweb.models.hosts.network.LogicalNetworkModel;
+import org.ovirt.engine.ui.uicommonweb.models.hosts.network.NetworkItemModel;
 import org.ovirt.engine.ui.webadmin.widget.editor.AnimatedVerticalPanel;
 import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.DragDropEventBase;
@@ -59,7 +61,13 @@ public abstract class UnassignedNetworksPanel<T extends NetworkItemPanel<?>> ext
             @Override
             public void onDrop(DropEvent event) {
                 event.preventDefault();
-                doDrag(event, true);
+                boolean isdrop = true;
+                NetworkItemModel netM1 =  getNetworkItemPanel(event , true);
+                if(netM1 !=null && netM1 instanceof LogicalNetworkModel){
+                    LogicalNetworkModel netM2 = (LogicalNetworkModel)netM1;
+                    isdrop =netM2.isManaged();
+                }
+                doDrag(event, isdrop);
                 animatedPanel.getElement().removeClassName(style.networkGroupDragOver());
             }
         }, DropEvent.getType());
@@ -100,6 +108,14 @@ public abstract class UnassignedNetworksPanel<T extends NetworkItemPanel<?>> ext
                 event.preventDefault();
             }
         }
+    }
+
+    private NetworkItemModel getNetworkItemPanel(DragDropEventBase<?> event, boolean isDrop) {
+         String dragDropEventData = NetworkItemPanel.getDragDropEventData(event, isDrop);
+         String type = NetworkItemPanel.getType(dragDropEventData);
+         String data = NetworkItemPanel.getData(dragDropEventData);
+         NetworkItemModel netm = setupModel.getItemModel(data, type);
+         return netm;
     }
 
     public void setSetupModel(HostSetupNetworksModel setupModel) {

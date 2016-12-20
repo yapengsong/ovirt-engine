@@ -198,7 +198,7 @@ public class HostSetupNetworksModel extends EntityModel<VDS> {
         return newLabelModel;
     }
 
-    private NetworkItemModel<?> getItemModel(String key, String type) {
+    public NetworkItemModel<?> getItemModel(String key, String type) {
         if (type != null) {
             switch(type) {
             case NIC:
