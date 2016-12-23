@@ -34,7 +34,7 @@ public class CpuQosParametersModel extends QosParametersModel<CpuQos> {
 
         getCpuLimit().validateEntity(new IValidation[] {
                 new NotEmptyValidation(),
-                new IntegerValidation(0, (Integer) AsyncDataProvider.getInstance()
+                new IntegerValidation(1, (Integer) AsyncDataProvider.getInstance()
                         .getConfigValuePreConverted(ConfigurationValues.MaxCpuLimitQosValue)) });
 
         setIsValid(getCpuLimit().getIsValid());
