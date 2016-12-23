@@ -58,6 +58,7 @@ import org.ovirt.engine.ui.webadmin.widget.provider.HostNetworkProviderWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.dom.client.Style.TextDecoration;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.dom.client.Style.Visibility;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -789,6 +790,7 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
     private void initExpander() {
         expander.initWithContent(expanderContent.getElement());
         pmExpander.initWithContent(pmExpanderContent.getElement());
+        pmExpander.getElement().getStyle().setMarginLeft(-15, Unit.PX);
     }
 
     private void showExternalDiscoveredHost(boolean enabled) {
