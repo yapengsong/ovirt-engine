@@ -2,6 +2,7 @@ package org.ovirt.engine.ui.uicommonweb.models.macpool;
 
 import org.ovirt.engine.core.common.action.MacPoolParameters;
 import org.ovirt.engine.core.common.action.VdcActionType;
+import org.ovirt.engine.core.common.businessentities.BusinessEntitiesDefinitions;
 import org.ovirt.engine.core.common.businessentities.MacPool;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.ui.frontend.Frontend;
@@ -10,6 +11,7 @@ import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.Model;
 import org.ovirt.engine.ui.uicommonweb.validation.AsciiOrNoneValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicompat.FrontendActionAsyncResult;
 import org.ovirt.engine.ui.uicompat.IFrontendActionAsyncCallback;
@@ -60,7 +62,7 @@ public class SharedMacPoolModel extends MacPoolModel {
     @Override
     public boolean validate() {
         super.validate();
-        getName().validateEntity(new IValidation[] { new NotEmptyValidation() });
+        getName().validateEntity(new IValidation[] { new NotEmptyValidation() , new LengthValidation(BusinessEntitiesDefinitions.GENERAL_NAME_SIZE)});
         getDescription().validateEntity(new IValidation[] { new AsciiOrNoneValidation() });
         setIsValid(getIsValid() && getName().getIsValid());
         return getIsValid();
