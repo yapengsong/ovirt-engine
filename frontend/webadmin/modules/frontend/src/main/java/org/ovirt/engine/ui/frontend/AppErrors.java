@@ -3789,6 +3789,9 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Cannot ${action} ${type}. Custom serial number must be non-empty when \"Custom\" serial number policy is specified.")
     String ACTION_TYPE_FAILED_INVALID_SERIAL_NUMBER();
 
+    @DefaultStringValue("Cannot set the cpu shares to the requested value. It has to be between 0 and 262144.")
+    String QOS_CPU_SHARES_OUT_OF_RANGE();
+
     @DefaultStringValue("Cannot ${action} ${type}. The following storage connections ${connectionIds} cannot be added to the specified iSCSI bond.\n"
             +
             "Possible reasons:\n" +
