@@ -82,8 +82,8 @@ public interface CommonApplicationConstantsWithLookup extends com.google.gwt.i18
     @DefaultStringValue("runAndPause")
     String runAndPause();
 
-    @DefaultStringValue("SerialNumberPolicy")
-    String SerialNumberPolicy();
+    @DefaultStringValue("serialNumberPolicy")
+    String serialNumberPolicy();
 
     @DefaultStringValue("customSerialNumber")
     String customSerialNumber();
@@ -155,4 +155,116 @@ public interface CommonApplicationConstantsWithLookup extends com.google.gwt.i18
 
     @DefaultStringValue("other_dc")
     String other_dc();
+
+    @DefaultStringValue("floppy")
+    String floppy();
+
+    @DefaultStringValue("disk")
+    String disk();
+
+    @DefaultStringValue("cdrom")
+    String cdrom();
+
+    @DefaultStringValue("interface")
+    String interfaces();
+
+
+    @DefaultStringValue("bridge")
+    String bridge();
+
+    @DefaultStringValue("video")
+    String video();
+
+    @DefaultStringValue("controller")
+    String controller();
+
+    @DefaultStringValue("redir")
+    String redir();
+
+    @DefaultStringValue("sound")
+    String sound();
+
+    @DefaultStringValue("memballoon")
+    String memballoon();
+
+    @DefaultStringValue("channel")
+    String channel();
+
+    @DefaultStringValue("smartcard")
+    String smartcard();
+
+    @DefaultStringValue("balloon")
+    String balloon();
+
+    @DefaultStringValue("console")
+    String console();
+
+    @DefaultStringValue("watchdog")
+    String watchdog();
+
+    @DefaultStringValue("hostdev")
+    String hostdev();
+
+    @DefaultStringValue("memory")
+    String memory();
+
+    @DefaultStringValue("other")
+    String other();
+
+    @DefaultStringValue("floppy")
+    String unknown();
+
+    @DefaultStringValue("graphicsProtocol")
+    String graphicsProtocol();
+
+
+    @DefaultStringValue("DISK")
+    String DISK();
+
+    @DefaultStringValue("INTERFACE")
+    String INTERFACE();
+
+    @DefaultStringValue("VIDEO")
+    String VIDEO();
+
+    @DefaultStringValue("GRAPHICS")
+    String GRAPHICS();
+
+    @DefaultStringValue("SOUND")
+    String SOUND();
+
+    @DefaultStringValue("CONTROLLER")
+    String CONTROLLER();
+
+    @DefaultStringValue("BALLOON")
+    String BALLOON();
+
+    @DefaultStringValue("CHANNEL")
+    String CHANNEL();
+
+    @DefaultStringValue("REDIR")
+    String REDIR();
+
+    @DefaultStringValue("CONSOLE")
+    String CONSOLE();
+
+    @DefaultStringValue("RNG")
+    String RNG();
+
+    @DefaultStringValue("SMARTCARD")
+    String SMARTCARD();
+
+    @DefaultStringValue("WATCHDOG")
+    String WATCHDOG();
+
+    @DefaultStringValue("HOSTDEV")
+    String HOSTDEV();
+
+    @DefaultStringValue("MEMORY")
+    String MEMORY();
+
+    @DefaultStringValue("UNKNOWN")
+    String UNKNOWN();
+
+
 }
