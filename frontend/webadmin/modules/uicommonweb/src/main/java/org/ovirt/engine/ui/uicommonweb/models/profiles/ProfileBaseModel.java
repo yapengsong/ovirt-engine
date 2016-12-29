@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.ovirt.engine.core.common.action.ProfileParametersBase;
 import org.ovirt.engine.core.common.action.VdcActionType;
+import org.ovirt.engine.core.common.businessentities.BusinessEntitiesDefinitions;
 import org.ovirt.engine.core.common.businessentities.BusinessEntity;
 import org.ovirt.engine.core.common.businessentities.profiles.ProfileBase;
 import org.ovirt.engine.core.common.businessentities.qos.QosBase;
@@ -23,6 +24,7 @@ import org.ovirt.engine.ui.uicommonweb.models.ListModel;
 import org.ovirt.engine.ui.uicommonweb.models.Model;
 import org.ovirt.engine.ui.uicommonweb.validation.AsciiOrNoneValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
+import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.SpecialAsciiI18NOrNoneValidation;
 import org.ovirt.engine.ui.uicompat.FrontendActionAsyncResult;
@@ -180,7 +182,7 @@ public abstract class ProfileBaseModel<P extends ProfileBase, Q extends QosBase,
     protected abstract void postInitQosList(List<Q> list);
 
     public boolean validate() {
-        getName().validateEntity(new IValidation[] { new NotEmptyValidation(), new SpecialAsciiI18NOrNoneValidation() });
+        getName().validateEntity(new IValidation[] { new NotEmptyValidation(), new SpecialAsciiI18NOrNoneValidation() , new LengthValidation(BusinessEntitiesDefinitions.GENERAL_NETWORK_ADDR_SIZE)});
         getDescription().validateEntity(new IValidation[] { new AsciiOrNoneValidation() });
         return getName().getIsValid();
     }
