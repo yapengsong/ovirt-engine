@@ -777,6 +777,13 @@ public abstract class OvfReader implements IOvfBuilder {
             }
         }
 
+        node = content.SelectSingleNode(OvfProperties.CPU_SHARES);
+        if (node != null) {
+            if (StringUtils.isNotEmpty(node.innerText)) {
+                vmBase.setCpuShares(Integer.parseInt(node.innerText));
+            }
+        }
+
         vmBase.setCustomProperties(VmPropertiesUtils.getInstance().customProperties(
                 vmBase.getPredefinedProperties(), vmBase.getUserDefinedProperties()));
 
