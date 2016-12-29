@@ -2830,7 +2830,7 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
         setValidTab(TabName.CUSTOM_PROPERTIES_TAB, customPropertySheetValid);
 
         if (getSerialNumberPolicy().getSelectedSerialNumberPolicy() == SerialNumberPolicy.CUSTOM) {
-            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() });
+            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() , new LengthValidation(BusinessEntitiesDefinitions.GENERAL_NAME_SIZE)});
         } else {
             getSerialNumberPolicy().getCustomSerialNumber().setIsValid(true);
         }
