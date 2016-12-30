@@ -31,8 +31,12 @@ public class ClusterValidator {
     }
 
     public ValidationResult nameNotUsed() {
+
+        String name=cluster.getName();
+        name=name.replaceAll("_" , "\\\\_");
+
         return ValidationResult.failWith(EngineMessage.VDS_GROUP_CANNOT_DO_ACTION_NAME_IN_USE)
-                .unless(clusterDao.getByName(cluster.getName(), false).isEmpty());
+                .unless(clusterDao.getByName(name , false).isEmpty());
     }
 
     /**
