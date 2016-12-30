@@ -64,7 +64,7 @@ public class AuditLog implements IVdcQueryable {
     public AuditLog(AuditLogType type, AuditLogSeverity severity) {
         this.logType = type.getValue();
         this.severity = severity.getValue();
-        this.origin = "oVirt";
+        this.origin = "Eayun";
         this.customEventId = -1;
         this.eventFloodInSec = 30;
         this.customData = "";
