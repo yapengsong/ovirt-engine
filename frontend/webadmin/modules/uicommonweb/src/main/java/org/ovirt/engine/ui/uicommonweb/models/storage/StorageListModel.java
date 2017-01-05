@@ -881,7 +881,7 @@ public class StorageListModel extends ListWithDetailsAndReportsModel<Void, Stora
             snapshotListModel.setIsAvailable(isDataStorage || isCinderStorage);
             diskProfileListModel.setIsAvailable(isDataStorage);
 
-            isoListModel.setIsAvailable(isImageStorage);
+            //isoListModel.setIsAvailable(isImageStorage);
         }
     }
 
