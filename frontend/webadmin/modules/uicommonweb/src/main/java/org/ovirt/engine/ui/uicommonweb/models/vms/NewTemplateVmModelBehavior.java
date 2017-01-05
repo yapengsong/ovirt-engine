@@ -69,7 +69,7 @@ public class NewTemplateVmModelBehavior extends VmModelBehaviorBase<UnitVmModel>
 
         DisksAllocationModel disksAllocationModel = getModel().getDisksAllocationModel();
         disksAllocationModel.setIsVolumeFormatAvailable(true);
-        disksAllocationModel.setIsAliasChangable(true);
+        disksAllocationModel.setIsAliasChangable(false);
         disksAllocationModel.setIsSizeChangable(false);
         disksAllocationModel.setContainer(getModel());
 
@@ -293,6 +293,7 @@ public class NewTemplateVmModelBehavior extends VmModelBehaviorBase<UnitVmModel>
             list.add(diskModel);
             diskModel.getVolumeFormat().setIsAvailable(true);
         }
+        getModel().getDisksAllocationModel().setIsAliasChangable(false);
         getModel().getDisksAllocationModel().setIsSizeChangable(false);
         getModel().setDisks(list);
     }
