@@ -362,7 +362,7 @@ public abstract class HostModel extends Model implements HasValidatedTabs {
 
         for (String item : array) {
             FenceProxyModel model = new FenceProxyModel();
-            model.setEntity(FenceProxySourceType.forValue(item));
+            model.setEntity(FenceProxySourceType.forValue(FenceProxyUtils.getProxyValue(item)));
             list.add(model);
         }
 

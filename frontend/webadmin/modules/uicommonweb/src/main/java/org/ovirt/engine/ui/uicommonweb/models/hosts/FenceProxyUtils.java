@@ -21,7 +21,7 @@ public class FenceProxyUtils {
 
     private static Map<String, String> proxyMap;
 
-    private static String getProxyValue(String key) {
+    public static String getProxyValue(String key) {
         if (proxyMap != null && proxyMap.containsKey(key)) {
             return proxyMap.get(key);
         }
