@@ -12,9 +12,8 @@
 
 		.messagePanel {
 			color: #CD2127;
-			height: 30px;
-            overflow-y: auto;
-            padding: 5px;
+                        overflow-y: auto;
+                        padding: 5px;
 		}
 
 		.disksAllocationPanel {
