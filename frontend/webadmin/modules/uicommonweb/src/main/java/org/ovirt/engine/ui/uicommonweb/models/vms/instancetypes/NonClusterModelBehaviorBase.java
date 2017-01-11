@@ -19,6 +19,7 @@ import org.ovirt.engine.ui.uicompat.IEventListener;
 
 public class NonClusterModelBehaviorBase extends VmModelBehaviorBase<UnitVmModel> {
 
+
     @Override
     public void initialize(SystemTreeItemModel systemTreeSelectedItem) {
         super.initialize(systemTreeSelectedItem);
@@ -39,7 +40,29 @@ public class NonClusterModelBehaviorBase extends VmModelBehaviorBase<UnitVmModel
         getModel().getDisplayType().getSelectedItemChangedEvent().addListener(new IEventListener() {
             @Override
             public void eventRaised(Event ev, Object sender, EventArgs args) {
+
                 enableSinglePCI(getModel().getDisplayType().getSelectedItem() == DisplayType.qxl);
+                getModel().getDisplayType().getSelectedItem();
+                DisplayTypeChange(getModel().getDisplayType().getSelectedItem());
+
+            }
+
+            private void DisplayTypeChange(DisplayType selectedItem ) {
+                if(selectedItem.name().equals(DisplayType.cirrus.name())){
+                    getModel().getGraphicsType().setItems(
+                            Arrays.asList(UnitVmModel.GraphicsTypes.VNC)
+                    );
+
+                }else if(selectedItem.name().equals(DisplayType.qxl.name()) || selectedItem.name().equals(DisplayType.vga.name())){
+                    getModel().getGraphicsType().setItems(
+                            Arrays.asList(
+                                        UnitVmModel.GraphicsTypes.SPICE,
+                                        UnitVmModel.GraphicsTypes.VNC,
+                                        UnitVmModel.GraphicsTypes.SPICE_AND_VNC
+                            )
+                     );
+                }
+
             }
         });
 
@@ -61,13 +84,11 @@ public class NonClusterModelBehaviorBase extends VmModelBehaviorBase<UnitVmModel
         }
     }
 
+
     private void initGraphicsModel(UnitVmModel.GraphicsTypes selectedGrahicsTypes) {
         List graphicsTypes = new ArrayList();
-        graphicsTypes.add(UnitVmModel.GraphicsTypes.SPICE);
         graphicsTypes.add(UnitVmModel.GraphicsTypes.VNC);
-        graphicsTypes.add(UnitVmModel.GraphicsTypes.SPICE_AND_VNC);
         getModel().getGraphicsType().setItems(graphicsTypes);
-        getModel().getGraphicsType().setSelectedItem(selectedGrahicsTypes);
     }
 
     @Override
