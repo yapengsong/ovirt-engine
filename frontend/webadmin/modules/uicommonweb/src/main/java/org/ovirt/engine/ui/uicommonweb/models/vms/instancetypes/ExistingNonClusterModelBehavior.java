@@ -40,7 +40,9 @@ public class ExistingNonClusterModelBehavior extends NonClusterModelBehaviorBase
     public void initialize(SystemTreeItemModel systemTreeSelectedItem) {
         super.initialize(systemTreeSelectedItem);
         updateNumOfSockets();
-        getModel().getUsbPolicy().setItems(Arrays.asList(UsbPolicy.values()));
+        getModel().getUsbPolicy().setItems(Arrays.asList(
+                UsbPolicy.DISABLED,
+                UsbPolicy.ENABLED_NATIVE));
 
         getModel().getIsSoundcardEnabled().setIsChangeable(true);
 
