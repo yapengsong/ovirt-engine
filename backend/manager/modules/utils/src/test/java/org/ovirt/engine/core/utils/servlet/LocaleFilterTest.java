@@ -45,7 +45,7 @@ public class LocaleFilterTest {
 
     @Test
     public void testDoFilterFromParameter() throws IOException, ServletException {
-        Locale testLocale = Locale.GERMANY;
+        Locale testLocale = Locale.CHINA;
         when(mockRequest.getParameter(LocaleFilter.LOCALE)).thenReturn(testLocale.toString());
         testFilter.doFilter(mockRequest, mockResponse, mockChain);
         verify(mockChain).doFilter(mockRequest, mockResponse);
@@ -57,8 +57,8 @@ public class LocaleFilterTest {
 
     @Test
     public void testDoFilterFromParameterWithCookie() throws IOException, ServletException {
-        Locale testLocale = Locale.JAPAN;
-        Cookie[] cookies = createCookies(Locale.GERMAN);
+        Locale testLocale = Locale.SIMPLIFIED_CHINESE;
+        Cookie[] cookies = createCookies(Locale.ENGLISH);
         when(mockRequest.getParameter(LocaleFilter.LOCALE)).thenReturn(testLocale.toString());
         when(mockRequest.getCookies()).thenReturn(cookies);
         testFilter.doFilter(mockRequest, mockResponse, mockChain);
@@ -69,7 +69,7 @@ public class LocaleFilterTest {
 
     @Test
     public void testDoFilterFromCookie() throws IOException, ServletException {
-        Locale testLocale = Locale.GERMANY;
+        Locale testLocale = Locale.CHINA;
         Cookie[] cookies = createCookies(testLocale);
         when(mockRequest.getCookies()).thenReturn(cookies);
         testFilter.doFilter(mockRequest, mockResponse, mockChain);
@@ -103,11 +103,11 @@ public class LocaleFilterTest {
 
     @Test
     public void testDoFilterFromRequest() throws IOException, ServletException {
-        when(mockRequest.getLocale()).thenReturn(Locale.JAPANESE);
+        when(mockRequest.getLocale()).thenReturn(Locale.SIMPLIFIED_CHINESE);
         testFilter.doFilter(mockRequest, mockResponse, mockChain);
         verify(mockChain).doFilter(mockRequest, mockResponse);
         verify(mockResponse, times(1)).addCookie((Cookie) any());
-        verify(mockRequest).setAttribute(LocaleFilter.LOCALE, Locale.JAPAN);
+        verify(mockRequest).setAttribute(LocaleFilter.LOCALE, Locale.CHINA);
     }
 
     @Test
