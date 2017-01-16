@@ -2065,7 +2065,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
     }
 
     private boolean isConsoleEditEnabled() {
-        return getSelectedItem() != null && getSelectedItem().isRunningOrPaused();
+        return getSelectedItem() != null && getSelectedItem().isRunningOrPaused() && (getSelectedItem().getStatus() != VMStatus.RestoringState);
     }
 
     private boolean isConsoleCommandsExecutionAllowed() {
@@ -2076,7 +2076,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
 
         // return true, if at least one console is available
         for (VM vm : list) {
-            if (consolesFactory.getVmConsolesForVm(vm).canConnectToConsole()) {
+            if (consolesFactory.getVmConsolesForVm(vm).canConnectToConsole() && (vm.getStatus() != VMStatus.SavingState)) {
                 return true;
             }
         }

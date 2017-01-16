@@ -331,6 +331,8 @@ private void setResumeUploadCommand(UICommand value) {
         }
 
         MoveDiskModel model = new MoveDiskModel();
+        model.setIsAliasChangable(false);
+        model.setIsSizeChangable(false);
         setWindow(model);
         model.setTitle(ConstantsManager.getInstance().getConstants().moveDisksTitle());
         model.setHelpTag(HelpTag.move_disks);
