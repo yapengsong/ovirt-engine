@@ -700,7 +700,7 @@ public class DataCenterGuideModel extends GuideModel implements ITaskTarget {
         boolean isNew = model.getStorage() == null;
         storageModel = model.getCurrentStorageItem();
         LocalStorageModel localModel = (LocalStorageModel) storageModel;
-        path = (String) localModel.getPath().getEntity();
+        path = localModel.getPath().getEntity();
 
         storageDomain = new StorageDomainStatic();
         storageDomain.setStorageType(isNew ? storageModel.getType() : storageDomain.getStorageType());
@@ -1391,7 +1391,7 @@ public class DataCenterGuideModel extends GuideModel implements ITaskTarget {
             }
         }
 
-        VDSGroup cluster = (VDSGroup) model.getCluster().getSelectedItem();
+        VDSGroup cluster = model.getCluster().getSelectedItem();
         final List<VdcActionParametersBase> parameterList = new ArrayList<>();
         for (MoveHostData hostData : model.getSelectedHosts()) {
             VDS host = hostData.getEntity();
@@ -1439,6 +1439,7 @@ public class DataCenterGuideModel extends GuideModel implements ITaskTarget {
                         } else {
                             final String searchString = getVdsSearchString(((MoveHost) dataCenterGuideModel.getWindow()));
                             Timer timer = new Timer() {
+                                @Override
                                 public void run() {
                                     checkVdsClusterChangeSucceeded(dataCenterGuideModel, searchString, parameterList, activateVdsParameterList);
                                 }
@@ -1559,6 +1560,7 @@ public class DataCenterGuideModel extends GuideModel implements ITaskTarget {
         addVdsParams.setOverrideFirewall(model.getOverrideIpTables().getEntity());
         addVdsParams.setRebootAfterInstallation(model.getCluster().getSelectedItem().supportsVirtService());
         addVdsParams.setFenceAgents(model.getFenceAgentListModel().getFenceAgents());
+        addVdsParams.setAuthMethod(model.getAuthenticationMethod());
         model.startProgress(null);
 
         Frontend.getInstance().runAction(VdcActionType.AddVds, addVdsParams,
@@ -1596,6 +1598,7 @@ public class DataCenterGuideModel extends GuideModel implements ITaskTarget {
         setWindow(null);
     }
 
+    @Override
     public void cancelConfirm() {
         setConfirmWindow(null);
     }
