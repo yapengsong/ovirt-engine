@@ -7,7 +7,6 @@ import org.ovirt.engine.ui.common.gin.AssetProvider;
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
 import org.ovirt.engine.ui.common.idhandler.WithElementId;
 import org.ovirt.engine.ui.common.widget.WidgetWithInfo;
-import org.ovirt.engine.ui.common.widget.tooltip.TooltipConfig.Width;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -69,7 +68,6 @@ public class HostDeviceFilterWidget extends Composite {
         filterline = new WidgetWithInfo(enableFilter);
         filterline.setExplanation(SafeHtmlUtils.fromTrustedString(createSpiceInvocationInfo()));
         filterline.addInfoIconStyle("cpv_infoIcon_pfly_fix"); //$NON-NLS-1$
-        filterline.setInfoIconTooltipMaxWidth(Width.W420);
 
         editButton = new Button();
         editButton.setText(constants.editFilterOfHostDevice());

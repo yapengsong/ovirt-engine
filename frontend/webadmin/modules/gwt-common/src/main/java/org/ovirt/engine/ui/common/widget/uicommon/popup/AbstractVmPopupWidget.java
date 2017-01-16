@@ -168,8 +168,6 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         String totalVcpusStyle();
 
         String threadsPerCoreStyle();
-
-        String breakWord();
     }
 
     @UiField
@@ -1628,7 +1626,6 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         numOfMonitorsEditor.hideLabel();
         migrationModeEditor.addContentWidgetContainerStyleName(style.migrationSelectorInner());
         isVirtioScsiEnabled.addContentWidgetContainerStyleName(style.isVirtioScsiEnabledEditor());
-        vmIdEditor.addTooltipInnerStyleName(style.breakWord());
         applyStylesForDetachableWithInfoIcon();
         foremanTab.removeFromParent();
     }

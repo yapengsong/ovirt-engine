@@ -407,11 +407,6 @@ public abstract class AbstractValidatedWidgetWithLabel<T, W extends EditorWidget
         wrapperPanel.removeStyleName(styleName);
     }
 
-    public void addTooltipInnerStyleName(String styleName){
-        labelTooltip.addTooltipInnerClassName(styleName);
-        contentWidgetContainerTooltip.addTooltipInnerClassName(styleName);
-    }
-
     // end set styleNames on my components
 
 

@@ -113,6 +113,7 @@ public class RemoveNetworkCommand<T extends RemoveNetworkParameters> extends Net
         return validate(validator.networkIsSet())
                 && validate(validator.notRemovingManagementNetwork())
                 && validate(validator.notIscsiBondNetwork())
+                && validate(validator.networkNotUsedByHosts())
                 && validate(validator.networkNotUsedByVms())
                 && validate(validator.networkNotUsedByTemplates());
     }
