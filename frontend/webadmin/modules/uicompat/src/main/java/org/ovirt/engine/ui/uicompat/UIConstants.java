@@ -1257,7 +1257,7 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("The given host address is neither a valid host name nor a valid IP address.")
     String addressIsNotValidHostNameOrIpAddressInvalidReason();
 
-    @DefaultStringValue("The address has to be in form: [port://]hostnameOrIp[:port]")
+    @DefaultStringValue("The address has to be in form: [protocol://]hostnameOrIp[:port]")
     String portHostnameOrIpPort();
 
     @DefaultStringValue("Given URI is of an invalid format.")

@@ -19,7 +19,6 @@ public class OvfProperties {
     final static String VMD_ALIAS = "Alias";
     final static String VMD_CUSTOM_PROP = "CustomProperties";
     final static String VMD_SNAPSHOT_PROP = "SnapshotId";
-    final static String CPU_SHARE="CpuShare";
     final static String AUTO_STARTUP = "AutoStartup";
     final static String PRIORITY = "Priority";
     final static String SSO_METHOD = "SsoMethod";
@@ -80,4 +79,5 @@ public class OvfProperties {
     final static String PREDEFINED_PROPERTIES = "PredefinedProperties";
     final static String USER_DEFINED_PROPERTIES = "UserDefinedProperties";
     final static String CLUSTER_COMPATIBILITY_VERSION = "ClusterCompatibilityVersion";
+    final static String CPU_SHARES="CpuShares";
 }

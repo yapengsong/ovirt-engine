@@ -42,9 +42,9 @@ import org.ovirt.engine.ui.uicommonweb.models.templates.ImportTemplateModel;
 import org.ovirt.engine.ui.uicommonweb.models.templates.TemplateImportDiskListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.ImportTemplateData;
 import org.ovirt.engine.ui.uicommonweb.models.vms.UnitVmModel;
+import org.ovirt.engine.ui.uicommonweb.validation.CustomLengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.I18NNameValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
-import org.ovirt.engine.ui.uicommonweb.validation.LengthValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotInCollectionValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.ValidationResult;
@@ -492,7 +492,7 @@ public class TemplateBackupModel extends ManageBackupModel<VmTemplate> {
         final int maxClonedNameLength = getMaxClonedNameLength(object);
         return new IValidation[] {
                 new NotEmptyValidation(),
-                new LengthValidation(maxClonedNameLength),
+                new CustomLengthValidation(maxClonedNameLength),
                 new I18NNameValidation() {
                     @Override
                     protected String composeMessage() {
@@ -578,7 +578,7 @@ public class TemplateBackupModel extends ManageBackupModel<VmTemplate> {
         final int maxClonedNameLength = getMaxClonedNameLength(object);
         return new IValidation[] {
                 new NotEmptyValidation(),
-                new LengthValidation(maxClonedNameLength),
+                new CustomLengthValidation(maxClonedNameLength),
                 new I18NNameValidation() {
                     @Override
                     protected String composeMessage() {

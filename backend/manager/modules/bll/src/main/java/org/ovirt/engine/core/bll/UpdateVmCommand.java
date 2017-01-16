@@ -172,17 +172,13 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         if (isRunningConfigurationNeeded()) {
             createNextRunSnapshot();
-            VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
-            getVmStaticDao().incrementDbGeneration(getVm().getId());
-            newVmStatic = getParameters().getVmStaticData();
-            newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
-        } else {
-            VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
-            getVmStaticDao().incrementDbGeneration(getVm().getId());
-            newVmStatic = getParameters().getVmStaticData();
-            newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
-            newVmStatic.setCpuShares(oldVm.getStaticData().getCpuShares());
         }
+
+        VmHandler.warnMemorySizeLegal(getParameters().getVm().getStaticData(), getVdsGroup().getCompatibilityVersion());
+        getVmStaticDao().incrementDbGeneration(getVm().getId());
+        newVmStatic = getParameters().getVmStaticData();
+        newVmStatic.setCreationDate(oldVm.getStaticData().getCreationDate());
+
         // Trigger OVF update for hosted engine VM only
         if (getVm().isHostedEngine()) {
             registerRollbackHandler(new TransactionCompletionListener() {
@@ -207,8 +203,6 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         int memSizeMb = newVmStatic.getMemSizeMb();
 
-        int cpuShare = newVmStatic.getCpuShares();
-
         if (newVmStatic.getCreationDate().equals(DateTime.getMinValue())) {
             newVmStatic.setCreationDate(new Date());
         }
@@ -221,7 +215,6 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
 
         }
 
-        newVmStatic.setCpuShares(cpuShare);
         UpdateVmNetworks();
         updateVmNumaNodes();
         if (isHotSetEnabled()) {

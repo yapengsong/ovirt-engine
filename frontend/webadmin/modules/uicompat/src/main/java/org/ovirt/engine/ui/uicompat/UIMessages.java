@@ -54,6 +54,9 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
     @DefaultMessage("Field content must not exceed {0} characters.")
     String lenValidationFieldMusnotExceed(int maxLength);
 
+    @DefaultMessage("Name and suffix content must not exceed {0} characters.")
+    String lenValidationFieldMusnotExceedOther(int maxLength);
+
     @DefaultMessage("Disks'' Storage Domains are not accessible.")
     String vmStorageDomainIsNotAccessible();
 
