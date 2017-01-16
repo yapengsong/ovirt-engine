@@ -16,7 +16,6 @@ import org.ovirt.engine.ui.uicompat.Event;
 import org.ovirt.engine.ui.uicompat.EventArgs;
 import org.ovirt.engine.ui.uicompat.IEventListener;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
-import org.ovirt.engine.ui.webadmin.ApplicationTemplates;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 
 import com.google.gwt.core.client.GWT;
@@ -41,7 +40,6 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
         ViewIdHandler idHandler = GWT.create(ViewIdHandler.class);
     }
 
-    private final static ApplicationTemplates templates = AssetProvider.getTemplates();
     private final static ApplicationConstants constants = AssetProvider.getConstants();
 
     @UiField(provided = true)
@@ -115,21 +113,20 @@ public class NeutronAgentWidget extends AbstractModelBoundPopupWidget<NeutronAge
     @Override
     public void edit(final NeutronAgentModel model) {
         driver.edit(model);
-        mappings.setExplanation(templates.italicText(model.getInterfaceMappingsExplanation().getEntity()));
-        localIPInfo.setExplanation(templates.italicText(model.getLocalIPExplanation().getEntity()));
+        mappings.setExplanation(model.getInterfaceMappingsExplanation().getEntity());
+        localIPInfo.setExplanation(model.getLocalIPExplanation().getEntity());
         model.getInterfaceMappingsExplanation().getEntityChangedEvent().addListener(new IEventListener<EventArgs>() {
 
             @Override
             public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
-                mappings.setExplanation(templates.italicText(model.getInterfaceMappingsExplanation()
-                        .getEntity()));
+                mappings.setExplanation(model.getInterfaceMappingsExplanation().getEntity());
             }
         });
         model.getLocalIPExplanation().getEntityChangedEvent().addListener(new IEventListener<EventArgs>() {
 
             @Override
             public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
-                localIPInfo.setExplanation(templates.italicText(model.getLocalIPExplanation().getEntity()));
+                localIPInfo.setExplanation(model.getLocalIPExplanation().getEntity());
             }
         });
     }

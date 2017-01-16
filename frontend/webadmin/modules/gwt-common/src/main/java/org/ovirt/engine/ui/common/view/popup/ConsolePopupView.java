@@ -6,12 +6,12 @@ import org.ovirt.engine.ui.common.gin.AssetProvider;
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
 import org.ovirt.engine.ui.common.idhandler.WithElementId;
 import org.ovirt.engine.ui.common.presenter.popup.ConsolePopupPresenterWidget;
+import org.ovirt.engine.ui.common.widget.AbstractUiCommandButton;
 import org.ovirt.engine.ui.common.widget.Align;
+import org.ovirt.engine.ui.common.widget.LeftAlignedUiCommandButton;
 import org.ovirt.engine.ui.common.widget.WidgetWithInfo;
 import org.ovirt.engine.ui.common.widget.dialog.SimpleDialogPanel;
 import org.ovirt.engine.ui.common.widget.editor.generic.EntityModelRadioButtonEditor;
-import org.ovirt.engine.ui.common.widget.tooltip.TooltipConfig.Width;
-import org.ovirt.engine.ui.common.widget.tooltip.WidgetTooltip;
 import org.ovirt.engine.ui.common.widget.uicommon.popup.console.EntityModelValueCheckBoxEditor;
 import org.ovirt.engine.ui.common.widget.uicommon.popup.console.EntityModelValueCheckbox.ValueCheckboxRenderer;
 import org.ovirt.engine.ui.uicommonweb.DynamicMessages;
@@ -23,6 +23,7 @@ import org.ovirt.engine.ui.uicommonweb.models.vms.IVnc;
 import org.ovirt.engine.ui.uicommonweb.models.vms.RdpConsoleModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.SpiceConsoleModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.VncConsoleModel;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
@@ -50,6 +51,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         String remapCADContentWidget();
         String consoleResourcesLink();
         String labelStyle();
+        String showConsoleResButton();
     }
 
     @UiField
@@ -164,36 +166,6 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     @UiField(provided = true)
     @WithElementId
     EntityModelValueCheckBoxEditor<ConsoleModel> wanEnabled;
-
-    @UiField
-    WidgetTooltip spiceRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip vncRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip remoteDesktopRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip spiceAutoImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip spiceNativeImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip spicePluginImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip spiceHtml5ImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip noVncImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip rdpPluginImplRadioButtonTooltip;
-
-    @UiField
-    WidgetTooltip enableSpiceProxyTooltip;
 
     private ConsolePopupModel model;
 
@@ -368,7 +340,6 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         spiceHeadline = new WidgetWithInfo(spiceInvocationLabel);
         spiceHeadline.setExplanation(SafeHtmlUtils.fromTrustedString(createSpiceInvocationInfo()));
         spiceHeadline.addInfoIconStyle("cpv_infoIcon_pfly_fix"); //$NON-NLS-1$
-        spiceHeadline.setInfoIconTooltipMaxWidth(Width.W620);
         vncHeadline= new WidgetWithInfo(vncInvocationLabel);
         vncHeadline.setExplanation(SafeHtmlUtils.fromTrustedString(createVncInvocationInfo()));
         rdpHeadline= new WidgetWithInfo(rdpInvocationLabel);
@@ -381,10 +352,10 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         vncPanel.setVisible(false);
         rdpPanel.setVisible(false);
 
-        clientConsoleResourcesUrl.asWidget().addStyleName(style.consoleResourcesLink());
+        //clientConsoleResourcesUrl.asWidget().addStyleName(style.consoleResourcesLink());
         remapCtrlAltDeleteSpice.getContentWidgetContainer().addStyleName(style.remapCADContentWidget());
         remapCtrlAltDeleteVnc.getContentWidgetContainer().addStyleName(style.remapCADContentWidget());
-        asWidget().addStatusWidget(clientConsoleResourcesUrl);
+        //asWidget().addStatusWidget(clientConsoleResourcesUrl);
         spiceInvocationLabel.addStyleName(style.labelStyle());
         vncInvocationLabel.addStyleName(style.labelStyle());
         rdpInvocationLabel.addStyleName(style.labelStyle());
@@ -548,19 +519,19 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     @Override
     public void setSpiceAvailable(boolean visible) {
         spiceRadioButton.setEnabled(visible);
-        spiceRadioButtonTooltip.setText(visible ? "" : constants.spiceNotAvailable()); //$NON-NLS-1$
+        spiceRadioButton.setTitle(visible ? "" : constants.spiceNotAvailable()); //$NON-NLS-1$
     }
 
     @Override
     public void setRdpAvailable(boolean visible) {
         remoteDesktopRadioButton.setEnabled(visible);
-        remoteDesktopRadioButtonTooltip.setText(visible ? "" : constants.rdpNotAvailable()); //$NON-NLS-1$
+        remoteDesktopRadioButton.setTitle(visible ? "" : constants.rdpNotAvailable()); //$NON-NLS-1$
     }
 
     @Override
     public void setVncAvailable(boolean visible) {
         vncRadioButton.setEnabled(visible);
-        vncRadioButtonTooltip.setText(visible ? "" : constants.vncNotAvailable()); //$NON-NLS-1$
+        vncRadioButton.setTitle(visible ? "" : constants.vncNotAvailable()); //$NON-NLS-1$
     }
 
     @Override
@@ -623,7 +594,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     @Override
     public void setNoVncEnabled(boolean enabled, String reason) {
         noVncImplRadioButton.setEnabled(enabled);
-        noVncImplRadioButtonTooltip.setText(enabled ? "" : reason); //$NON-NLS-1$
+        noVncImplRadioButton.setTitle(enabled ? "" : reason); //$NON-NLS-1$
     }
 
     abstract class SpiceRenderer implements ValueCheckboxRenderer<ConsoleModel> {
@@ -713,7 +684,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     @Override
     public void setSpiceProxyEnabled(boolean enabled, String reason) {
         enableSpiceProxy.setEnabled(enabled);
-        enableSpiceProxyTooltip.setText(reason);
+        enableSpiceProxy.setTitle(reason);
     }
 
     @Override
@@ -730,7 +701,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     public void setSpicePluginImplEnabled(boolean enabled, String reason) {
         spicePluginImplRadioButton.setEnabled(enabled);
         if (!enabled) {
-            spicePluginImplRadioButtonTooltip.setText(reason);
+            spicePluginImplRadioButton.setTitle(reason);
         }
     }
 
@@ -738,7 +709,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     public void setSpiceHtml5ImplEnabled(boolean enabled, String reason) {
         spiceHtml5ImplRadioButton.setEnabled(enabled);
         if (!enabled) {
-            spiceHtml5ImplRadioButtonTooltip.setText(reason);
+            spiceHtml5ImplRadioButton.setTitle(reason);
         }
     }
 
@@ -746,7 +717,7 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     public void setRdpPluginImplEnabled(boolean enabled, String reason) {
         rdpPluginImplRadioButton.setEnabled(enabled);
         if (!enabled) {
-            rdpPluginImplRadioButtonTooltip.setText(reason);
+            rdpPluginImplRadioButton.setTitle(reason);
         }
     }
 
@@ -869,4 +840,15 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
     public HasValueChangeHandlers<Boolean> getVncNativeImplRadioButton() {
         return vncNativeImplRadioButton.asRadioButton();
     }
+
+    @Override
+    protected AbstractUiCommandButton createCommandButton(String label, String uniqueId) {
+        if("consoleRes".equals(uniqueId)){//$NON-NLS-1$
+            LeftAlignedUiCommandButton leftAlignedUiCommandButton = new LeftAlignedUiCommandButton(label);
+            leftAlignedUiCommandButton.setCustomContentStyle(style.showConsoleResButton());
+            return leftAlignedUiCommandButton;
+        }
+        return super.createCommandButton(label, uniqueId);
+    }
+
 }

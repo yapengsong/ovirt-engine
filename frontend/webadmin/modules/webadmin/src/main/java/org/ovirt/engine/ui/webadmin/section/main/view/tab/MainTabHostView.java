@@ -45,7 +45,6 @@ import org.ovirt.engine.ui.webadmin.widget.table.column.VmCountColumn;
 
 import com.google.gwt.cell.client.HasCell;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.safehtml.shared.SafeHtml;
 import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.inject.Inject;
@@ -179,12 +178,12 @@ public class MainTabHostView extends AbstractMainTabWithDetailsTableView<VDS, Ho
             }
 
             @Override
-            public SafeHtml getTooltip(VDS value) {
+            public String getTooltip(VDS value) {
                 String maintenanceReason = value.getMaintenanceReason();
                 if (maintenanceReason != null && !maintenanceReason.trim().isEmpty()) {
-                    return SafeHtmlUtils.fromString(maintenanceReason);
+                    return maintenanceReason;
                 }
-                return null;
+                return "";
             }
         };
 
@@ -318,12 +317,12 @@ public class MainTabHostView extends AbstractMainTabWithDetailsTableView<VDS, Ho
                 return getMainModel().getInstallCommand();
             }
         });
-        // getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.upgradeHost()) {
-        // @Override
-        // protected UICommand resolveCommand() {
-        // return getMainModel().getUpgradeCommand();
-        // }
-        // });
+        getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.upgradeHost()) {
+            @Override
+            protected UICommand resolveCommand() {
+                return getMainModel().getUpgradeCommand();
+            }
+        });
         getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.configureLocalStorageHost()) {
             @Override
             protected UICommand resolveCommand() {

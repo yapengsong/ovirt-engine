@@ -61,7 +61,7 @@ public class SubTabVirtualMachineErrataPresenter extends AbstractSubTabPresenter
 
     @TabInfo(container = VirtualMachineSubTabPanelPresenter.class)
     static TabData getTabData(DetailTabModelProvider<VmListModel<Void>, VmErrataCountModel> errataCountModelProvider) {
-        return new ModelBoundTabData(constants.virtualMachineErrataSubTabLabel(), 9, errataCountModelProvider);
+        return new ModelBoundTabData("", 9, errataCountModelProvider);
     }
 
     private final VmErrataCountModel errataCountModel;
@@ -75,6 +75,7 @@ public class SubTabVirtualMachineErrataPresenter extends AbstractSubTabPresenter
         super(eventBus, view, proxy, placeManager, errataCountModelProvider,
                 VirtualMachineSubTabPanelPresenter.TYPE_SetTabContent);
         errataCountModel = errataCountModelProvider.getModel();
+        errataCountModel.setIsAvailable(false);
     }
 
     @Override
@@ -136,7 +137,7 @@ public class SubTabVirtualMachineErrataPresenter extends AbstractSubTabPresenter
             public void eventRaised(Event<? extends EventArgs> ev, Object sender, EventArgs args) {
                 // bus published message that the counts changed. update view.
                 ErrataCounts counts = errataCountModel.getErrataCounts();
-                getView().showCounts(counts);
+                //getView().showCounts(counts);
             }
         });
 
@@ -154,7 +155,7 @@ public class SubTabVirtualMachineErrataPresenter extends AbstractSubTabPresenter
                     }
                 } else if (PropertyChangedEventArgs.PROGRESS.equals(args.propertyName)) {
                     if (errataCountModel.getProgress() != null) {
-                        getView().showProgress();
+                        //getView().showProgress();
                     }
                 }
             }

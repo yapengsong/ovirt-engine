@@ -2315,4 +2315,7 @@ public interface CommonApplicationConstants extends Constants {
             "Only keep The devices of infiltration such as USB, video card, network card. Individual cases, not find " +
             "through the equipment. Please cancel.")
     String filterexplain();
+
+    @DefaultStringValue("Specify public key for SSH authentication. Used to access guest serial console.")
+    String consolePublicKeyMessage();
 }

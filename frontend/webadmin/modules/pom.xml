@@ -4,7 +4,7 @@
   <parent>
     <groupId>org.ovirt.engine.ui</groupId>
     <artifactId>webadmin-all</artifactId>
-    <version>3.6.10.1-SNAPSHOT</version>
+    <version>3.6.10.3-SNAPSHOT</version>
   </parent>
   <artifactId>webadmin-modules</artifactId>
   <packaging>pom</packaging>
@@ -63,7 +63,7 @@
     <gwt.userAgent>gecko1_8</gwt.userAgent>
     <!-- Control target locales for GWT compilation, maps to 'locale' deferred binding property in *.gwt.xml -->
     <!-- By default, only English locale is supported, see 'all-langs' profile for a complete list -->
-    <gwt.locale>en_US</gwt.locale>
+    <gwt.locale>zh_CN</gwt.locale>
     <!-- By default, engine port is 8080 -->
     <engine.port.http>8080</engine.port.http>
     <!-- GWT CSS obfuscation style. production should be 'obf', use 'pretty' in development for easier css debugging -->
@@ -215,7 +215,7 @@
     <profile>
       <id>all-langs</id>
       <properties>
-        <gwt.locale>en_US,es_ES,fr_FR,ja_JP,pt_BR,zh_CN,de_DE,ko_KR</gwt.locale>
+        <gwt.locale>zh_CN,en_US</gwt.locale>
       </properties>
     </profile>
     <profile>
