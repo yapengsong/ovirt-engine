@@ -5,7 +5,7 @@ public enum VmDeviceType {
     DISK("disk", "17"),
     LUN("lun"),
     CDROM("cdrom", "15"),
-    INTERFACE("interface", "10"),
+    INTERFACE("interfaces", "10"),
     BRIDGE("bridge", "3"),
     VIDEO("video", "20"),
     USB("usb", "23"),

@@ -36,6 +36,36 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Back")
     String backButtonLabel();
 
+    @DefaultStringValue("User role")
+    String userRole();
+
+    @DefaultStringValue("Administrator role")
+    String adminRole();
+
+    @DefaultStringValue("Client download")
+    String clientDownload();
+
+    @DefaultStringValue("32 bit EayunOS4.2 client")
+    String btn32();
+
+    @DefaultStringValue("64 bit EayunOS4.2 client")
+    String btn64();
+
+    @DefaultStringValue("EayunOS4.2 Linux client")
+    String btnlinux();
+
+    @DefaultStringValue("enter one user name")
+    String inputusername();
+
+    @DefaultStringValue("please input a password")
+    String inputpwd();
+
+    @DefaultStringValue("EayunOS 4.2 server virtualization")
+    String titlefield();
+
+    @DefaultStringValue("User login")
+    String txtfield();
+
     @DefaultStringValue("Connect Automatically")
     String loginFormConnectAutomaticallyLabel();
 
@@ -326,6 +356,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Run VM")
     String runVm();
 
+    @Override
     @DefaultStringValue("Reboot VM")
     String rebootVm();
 

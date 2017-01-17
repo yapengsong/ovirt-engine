@@ -62,7 +62,6 @@
 
       .overrideMigrationDowntime {
         display: inline;
-        float: left;
         width: 50px;
       }
 
@@ -113,7 +112,7 @@
         }
 
         .checkboxWithLongLabel label {
-            margin-left: 26px;
+            margin-left: 19px;
             margin-top: -18px;
             display: block;
             line-height: 20px;
@@ -582,7 +581,7 @@
                             </g:HorizontalPanel>
                         </w:GenericWidgetWithLabel>
 
-                        <ge:EntityModelCheckBoxEditor ui:field="isSmartcardEnabledEditor" addStyleNames="{style.floatLeft} avmpw_smartcard_pfly_fix" />
+                        <ge:EntityModelCheckBoxEditor ui:field="isSmartcardEnabledEditor" addStyleNames="{style.floatLeft}" />
                         <g:Label ui:field="nativeUsbWarningMessage" text="{constants.nativeUsbSupportWarning}" addStyleNames="{style.warningMessageLabel}" />
 
                         <g:Label ui:field="ssoMethodLabel" text="{constants.ssoMethod}" addStyleNames="{style.sectionLabel} {style.floatLeft} {style.fullWidth}" />

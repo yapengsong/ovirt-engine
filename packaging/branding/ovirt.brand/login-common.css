@@ -1,81 +1,439 @@
-/*login page common css*/
+@charset "utf-8";
 
-.login-modal-content {
-    border-radius: 4px;
-    background-color: rgba(100, 100, 100, 0.7);
-    margin-top: 10%;
-    width: 600px;
-}
+/************************cssreset**************************/
 
-.login-modal-content .login-modal-body {
-    padding: 20px 30px 50px 30px;
-    border-radius: 0px 0px 4px 4px;
-}
 
-.login-modal-content .login-modal-body-form {
-    padding-left: 50px;
-    padding-right: 50px;
+/*************************全局常用CSS样式 *************************/
+
+/********************左右浮动********************/
+ 
+.z{
+	float: left;
 }
 
-.login-modal-content .login-modal-header {
-    padding: 10px 50px;
-    background-color: #222;
-    border-radius: 4px 4px 0px 0px;
-    border: 0px;
-    font-size: 13;
-    background-color: rgba(70, 70, 70, 0.7);
-    min-height: 36px;
-    height: 100%;
-}
-.login-modal-content .login-modal-header .login-info-alert{
-    padding: 5px !important;
-    margin-bottom: 0px !important;
-    font-family: inherit;
-    font-weight: 600;
-    color: #FFC300;
-    background-color: transparent;
+.y{
+	float: right;
 }
 
-.login-modal-content .login-modal-body-form .login-word {
-    color: #fff;
-    text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-.login-modal-content .login-modal-body-form .login-localebox{
-    margin-top: 4px;
+/********************清除浮动********************/ 
+ 
+.clearfix{
+	clear: both;
+	zoom: 1;
 }
 
-.login-modal-content .login-modal-body-form .login-btn {
-    background-color: #69B83C;
-    border-color: transparent;
+.clearfix:after{
+	content: "";
+	display: block;
+	height: 0;
+	clear: both;
 }
-.login-modal-content .login-modal-body-form .back-btn {
-	margin-top: 20px;
-    background-color: #00B6EE;
-    border-color: transparent;
+
+/********************兼容ie7\8\9  rgba半透明********************/
+
+/*filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#99000000,endcolorstr=#99000000);*/
+
+/********************按钮********************/
+
+/*按钮居中*/
+
+.abtns{
+	text-align: center;
 }
-.inner-addon{
+
+/*通用按钮*/
+
+.abtn{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	background: #0079C3;
+	color: #FFFFFF;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+}
+
+/********************表单********************/
+
+.infinp{
+	margin: 0 0 25px 0;
+}
+
+.infname{
+	display: inline-block; 
+	width: 100px;
+	padding: 0 15px 0 0; 
+	height: 32px; 
+	line-height: 32px;
+	text-align: right;
+}/*名称*/ 
+
+.inpbox{
+	width: 300px;
+}
+
+.inpt{
+	width: 200px; 
+	height: 30px; 
+	font-size:14px;
+	line-height: 30px; 
+	padding: 0 10px; 
+	border: 1px solid #f2f5f4;
+}/*文本框*/
+
+.inps{
+	width: 200px; 
+	height: 30px; 
+	font-size:14px;
+	line-height: 30px; 
+	border: 1px solid #c6c6c6;
+	padding-left:8px;
+}/*下拉框*/
+	
+.inpta{
+	width: 300px; 
+	height: 100px; 
+	padding: 10px; 
+	border: 1px solid #c6c6c6;
+}/*textarea*/
+
+.inptxt{
+	line-height: 30px;
+}/*默认信息*/
+
+.infmeg{
+	color: #CC0000;  
+	font-size: 12px; 
+	padding: 5px 0 0 0; 
+	line-height: 20px; 
+	word-break: break-all; 
+	word-wrap: break-word;
+}/*提示信息*/
+
+
+@charset "utf-8";
+
+/*背景*/
+
+.bk{
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+/*head*/
+
+.lg_head{
+	width: 100%;
+	height: 70px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	background: #F2F5F4;
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#B2000000,endcolorstr=#B2000000);
+}
+
+.lgh_l{
+	margin: 0 0 0 5%;
+	display:flex;
+}
+
+.logo{
+	display: inline-block;
+	margin: 14px 18px 0 0;
+}
+
+.title{
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	font-size: 26px;
+	color: #555555;
+	padding: 0 0 0 16px;
+	margin: 21px 0 0 0;
+	border-left: 2px solid #999999;
+}
+
+/*客户端下载*/
+
+.lgh_r{
+	margin: 0 5% 0 0;
 	position: relative;
 }
-.inner-addon-icon{
+
+.khddown{
+	display: inline-block;
+	height: 70px;
+	line-height: 70px;
+	padding: 0 30px;
+	color: #0077cc;
+	font-size: 16px;
+	border:0px;
+	background-color:#F2F5F4;
+}
+
+.drop{
+	width: 550px;
+	height: 240px;
+	padding: 45px 25px 0;
+	background: #FFFFFF;
 	position: absolute;
-    padding: 10px;
-    border: none;
-    pointer-events: none;
- }
-.left-addon-icon{
-	left:0px !important;
+	right: 0;
+	top: 70px;
+	box-shadow: 0px 2px 2px 0px #666666;
+	display: none;
 }
-.inner-addon-input-pull-left{
-	padding-left: 30px !important;
+
+.lgh_r:hover .khddown{
+	background: #FFFFFF;
 }
-.user-icon-color{
-    color: #00b6ec;
+
+.lgh_r:hover .drop{
+	display: block;
 }
-.psw-icon-color{
-    color: #feb902;
+
+.dp_l{
+	width: 248px;
+	height: 177px;
+	padding: 0 0 0 20px;
 }
-.prf-icon-color{
-    color: #ff8a00;
+
+.dp_r{
+	width: 248px;
+	height: 177px;
+	border-left: 1px solid #8c8c8c;
+	padding: 0 0 0 50px;
+}
+
+.btn32{
+	display: block;
+	width: 190px;
+	height: 31px;
+	line-height: 31px;
+	color: #FFFFFF;
+	background: url(images/32.png);
+	margin: 45px 0 15px 0;
+	padding: 0 0 0 38px;
+	cursor: pointer;
+}
+
+.btn64{
+	display: block;
+	width: 190px;
+	height: 31px;
+	line-height: 31px;
+	color: #FFFFFF;
+	background: url(images/32.png);
+	padding: 0 0 0 38px;
+	cursor: pointer
+}
+
+.btnln{
+	display: block;
+	width: 190px;
+	height: 31px;
+	line-height: 31px;
+	color: #FFFFFF;
+	background: url(images/32.png);
+	padding: 0 0 0 38px;
+	margin: 40px 0 0 0;
+	cursor: pointer
+}
+
+/*登录框*/
+
+.lg_con{
+	width: 436px;
+	height: 520px;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 2;
+	margin: -220px 0 0 -218px;
+}
+
+.lg_box{
+	width: 436px;
+	height: 458px;
+	background: #ECF3F5;
+	border-radius: 0 0 10px 10px;
+	-webkit-border-radius: 0 0 10px 10px;
+	-moz-border-radius: 0 0 10px 10px;
+	-ms-border-radius: 0 0 10px 10px;
+}
+
+.tabs{
+	border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	-moz-border-radius: 10px 10px 0 0;
+	-ms-border-radius: 10px 10px 0 0;
+	overflow: hidden;
+}
+
+.tabs li{
+	float: left;
+	background: rgba(255,255,255,0.6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#99000000,endcolorstr=#99000000);
+}
+
+.tabs li a{
+	display: block;
+	width: 218px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	font-size: 18px;
+	color: #555555;
+}
+
+.tabs li.active{
+	background: #f2f5f4;
+}
+
+.tabs li.active a{
+	color: #999999;
+}
+
+.txt{
+	font-size: 18px;
+	color: #555555;
+	padding: 30px 60px 10px;
+}
+
+.inpt{
+	display: block;
+	width: 300px;
+	font-size: 14px;
+	height: 40px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	border: 1px solid #e4e4e4;
+	font-family: "黑体";
+	margin: 0 auto 0px;
+	color: #999999;
+}
+
+.inps{
+	display: block;
+	width: 300px;
+	height: 40px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	border: 1px solid #e4e4e4;
+	font-family: "黑体";
+	margin: 33px auto 0px;
+	color: #999999;
+	font-size: 14px;
+	background-color: #FFFFFF;
+}
+
+.lg_btn{
+	display: block;
+	width: 300px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	color: #FFFFFF;
+	font-size: 16px;
+	background: #1279c9;
+	border: 1px solid #1072b0;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-ms-border-radius: 5px;
+	margin: 20px auto;
+}
+
+.xgpwd{
+	text-align: right;
+	padding: 10px 60px 0;
+}
+
+.xgpwd a{
+	color: #0077cc;
+}
+
+/*版本号*/
+
+.version{
+	text-align: right;
+	color: #FFFFFF;
+	padding-right: 10px;
+	font-size:15px;
+}
+
+.copyright{
+	text-align: center;
+	color: #FFFFFF;
+	font-size:15px;
+	margin: 0 0 10px;
+}
+
+/*tab切换*/
+
+.tabbtn{
+	display: inline-block;
+	width: 218px;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	font-size: 18px;
+	color: #555555;
+	border: none;
+	outline: none;
+	font-family: "黑体";
+	background:rgba(255,255,255,0.6);
+	filter: progid:DXImageTransform.Microsoft.gradient(startcolorstr=#99000000,endcolorstr=#99000000);
+	cursor: pointer;
+}
+
+.tabbtn.active{
+	border: none;
+	background: #ECF3F5;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon-icon {
+    position: absolute;
+	pointer-events: none;	
+}
+
+.right-addon-icon{
+	right: 70px;
+	font-size: 20px !important;
+}
+
+.prf-icon-style{
+	padding: 4px 12px 4px 15px;
+	border: none;
+	background-color: white;
+	margin: 6px 0px 6px 2px;
+	border-left: solid 1px #999999;
+}
+
+.wrapper {
+    /* margin: 0 auto; */
+    padding: 0;
+    border: 0;
+    width: 100%;
+    position: fixed;
+    bottom: 15px;
+}
+.fontbai {
+    font-size: 12px;
+    line-height: 30px;
+    color: #555555;
+    text-align: center;
+    padding: 15px;
 }

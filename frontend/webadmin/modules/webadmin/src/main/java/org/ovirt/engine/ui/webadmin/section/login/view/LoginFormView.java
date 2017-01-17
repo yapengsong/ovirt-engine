@@ -45,11 +45,21 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
     }
 
     private void localize() {
-        loginText.setText(constants.loginTextLabel());
-        userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
-        passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
+        //loginText.setText(constants.loginTextLabel());
+        //userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
+        //passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
         loginButton.setLabel(constants.loginButtonLabel());
-        backButton.setLabel(constants.backButtonLabel());
+        //backButton.setLabel(constants.backButtonLabel());
+        adminRoleButton.setLabel(constants.adminRole());
+        userRoleButton.setLabel(constants.userRole());
+        clientButton.setLabel(constants.clientDownload());
+        btn32.setText(constants.btn32());
+        btn64.setText(constants.btn64());
+        btnlinux.setText(constants.btnlinux());
+        userNameEditor.asValueBox().getElement().setPropertyString("placeholder" , constants.inputusername());//$NON-NLS-1$
+        passwordEditor.asValueBox().getElement().setPropertyString("placeholder" , constants.inputpwd());//$NON-NLS-1$
+        titlefield.setText(constants.titlefield());
+        txtfield.setText(constants.txtfield());
     }
 
     @Override

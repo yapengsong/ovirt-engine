@@ -1,14 +1,7 @@
 package org.ovirt.engine.ui.userportal.section.login.view;
 
-import org.gwtbootstrap3.client.ui.Label;
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
-import org.ovirt.engine.ui.common.idhandler.WithElementId;
 import org.ovirt.engine.ui.common.view.AbstractLoginFormView;
-import org.ovirt.engine.ui.common.widget.Align;
-import org.ovirt.engine.ui.common.widget.editor.generic.EntityModelCheckBoxEditor;
-import org.ovirt.engine.ui.frontend.AsyncQuery;
-import org.ovirt.engine.ui.frontend.INewAsyncCallback;
-import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import org.ovirt.engine.ui.uicommonweb.models.userportal.UserPortalLoginModel;
 import org.ovirt.engine.ui.userportal.ApplicationConstants;
 import org.ovirt.engine.ui.userportal.ApplicationDynamicMessages;
@@ -20,10 +13,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FocusPanel;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Panel;
 import com.google.inject.Inject;
 
 public class LoginFormView extends AbstractLoginFormView implements LoginFormPresenterWidget.ViewDef {
@@ -39,23 +29,6 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
         ViewIdHandler idHandler = GWT.create(ViewIdHandler.class);
     }
 
-    @UiField(provided = true)
-    @Path("isAutoConnect.entity")
-    @WithElementId
-    EntityModelCheckBoxEditor connectAutomaticallyEditor;
-
-    @UiField
-    @Ignore
-    Panel motdPanel;
-
-    @UiField
-    @Ignore
-    Label motdHeaderLabel;
-
-    @UiField
-    @Ignore
-    Panel motdMessagePanel;
-
     private final Driver driver = GWT.create(Driver.class);
 
     private final static ApplicationTemplates templates = AssetProvider.getTemplates();
@@ -65,14 +38,11 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
     public LoginFormView(EventBus eventBus, ApplicationDynamicMessages dynamicMessages) {
         super(eventBus);
 
-        connectAutomaticallyEditor = new EntityModelCheckBoxEditor(Align.RIGHT);
 
         initWidget(ViewUiBinder.uiBinder.createAndBindUi(this));
         localize();
 
         setStyles();
-
-        retrieveMessageOfTheDay();
 
         ViewIdHandler.idHandler.generateAndSetIds(this);
         driver.initialize(this);
@@ -81,43 +51,25 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
     @Override
     protected void setStyles() {
         super.setStyles();
-        connectAutomaticallyEditor.setContentWidgetContainerStyleName("connect-automatically-checkbox"); //$NON-NLS-1$
-        connectAutomaticallyEditor.addContentWidgetContainerStyleName("connect-automatically-checkbox_pfly_fix"); //$NON-NLS-1$
-        connectAutomaticallyEditor.setContentWidgetStyleName(""); //$NON-NLS-1$
-        motdPanel.setVisible(false);
     }
 
-    private void retrieveMessageOfTheDay() {
-
-        AsyncQuery _asyncQuery = new AsyncQuery();
-        _asyncQuery.setModel(this);
-        _asyncQuery.asyncCallback = new INewAsyncCallback() {
-            @Override
-            public void onSuccess(Object model, Object result) {
-                String message = (String) result;
-
-                if (message != null && !message.isEmpty()) {
-                    motdMessagePanel.clear();
-                    motdMessagePanel.add(new HTMLPanel(templates.userMessageOfTheDay(message)));
-                    motdPanel.setVisible(true);
-                } else {
-                    motdPanel.setVisible(false);
-                }
-
-            }
-        };
-        AsyncDataProvider.getInstance().getUserMessageOfTheDayViaPublic(_asyncQuery);
-
-    }
 
     void localize() {
-        loginText.setText(constants.loginTextLabel());
-        userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
-        passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
-        connectAutomaticallyEditor.setLabel(constants.loginFormConnectAutomaticallyLabel());
+        //loginText.setText(constants.loginTextLabel());
+        //userNameEditor.setPlaceHolder(constants.loginFormUserNameLabel());
+        //passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
+        //connectAutomaticallyEditor.setLabel(constants.loginFormConnectAutomaticallyLabel());
         loginButton.setLabel(constants.loginButtonLabel());
-        backButton.setLabel(constants.backButtonLabel());
-        motdHeaderLabel.setText(constants.motdHeaderLabel());
+        userRoleButton.setLabel(constants.userRole());
+        adminRoleButton.setLabel(constants.adminRole());
+        clientButton.setLabel(constants.clientDownload());
+        btn32.setText(constants.btn32());
+        btn64.setText(constants.btn64());
+        btnlinux.setText(constants.btnlinux());
+        userNameEditor.asValueBox().getElement().setPropertyString("placeholder" ,  constants.inputusername());//$NON-NLS-1$
+        passwordEditor.asValueBox().getElement().setPropertyString("placeholder" , constants.inputpwd());//$NON-NLS-1$
+        titlefield.setText(constants.titlefield());
+        txtfield.setText(constants.txtfield());
     }
 
     @Override
