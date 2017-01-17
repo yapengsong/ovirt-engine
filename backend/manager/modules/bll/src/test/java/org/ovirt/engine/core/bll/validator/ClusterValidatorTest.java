@@ -65,6 +65,7 @@ public class ClusterValidatorTest {
     public void nameNotUsed() {
         when(clusterDao.getByName(any(String.class), any(Boolean.class))).thenReturn(Collections.<VDSGroup> emptyList());
         when(dbFacade.getVdsGroupDao()).thenReturn(clusterDao);
+        when(cluster.getName()).thenReturn("testCluster");
         validator = new ClusterValidator(dbFacade, cluster);
 
         assertThat(validator.nameNotUsed(), isValid());
@@ -74,6 +75,7 @@ public class ClusterValidatorTest {
     public void nameIsAlreadyUsed() {
         when(clusterDao.getByName(any(String.class), any(Boolean.class))).thenReturn(Collections.<VDSGroup> singletonList(mock(VDSGroup.class)));
         when(dbFacade.getVdsGroupDao()).thenReturn(clusterDao);
+        when(cluster.getName()).thenReturn("testCluster");
         validator = new ClusterValidator(dbFacade, cluster);
 
         assertThat(validator.nameNotUsed(), failsWith(EngineMessage.VDS_GROUP_CANNOT_DO_ACTION_NAME_IN_USE));
