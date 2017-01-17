@@ -77,7 +77,7 @@ public class WelcomeServletTest {
 
     @Test
     public void testDoGetHttpServletRequestHttpServletResponseNoDispatcher() throws IOException, ServletException {
-        when(mockRequest.getAttribute(LocaleFilter.LOCALE)).thenReturn(Locale.JAPANESE);
+        when(mockRequest.getAttribute(LocaleFilter.LOCALE)).thenReturn(Locale.SIMPLIFIED_CHINESE);
         testServlet.doGet(mockRequest, mockResponse);
         verify(mockRequest).setAttribute("localeKeys", localeKeys);
         //Make sure the content type contains UTF-8 so the characters display properly.
@@ -86,7 +86,7 @@ public class WelcomeServletTest {
 
     @Test
     public void testDoGetHttpServletRequestHttpServletResponseWithDispatcher() throws IOException, ServletException {
-        when(mockRequest.getAttribute(LocaleFilter.LOCALE)).thenReturn(Locale.JAPANESE);
+        when(mockRequest.getAttribute(LocaleFilter.LOCALE)).thenReturn(Locale.SIMPLIFIED_CHINESE);
         when(mockRequest.getRequestDispatcher("/WEB-INF/ovirt-engine.jsp")).thenReturn(mockDispatcher);
         testServlet.doGet(mockRequest, mockResponse);
         verify(mockRequest).setAttribute("localeKeys", localeKeys);
@@ -98,13 +98,7 @@ public class WelcomeServletTest {
 
     private List<String> createLocaleKeys() {
         List<String> keys = new ArrayList<String>();
-        keys.add("de_DE");
         keys.add("en_US");
-        keys.add("es_ES");
-        keys.add("fr_FR");
-        keys.add("ja_JP");
-        keys.add("ko_KR");
-        keys.add("pt_BR");
         keys.add("zh_CN");
         return keys;
     }
