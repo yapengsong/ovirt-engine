@@ -603,7 +603,7 @@
 
                         <ge:EntityModelCheckBoxEditor ui:field="spiceFileTransferEnabledEditor" addStyleNames="{style.checkboxWithLongLabel}" />
                         <ge:EntityModelCheckBoxEditor ui:field="spiceCopyPasteEnabledEditor" addStyleNames="{style.checkboxWithLongLabel}" />
-                    </g:FlowPanel>	
+                    </g:FlowPanel>
                 </t:content>
             </t:DialogTab>
         </t:tab>
