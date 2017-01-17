@@ -18,6 +18,7 @@ import org.ovirt.engine.ui.uicompat.PropertyChangedEventArgs;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.dom.client.HasKeyPressHandlers;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyPressEvent;
@@ -51,12 +52,19 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
 
         HasUiCommandClickHandlers getLoginButton();
 
-        HasUiCommandClickHandlers getBackButton();
+        HasUiCommandClickHandlers getUserRoleButton();
+
+        HasUiCommandClickHandlers getAdminRoleButton();
+
+        HasClickHandlers getBtn32();
+
+        HasClickHandlers getBtn64();
 
         HasKeyPressHandlers getLoginForm();
 
         String getMotdAnchorHtml(String url);
 
+        @Override
         T flush();
 
         void fireChangeEventsOnFields();
@@ -82,6 +90,7 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
         super.onBind();
 
         final T loginModel = getView().flush();
+
 
         // Set up model command invoker
         this.modelCommandInvoker = new DeferredModelCommandInvoker(loginModel) {
@@ -111,12 +120,33 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
 
         });
 
-        getView().getBackButton().setCommand(loginModel.getBackCommand());
-        registerHandler(getView().getBackButton().addClickHandler(new ClickHandler(){
+        // getView().getUserRoleButton().setCommand(loginModel.getBackCommand());
+        registerHandler(getView().getUserRoleButton().addClickHandler(new ClickHandler(){
             @Override
             public void onClick(ClickEvent event) {
-                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost());//$NON-NLS-1$
+                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunos/userportal/?locale=zh_CN");//$NON-NLS-1$ //$NON-NLS-2$
             }}));
+
+        // getView().getAdminRoleButton().setCommand(loginModel.getBackCommand());
+        registerHandler(getView().getAdminRoleButton().addClickHandler(new ClickHandler(){
+            @Override
+            public void onClick(ClickEvent event) {
+                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunos/webadmin/?locale=zh_CN");//$NON-NLS-1$ //$NON-NLS-2$
+            }}));
+
+        registerHandler(getView().getBtn32().addClickHandler(new ClickHandler(){
+            @Override
+            public void onClick(ClickEvent event) {
+                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunVirt/virt-viewer-x86-3.1.msi");//$NON-NLS-1$ //$NON-NLS-2$
+            }}));
+
+        registerHandler(getView().getBtn64().addClickHandler(new ClickHandler(){
+            @Override
+            public void onClick(ClickEvent event) {
+
+                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunVirt/virt-viewer-x64-3.1.msi");//$NON-NLS-1$ //$NON-NLS-2$
+            }}));
+
 
         getView().getLoginButton().setCommand(loginModel.getLoginCommand());
         registerHandler(getView().getLoginButton().addClickHandler(new ClickHandler() {

@@ -1,28 +1,21 @@
 package org.ovirt.engine.core;
 
 import java.io.IOException;
-import java.util.Locale;
 
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.ovirt.engine.core.branding.BrandingManager;
-import org.ovirt.engine.core.common.config.ConfigCommon;
 import org.ovirt.engine.core.common.interfaces.BackendLocal;
-import org.ovirt.engine.core.common.queries.ConfigurationValues;
-import org.ovirt.engine.core.common.queries.GetConfigurationValueParameters;
-import org.ovirt.engine.core.common.queries.VdcQueryType;
-import org.ovirt.engine.core.utils.servlet.LocaleFilter;
-import org.ovirt.engine.core.utils.servlet.UnsupportedLocaleHelper;
 
 /**
  * This Servlet serves the welcome page to allow users to select either web admin or user portal.
  */
 public class WelcomeServlet extends HttpServlet {
+
     /**
      * Generated UID.
      */
@@ -79,6 +72,7 @@ public class WelcomeServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws IOException,
         ServletException {
+        /*
         request.setAttribute(LOCALE_KEYS, UnsupportedLocaleHelper.getDisplayedLocales(LocaleFilter.getLocaleKeys()));
         String oVirtVersion = backend.runPublicQuery(VdcQueryType.GetConfigurationValue,
                 new GetConfigurationValueParameters(ConfigurationValues.ProductRPMVersion,
@@ -86,11 +80,14 @@ public class WelcomeServlet extends HttpServlet {
         request.setAttribute(VERSION, oVirtVersion != null ? oVirtVersion : "myVersion");
         request.setAttribute(SECTIONS, brandingManager
                 .getWelcomeSections((Locale) request.getAttribute(LocaleFilter.LOCALE)));
+
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/ovirt-engine.jsp");
         response.setContentType("text/html;charset=UTF-8");
         if (dispatcher != null) {
             dispatcher.include(request, response);
         }
+        */
+        request.getRequestDispatcher("/WEB-INF/ovirt-engine.jsp").forward(request, response);
     }
 
 }

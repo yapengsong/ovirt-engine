@@ -13,8 +13,8 @@ public class ListModelListBoxWithIconEditor<T> extends AbstractValidatedWidgetWi
     private final WidgetWithLabelEditor<T, ListModelListBoxWithIconEditor<T>> editor;
 
     public ListModelListBoxWithIconEditor() {
-        this(new StringRenderer<T>(), "fa fa-puzzle-piece");//$NON-NLS-1$
-        addStyleNameToIcon("prf-icon-color");//$NON-NLS-1$
+        this(new StringRenderer<T>(), "fa fa-angle-down");//$NON-NLS-1$
+        addStyleNameToIcon("prf-icon-style");//$NON-NLS-1$
     }
 
     public ListModelListBoxWithIconEditor(VisibilityRenderer visibilityRenderer, String iconName) {
