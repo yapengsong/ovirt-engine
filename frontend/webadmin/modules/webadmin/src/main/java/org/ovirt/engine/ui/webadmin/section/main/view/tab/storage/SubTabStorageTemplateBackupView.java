@@ -12,6 +12,7 @@ import org.ovirt.engine.ui.common.widget.table.column.AbstractTextColumn;
 import org.ovirt.engine.ui.uicommonweb.UICommand;
 import org.ovirt.engine.ui.uicommonweb.models.storage.StorageListModel;
 import org.ovirt.engine.ui.uicommonweb.models.storage.TemplateBackupModel;
+import org.ovirt.engine.ui.uicompat.EnumTranslator;
 import org.ovirt.engine.ui.uicompat.UIConstants;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
@@ -77,8 +78,7 @@ public class SubTabStorageTemplateBackupView extends AbstractSubTabTableView<Sto
                 new AbstractTextColumn<VmTemplate>() {
                     @Override
                     public String getValue(VmTemplate object) {
-                        return object.getOrigin() == null ? messageConstants.notSpecifiedLabel() : object.getOrigin()
-                                .toString();
+                        return object.getOrigin() == null ? messageConstants.notSpecifiedLabel() : EnumTranslator.getInstance().translate(object.getOrigin()).toString();
                     }
                 };
         originColumn.makeSortable();
