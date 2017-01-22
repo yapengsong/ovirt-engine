@@ -67,13 +67,12 @@ public class CompositeCell<C> extends com.google.gwt.cell.client.CompositeCell<C
         else {
             tooltip = tooltipContent;
         }
-        //ElementTooltipUtils.setTooltipOnElement(tooltip, parent);
 
         if (BrowserEvents.MOUSEOVER.equals(event.getType())) {
             ElementTooltipUtils.setTooltipOnElement(tooltip, parent);
+        }else{
+            super.onBrowserEvent(context, parent, value, event, valueUpdater);
         }
-
-        //super.onBrowserEvent(context, parent, value, event, valueUpdater);
     }
 
     /**
