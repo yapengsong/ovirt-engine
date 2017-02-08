@@ -21,7 +21,9 @@ public class NewInstanceTypeModelBehavior extends NonClusterModelBehaviorBase {
 
         // no way to pick a specific host
         getModel().getIsAutoAssign().setEntity(true);
-        getModel().getUsbPolicy().setItems(Arrays.asList(UsbPolicy.values()));
+        getModel().getUsbPolicy().setItems(Arrays.asList(
+                UsbPolicy.DISABLED,
+                UsbPolicy.ENABLED_NATIVE));
 
         getModel().getIsSoundcardEnabled().setIsChangeable(true);
         getModel().setSelectedMigrationDowntime(null);
