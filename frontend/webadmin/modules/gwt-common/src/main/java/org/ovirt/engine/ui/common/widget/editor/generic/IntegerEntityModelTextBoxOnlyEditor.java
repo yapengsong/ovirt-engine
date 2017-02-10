@@ -1,5 +1,6 @@
 package org.ovirt.engine.ui.common.widget.editor.generic;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import org.ovirt.engine.ui.common.widget.VisibilityRenderer;
@@ -26,4 +27,18 @@ public class IntegerEntityModelTextBoxOnlyEditor extends NumberEntityModelTextBo
                 .thisFieldMustContainIntegerNumberInvalidReason()));
     }
 
+    @Override
+    protected boolean isNumberType(String text) {
+        if (text.length() <= 20) {
+            BigInteger value = new BigInteger(text);
+            if (value.compareTo(new BigInteger("" + Integer.MIN_VALUE)) >= 0
+                    && value.compareTo(new BigInteger("" + Integer.MAX_VALUE)) <= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }

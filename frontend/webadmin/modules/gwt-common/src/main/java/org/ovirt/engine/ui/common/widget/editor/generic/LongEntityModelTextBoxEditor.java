@@ -1,5 +1,6 @@
 package org.ovirt.engine.ui.common.widget.editor.generic;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 import org.ovirt.engine.ui.common.widget.parser.generic.ToLongEntityParser;
@@ -17,5 +18,20 @@ public class LongEntityModelTextBoxEditor extends NumberEntityModelTextBoxEditor
         super.handleInvalidState();
         //Even though this is a long, the validator will return the integer message, so that is the one we are using here.
         markAsInvalid(Arrays.asList(ConstantsManager.getInstance().getConstants().thisFieldMustContainIntegerNumberInvalidReason()));
+    }
+
+    @Override
+    protected boolean isNumberType(String text) {
+        if (text.length() <= 20) {
+            BigInteger value = new BigInteger(text);
+            if (value.compareTo(new BigInteger("" + Long.MIN_VALUE)) >= 0
+                    && value.compareTo(new BigInteger("" + Long.MAX_VALUE)) <= 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
