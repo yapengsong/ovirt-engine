@@ -68,7 +68,7 @@ public class NonClusterModelBehaviorBase extends VmModelBehaviorBase<UnitVmModel
 
         List<Pair<GraphicsType, DisplayType>> allGraphicsAndDisplays = new ArrayList<Pair<GraphicsType, DisplayType>>();
         for (GraphicsType graphicsType : GraphicsType.values()) {
-            for (DisplayType displayType : DisplayType.values()) {
+            for (DisplayType displayType : Arrays.asList(DisplayType.cirrus, DisplayType.qxl)) {
                 allGraphicsAndDisplays.add(new Pair<GraphicsType, DisplayType>(
                         graphicsType,
                         displayType
