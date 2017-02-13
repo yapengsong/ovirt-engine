@@ -14,14 +14,18 @@ import org.ovirt.engine.core.common.businessentities.storage.DiskStorageType;
 import org.ovirt.engine.core.common.businessentities.storage.LunDisk;
 import org.ovirt.engine.core.common.businessentities.storage.ScsiGenericIO;
 import org.ovirt.engine.core.common.businessentities.storage.StorageType;
+import org.ovirt.engine.core.common.businessentities.storage.VolumeType;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.ui.frontend.AsyncQuery;
 import org.ovirt.engine.ui.frontend.Frontend;
 import org.ovirt.engine.ui.frontend.INewAsyncCallback;
+import org.ovirt.engine.ui.uicommonweb.ErrorPopupManager;
+import org.ovirt.engine.ui.uicommonweb.TypeResolver;
 import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import org.ovirt.engine.ui.uicommonweb.validation.IValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NonNegativeLongNumberValidation;
 import org.ovirt.engine.ui.uicommonweb.validation.NotEmptyValidation;
+import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.FrontendActionAsyncResult;
 import org.ovirt.engine.ui.uicompat.IFrontendActionAsyncCallback;
 
@@ -204,4 +208,26 @@ public class EditDiskModel extends AbstractDiskModel {
     protected void updateCinderVolumeTypes() {
         getCinderVolumeType().setSelectedItem(getDisk().getCinderVolumeType());
     }
+
+    @Override
+    public void onSave() {
+
+        if((!(getSizeExtend().getEntity().equals("0")))&&getDisk().getNumberOfVms()>0){//$NON-NLS-1$
+            if(getVolumeType().getSelectedItem().name().equals(VolumeType.Sparse.name())&&getDisk().getPlugged().equals(false)){
+                displayExtendDiskLimitDialog();
+            }else{
+                super.onSave();
+            }
+        }else{
+            super.onSave();
+        }
+    }
+
+    private void displayExtendDiskLimitDialog() {
+        final ErrorPopupManager popupManager =
+                (ErrorPopupManager) TypeResolver.getInstance().resolve(ErrorPopupManager.class);
+        popupManager.show(ConstantsManager.getInstance().getConstants().displayExtendDiskLimitDialog());
+    }
+
+
 }
