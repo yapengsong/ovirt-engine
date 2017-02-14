@@ -157,6 +157,7 @@ public abstract class AbstractLoginFormView extends AbstractView {
         errorMessagePanel.getWidget().addStyleName(ColumnOffset.XS_1.getCssName());
         // column-size=10
         errorMessagePanel.setWidgetColumnSize(ColumnSize.XS_10);
+        errorMessagePanel.getElement().setPropertyString("style", "float:none; margin-bottom: 0px;");//$NON-NLS-1$ //$NON-NLS-2$
         loginButton.getElement().removeClassName("btn btn-default");//$NON-NLS-1$
         userRoleButton.getElement().removeClassName("btn btn-default");//$NON-NLS-1$
         adminRoleButton.getElement().removeClassName("btn btn-default");//$NON-NLS-1$
