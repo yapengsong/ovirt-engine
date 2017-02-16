@@ -35,6 +35,7 @@ import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.quota.QuotaPopupPresenterWidget;
 import org.ovirt.engine.ui.webadmin.widget.table.cell.NullableButtonCell;
 import org.ovirt.engine.ui.webadmin.widget.table.column.QuotaUtilizationStatusColumn;
+
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.editor.client.SimpleBeanEditorDriver;
@@ -207,12 +208,12 @@ public class QuotaPopupView extends AbstractModelBoundPopupView<QuotaModel> impl
     }
 
     private void initSliders() {
-        clusterThresholdSlider = new Slider(2, 0, 100, 80, MIN_COLOR);
+        clusterThresholdSlider = new Slider(2, 1, 100, 80, MIN_COLOR);
         clusterThresholdSlider.setSliderValueChange(THRESHOLD_CLUSTER, this);
         clusterGraceSlider = new Slider(2, 101, 200, 120, MAX_COLOR);
         clusterGraceSlider.setSliderValueChange(GRACE_CLUSTER, this);
 
-        storageThresholdSlider = new Slider(2, 0, 100, 80, MIN_COLOR);
+        storageThresholdSlider = new Slider(2, 1, 100, 80, MIN_COLOR);
         storageThresholdSlider.setSliderValueChange(THRESHOLD_STORAGE, this);
         storageGraceSlider = new Slider(2, 101, 200, 120, MAX_COLOR);
         storageGraceSlider.setSliderValueChange(GRACE_STORAGE, this);
