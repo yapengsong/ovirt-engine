@@ -175,6 +175,7 @@ public abstract class AbstractLoginFormView extends AbstractView {
         profileEditor.asListBox().removeStyleName("form-control");//$NON-NLS-1$
         profileEditor.asListBox().addStyleName("inps");//$NON-NLS-1$
         profileEditor.addStyleNameToIcon(" right-addon-icon prf-icon-style");//$NON-NLS-1$
+        profileEditor.getIconPanel().getElement().setPropertyString("style", "padding-top: 9px; padding-bottom: 9px; margin-top: 1px;");//$NON-NLS-1$ //$NON-NLS-2$
         profileEditor.asWidget().getElement().getStyle().clearBorderStyle();
         profileEditor.asListBox().removeStyleName("inner-addon-input-pull-left ");//$NON-NLS-1$
         profileEditor.removeIconStyleName("left-addon-icon");//$NON-NLS-1$
