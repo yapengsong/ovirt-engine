@@ -1877,7 +1877,7 @@ public enum ConfigValues {
     GlusterPeerStatusRetries,
 
     @TypeConverterAttribute(Integer.class)
-    @DefaultValueAttribute("1")
+    @DefaultValueAttribute("10")
     AutoStartVmsRunnerIntervalInSeconds,
 
     @TypeConverterAttribute(Integer.class)
