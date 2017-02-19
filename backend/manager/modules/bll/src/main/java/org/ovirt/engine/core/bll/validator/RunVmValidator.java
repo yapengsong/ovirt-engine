@@ -116,8 +116,7 @@ public class RunVmValidator {
                    validate(validateStoragePoolUp(vm, storagePool, getVmImageDisks()), messages) &&
                    validate(vmDuringInitialization(vm), messages) &&
                     validate(validateStorageDomains(vm,
-                            isInternalExecution,
-                            filterReadOnlyAndPreallocatedDisks(getVmImageDisks())), messages)
+                            filterReadOnlyAndPreallocatedAndUnpluggedDisks(getVmImageDisks())), messages)
                     &&
                    validate(validateImagesForRunVm(vm, getVmImageDisks()), messages) &&
                    getSchedulingManager().canSchedule(
@@ -137,8 +136,7 @@ public class RunVmValidator {
                 validate(validateStatelessVm(vm, runVmParam.getRunAsStateless()), messages) &&
                 validate(validateFloppy(), messages) &&
                 validate(validateStorageDomains(vm,
-                        isInternalExecution,
-                        filterReadOnlyAndPreallocatedDisks(getVmImageDisks())), messages)
+                        filterReadOnlyAndPreallocatedAndUnpluggedDisks(getVmImageDisks())), messages)
                 &&
                 validate(validateImagesForRunVm(vm, getVmImageDisks()), messages) &&
                 validate(validateMemorySize(vm), messages) &&
@@ -146,10 +144,11 @@ public class RunVmValidator {
                         vdsGroup, vm, vdsBlackList, vdsWhiteList, destVdsList, messages);
     }
 
-    private List<DiskImage> filterReadOnlyAndPreallocatedDisks(List<DiskImage> vmImageDisks) {
+    private List<DiskImage> filterReadOnlyAndPreallocatedAndUnpluggedDisks(List<DiskImage> vmImageDisks) {
         List<DiskImage> retVal = new ArrayList<>();
         for (DiskImage disk : vmImageDisks) {
-            if (!(disk.getVolumeType() == VolumeType.Preallocated || disk.getReadOnly())) {
+            if (!(disk.getVolumeType() == VolumeType.Preallocated || disk.getReadOnly())
+                    && disk.getPlugged()) {
                 retVal.add(disk);
             }
         }
@@ -276,37 +275,32 @@ public class RunVmValidator {
     }
 
     /**
-     * Check storage domains. Storage domain status and disk space are checked only for non-HA VMs.
+     * Check storage domains. Storage domain status and disk space are checked.
      *
      * @param vm
      *            The VM to run
-     * @param isInternalExecution
-     *            Command is internal?
      * @param vmImages
      *            The VM's image disks
      * @return <code>true</code> if the VM can be run, <code>false</code> if not
      */
-    protected ValidationResult validateStorageDomains(VM vm, boolean isInternalExecution,
-            List<DiskImage> vmImages) {
+    protected ValidationResult validateStorageDomains(VM vm, List<DiskImage> vmImages) {
         if (vmImages.isEmpty()) {
             return ValidationResult.VALID;
         }
 
-        if (!vm.isAutoStartup() || !isInternalExecution) {
-            Set<Guid> storageDomainIds = ImagesHandler.getAllStorageIdsForImageIds(vmImages);
-            MultipleStorageDomainsValidator storageDomainValidator =
-                    new MultipleStorageDomainsValidator(vm.getStoragePoolId(), storageDomainIds);
+        Set<Guid> storageDomainIds = ImagesHandler.getAllStorageIdsForImageIds(vmImages);
+        MultipleStorageDomainsValidator storageDomainValidator =
+                new MultipleStorageDomainsValidator(vm.getStoragePoolId(), storageDomainIds);
 
-            ValidationResult result = storageDomainValidator.allDomainsExistAndActive();
-            if (!result.isValid()) {
-                return result;
-            }
+        ValidationResult result = storageDomainValidator.allDomainsExistAndActive();
+        if (!result.isValid()) {
+            return result;
+        }
 
-            result = !vm.isAutoStartup() ? storageDomainValidator.allDomainsWithinThresholds()
-                    : ValidationResult.VALID;
-            if (!result.isValid()) {
-                return result;
-            }
+        result = !vm.isAutoStartup() ? storageDomainValidator.allDomainsWithinThresholds()
+                : ValidationResult.VALID;
+        if (!result.isValid()) {
+            return result;
         }
 
         return ValidationResult.VALID;
