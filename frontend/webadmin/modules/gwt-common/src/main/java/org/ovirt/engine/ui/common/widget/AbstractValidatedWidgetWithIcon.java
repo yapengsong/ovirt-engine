@@ -63,7 +63,7 @@ public abstract class AbstractValidatedWidgetWithIcon<T, W extends EditorWidget<
 
     }
 
-    private Span getIconPanel() {
+    public Span getIconPanel() {
         return icon;
     }
 

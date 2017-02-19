@@ -488,6 +488,7 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         indexOfVmSnapshotListModel = list.indexOf(vmSnapshotListModel);
         list.add(vmEventListModel);
         list.add(vmAppListModel);
+        vmAppListModel.setIsAvailable(false);
         list.add(vmDevicesListModel);
         list.add(permissionListModel);
         list.add(vmAffinityGroupListModel);

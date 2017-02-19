@@ -157,16 +157,8 @@ popup windows, for instance for creating a new VM */
 /*background image  background-official.png*/
 
 .obrand_loginPageBackground {
-    background-image: url('images/bg.png');
+    background-image: url('images/bg.png') ;
     background-color: #282d33;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: 50% 0;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
 }
 
 
