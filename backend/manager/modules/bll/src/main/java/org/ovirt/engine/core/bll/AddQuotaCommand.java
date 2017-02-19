@@ -49,15 +49,15 @@ public class AddQuotaCommand extends QuotaCRUDCommand {
 
                 @Override
                 public Void runInTransaction() {
-                    return executeAddQutoa();
+                    return executeAddQuota();
                 }
             });
         } else {
-            executeAddQutoa();
+            executeAddQuota();
         }
     }
 
-    private Void executeAddQutoa() {
+    private Void executeAddQuota() {
         getQuotaDao().save(getQuota());
         if (getParameters().isCopyPermissions()) {
             copyQuotaPermissions();
