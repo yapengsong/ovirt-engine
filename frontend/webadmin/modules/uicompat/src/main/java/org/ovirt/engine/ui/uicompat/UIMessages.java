@@ -51,6 +51,15 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
     @DefaultMessage("{0} less than or equal to {1}.")
     String integerValidationNumberLessInvalidReason(String prefixMsg, int max);
 
+    @DefaultMessage("{0} between {1} and {2}.")
+    String longValidationNumberBetweenInvalidReason(String prefixMsg, long min, long max);
+
+    @DefaultMessage("{0} greater than or equal to {1}.")
+    String longValidationNumberGreaterInvalidReason(String prefixMsg, long min);
+
+    @DefaultMessage("{0} less than or equal to {1}.")
+    String longValidationNumberLessInvalidReason(String prefixMsg, long max);
+
     @DefaultMessage("Field content must not exceed {0} characters.")
     String lenValidationFieldMusnotExceed(int maxLength);
 
@@ -591,7 +600,7 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
 
     @DefaultMessage("Errata for VM {0}")
     String errataForVm(String vmName);
-    
+
     @DefaultMessage("Failed to start upload: {0}")
     String uploadImageFailedToStartMessage(String reason);
 
