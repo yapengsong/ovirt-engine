@@ -546,12 +546,12 @@ public class ClusterListModel<E> extends ListWithDetailsAndReportsModel<E, VDSGr
 
     public void onSave() {
         ClusterModel model = (ClusterModel) getWindow();
-
+        boolean  myisvali = model.isVali();
         boolean validateCpu =
                 (model.getIsNew() && model.getEnableOvirtService().getEntity())
                         || (model.getIsEdit() && getSelectedItem().getCpuName() != null);
 
-        if (!model.validate(validateCpu)) {
+        if (!model.validate(validateCpu) || !myisvali) {
             return;
         }
         else if (model.getIsNew()) {

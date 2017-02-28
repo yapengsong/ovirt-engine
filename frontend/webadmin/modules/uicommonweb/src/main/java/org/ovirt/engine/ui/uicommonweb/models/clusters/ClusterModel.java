@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.ovirt.engine.core.common.businessentities.AdditionalFeature;
 import org.ovirt.engine.core.common.businessentities.ArchitectureType;
+import org.ovirt.engine.core.common.businessentities.BusinessEntitiesDefinitions;
 import org.ovirt.engine.core.common.businessentities.MigrateOnErrorOptions;
 import org.ovirt.engine.core.common.businessentities.SerialNumberPolicy;
 import org.ovirt.engine.core.common.businessentities.ServerCpu;
@@ -2033,7 +2034,7 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
         setValidTab(TabName.CONSOLE_TAB, getSpiceProxy().getIsValid());
 
         if (getSerialNumberPolicy().getSelectedSerialNumberPolicy() == SerialNumberPolicy.CUSTOM) {
-            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() });
+            getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() , new LengthValidation(BusinessEntitiesDefinitions.GENERAL_NAME_SIZE) });
         } else {
             getSerialNumberPolicy().getCustomSerialNumber().setIsValid(true);
         }
@@ -2052,6 +2053,13 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
         ValidationCompleteEvent.fire(getEventBus(), this);
         return generalTabValid && getCustomPropertySheet().getIsValid() && getSpiceProxy().getIsValid();
     }
+
+    public Boolean isVali(){
+        getSerialNumberPolicy().getCustomSerialNumber().validateEntity(new IValidation[] { new NotEmptyValidation() , new LengthValidation(BusinessEntitiesDefinitions.GENERAL_NAME_SIZE) });
+        boolean myvali = getSerialNumberPolicy().getCustomSerialNumber().getIsValid();
+        return myvali;
+    }
+
 
     public void validateName() {
         getName().validateEntity(new IValidation[] {
