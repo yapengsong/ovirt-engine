@@ -156,7 +156,7 @@ public interface CommonApplicationMessages extends Messages {
             " - Power8: 1..8 (8 for high load VMs)")
     String threadsPerCoreInfo();
 
-    @DefaultMessage("Policy of assigning serial numbers to running VMs. Can be Host''s UUID, Vm''s UUID or any custom value.")
+    @DefaultMessage("Policy of assigning serial numbers to running VMs. Can be Host''s UUID, Vm''s UUID or any custom value. To run the virtual machine host ID by default")
     String serialNumberInfo();
 
     @DefaultMessage("Changes that require Virtual Machine restart:")
