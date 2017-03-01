@@ -137,7 +137,7 @@ public interface CommonApplicationMessages extends Messages {
     @DefaultMessage("{0} or {1}")
     String or(String a, String b);
 
-    @DefaultMessage("Represents maximum number of milliseconds the VM can be down during live migration. Value of 0 means that VDSM default will be used. (Current engine-wide default is {0}ms)")
+    @DefaultMessage("Represents maximum number of milliseconds the VM can be down during live migration. Value of 0 means that VDSM default will be used. (engine-wide default is {0}ms)")
     String migrationDowntimeInfo(Integer milliseconds);
 
     @DefaultMessage("When at least one of the VM activated disks use SCSI reservation, migration option is ignored and VM cannot be migrated.")
