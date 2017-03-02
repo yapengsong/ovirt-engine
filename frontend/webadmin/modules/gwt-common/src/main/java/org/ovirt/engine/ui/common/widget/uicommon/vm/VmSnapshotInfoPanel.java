@@ -27,6 +27,7 @@ import org.ovirt.engine.ui.frontend.INewAsyncCallback;
 import org.ovirt.engine.ui.uicommonweb.models.EntityModel;
 import org.ovirt.engine.ui.uicommonweb.models.ListModel;
 import org.ovirt.engine.ui.uicommonweb.models.vms.SnapshotModel;
+
 import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.user.client.ui.ScrollPanel;
@@ -42,7 +43,6 @@ public class VmSnapshotInfoPanel extends TabLayoutPanel {
     private VmSnapshotInfoGeneral generalForm;
     private EntityModelCellTable<ListModel> disksTable;
     private EntityModelCellTable<ListModel> nicsTable;
-    private EntityModelCellTable<ListModel> appsTable;
 
     public VmSnapshotInfoPanel() {
         super(CommonApplicationTemplates.TAB_BAR_HEIGHT, Unit.PX);
@@ -57,13 +57,11 @@ public class VmSnapshotInfoPanel extends TabLayoutPanel {
         initGeneralForm();
         initDisksTable();
         initNicsTable();
-        initAppsTable();
 
         // Add Tabs
         add(new ScrollPanel(generalForm), constants.generalLabel());
         add(new ScrollPanel(disksTable), constants.disksLabel());
         add(new ScrollPanel(nicsTable), constants.nicsLabel());
-        add(new ScrollPanel(appsTable), constants.applicationsLabel());
     }
 
     public void updatePanel(final SnapshotModel snapshotModel) {
@@ -84,7 +82,6 @@ public class VmSnapshotInfoPanel extends TabLayoutPanel {
         generalForm.update(snapshotModel.getVm());
         disksTable.setRowData((List) snapshotModel.getDisks());
         nicsTable.setRowData((List) snapshotModel.getNics());
-        appsTable.setRowData((List) snapshotModel.getApps());
     }
 
     private void initGeneralForm() {
@@ -287,19 +284,4 @@ public class VmSnapshotInfoPanel extends TabLayoutPanel {
         nicsTable.setSelectionModel(new NoSelectionModel());
     }
 
-    private void initAppsTable() {
-        appsTable = new EntityModelCellTable<ListModel>(false, true);
-
-        AbstractTextColumn<String> appNameColumn = new AbstractTextColumn<String>() {
-            @Override
-            public String getValue(String appName) {
-                return appName;
-            }
-        };
-        appsTable.addColumn(appNameColumn, constants.nameSnapshot());
-
-        appsTable.setRowData(new ArrayList<EntityModel>());
-        appsTable.setWidth("100%", true); //$NON-NLS-1$
-        appsTable.setSelectionModel(new NoSelectionModel());
-    }
 }
