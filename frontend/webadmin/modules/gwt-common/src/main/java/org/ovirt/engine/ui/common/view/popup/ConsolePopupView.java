@@ -387,11 +387,11 @@ public class ConsolePopupView extends AbstractModelBoundPopupView<ConsolePopupMo
         private String html;
 
         private KeyValueHtmlRowMaker(String key, String val) {
-            html = "<b>" + key + "</b>: " + val; //$NON-NLS-1$ //$NON-NLS-2$
+            html = "" + key + ":" + val; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         public KeyValueHtmlRowMaker append(String key, String val) {
-            html += "<br/>" + new KeyValueHtmlRowMaker(key, val).toString(); //$NON-NLS-1$
+            html += "" + new KeyValueHtmlRowMaker(key, val).toString(); //$NON-NLS-1$
             return this;
         }
 
