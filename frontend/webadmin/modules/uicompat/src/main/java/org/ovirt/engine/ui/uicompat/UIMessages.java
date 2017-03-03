@@ -612,4 +612,7 @@ public interface UIMessages extends com.google.gwt.i18n.client.Messages {
 
     @DefaultMessage("Failed to communicate with the external provider, see log for additional details.")
     String providerFailure();
+
+    @DefaultMessage("Storage domain of disk ''{0}'' cannot be accessed. Please make sure you can access the disk.")
+    String storageDomainOfDiskCannotBeAccessed(String diskName);
 }
