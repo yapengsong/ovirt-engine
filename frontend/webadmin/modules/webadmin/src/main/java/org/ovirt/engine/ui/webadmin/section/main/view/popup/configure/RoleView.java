@@ -18,8 +18,6 @@ import org.ovirt.engine.ui.webadmin.widget.action.WebAdminButtonDefinition;
 import org.ovirt.engine.ui.webadmin.widget.table.column.IsLockedImageTypeColumn;
 import org.ovirt.engine.ui.webadmin.widget.table.column.RoleTypeColumn;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -97,41 +95,12 @@ public class RoleView extends Composite {
     }
 
     private void initRolesFilterRadioButtons() {
-        allRolesRadioButton.setValue(true);
-
-        allRolesRadioButton.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-            @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event) {
-                if (event.getValue()) {
-                    roleModelProvider.getModel().setItemsFilter(null);
-                    roleModelProvider.getModel().forceRefresh();
-                }
-            }
-        });
-
-        adminRolesRadioButton.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-            @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event) {
-                if (event.getValue()) {
-                    roleModelProvider.getModel().setItemsFilter(RoleType.ADMIN);
-                    roleModelProvider.getModel().forceRefresh();
-                }
-            }
-        });
-
-        userRolesRadioButton.addValueChangeHandler(new ValueChangeHandler<Boolean>() {
-
-            @Override
-            public void onValueChange(ValueChangeEvent<Boolean> event) {
-                if (event.getValue()) {
-                    roleModelProvider.getModel().setItemsFilter(RoleType.USER);
-                    roleModelProvider.getModel().forceRefresh();
-                }
-            }
-        });
-
+        adminRolesRadioButton.setValue(true);
+        roleModelProvider.getModel().setItemsFilter(RoleType.ADMIN);
+        roleModelProvider.getModel().forceRefresh();
+        adminRolesRadioButton.getParent().removeFromParent();
+        userRolesRadioButton.getParent().removeFromParent();
+        allRolesRadioButton.getParent().removeFromParent();
     }
 
     private void localize() {
