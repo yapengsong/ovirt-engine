@@ -69,10 +69,7 @@
 		</htl:Div>
 	   
 			<htl:Div addStyleNames="lg_con">
-									<htl:Div addStyleNames="tabs">
-									<w:PatternflyUiCommandButton ui:field="adminRoleButton"  addStyleNames="tabbtn active" />
-									<w:PatternflyUiCommandButton ui:field="userRoleButton" addStyleNames="tabbtn" />
-								    </htl:Div>
+									
 						<htl:Div addStyleNames="lg_box">
 						<htl:Paragraph ui:field="txtfield" styleName="txt"/>
 							<p:AlertPanel ui:field="errorMessagePanel" />
