@@ -2411,7 +2411,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Load")
     String loadClusterHost();
 
-    @DefaultStringValue("Sync MoM Policy")
+    @DefaultStringValue("Synchronous Memory Optimization Policy")
     String updateMomPolicyClusterHost();
 
     // Cluster service
