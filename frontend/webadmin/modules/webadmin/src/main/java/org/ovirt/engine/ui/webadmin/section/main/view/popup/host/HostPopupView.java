@@ -401,6 +401,9 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
         driver.initialize(this);
         applyModeCustomizations();
         networkProviderTab.removeFromParent();
+        fingerprintLabel.removeFromParent();
+        fetchSshFingerprint.removeFromParent();
+        fetchPanel.removeFromParent();
     }
 
     private void hideEditorLabels() {
