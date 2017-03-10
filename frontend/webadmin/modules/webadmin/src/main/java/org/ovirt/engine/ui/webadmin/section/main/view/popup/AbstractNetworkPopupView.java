@@ -214,6 +214,9 @@ public abstract class AbstractNetworkPopupView<T extends NetworkModel> extends A
         initEntityModelCellTable();
         localize();
         addStyles();
+        externalProviderEditor.getParent().removeFromParent();
+        exportEditor.getParent().removeFromParent();
+        neutronPhysicalNetwork.getParent().removeFromParent();
     }
 
     protected void localize() {
