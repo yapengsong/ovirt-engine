@@ -466,6 +466,9 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
         setVisibilities();
 
         additionalFeaturesEditor.clearAllSelections();
+        rngLabel.getParent().removeFromParent();
+        rngRandomSourceRequired.getParent().removeFromParent();
+        rngHwrngSourceRequired.getParent().removeFromParent();
     }
 
     private void setVisibilities() {
