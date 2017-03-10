@@ -384,12 +384,6 @@ public class MainTabHostView extends AbstractMainTabWithDetailsTableView<VDS, Ho
             }
         });
 
-        getTable().addActionButton(new WebAdminButtonDefinition<VDS>(constants.enrollCertificate()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getEnrollCertificateCommand();
-            }
-        });
     }
 
     private void updateReportsAvailability() {
