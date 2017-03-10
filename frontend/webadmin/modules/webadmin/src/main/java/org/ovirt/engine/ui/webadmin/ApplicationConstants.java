@@ -1687,7 +1687,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Show Report")
     String showReportHost();
 
-    @DefaultStringValue("Refresh Capabilities")
+    @DefaultStringValue("Refresh Hardware Information")
     String refreshHostCapabilities();
 
     @DefaultStringValue("Enroll Certificate")
