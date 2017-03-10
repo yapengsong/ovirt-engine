@@ -400,6 +400,7 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
         addStyles();
         driver.initialize(this);
         applyModeCustomizations();
+        networkProviderTab.removeFromParent();
     }
 
     private void hideEditorLabels() {
