@@ -1039,6 +1039,7 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         ssoMethodLabel.removeFromParent();
         ssoMethodNone.getParent().removeFromParent();
         isConsoleDeviceEnabledEditor.removeFromParent();
+        numaNodeCount.getParent().removeFromParent();
     }
 
     protected void populateTabMap() {
