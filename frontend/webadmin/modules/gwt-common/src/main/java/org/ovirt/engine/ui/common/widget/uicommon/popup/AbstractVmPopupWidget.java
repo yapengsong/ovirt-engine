@@ -1036,6 +1036,8 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         initialize();
         populateTabMap();
         isSmartcardEnabledEditor.removeFromParent();
+        ssoMethodLabel.removeFromParent();
+        ssoMethodNone.getParent().removeFromParent();
     }
 
     protected void populateTabMap() {
