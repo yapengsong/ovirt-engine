@@ -79,6 +79,7 @@ public class MainTabDiskView extends AbstractMainTabWithDetailsTableView<Disk, D
         initTableButtons();
         initTableOverhead();
         initWidget(getTable());
+        disksViewRadioGroup.getCinderButton().removeFromParent();
     }
 
     final ClickHandler clickHandler = new ClickHandler() {
