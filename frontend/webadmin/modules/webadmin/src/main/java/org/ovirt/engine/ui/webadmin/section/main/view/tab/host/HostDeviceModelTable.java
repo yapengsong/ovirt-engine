@@ -19,12 +19,6 @@ public class HostDeviceModelTable extends HostDeviceModelBaseTable<HostDeviceLis
         super(modelProvider, eventBus, clientStorage);
         filterPanel = new HostDeviceFilterWidget();
 
-        initTable();
-    }
-
-    @Override
-    public void initTable() {
-        super.initTable();
         initTableOverhead();
     }
 

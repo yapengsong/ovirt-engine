@@ -617,7 +617,7 @@ public abstract class OvfReader implements IOvfBuilder {
 
         node = content.SelectSingleNode(OvfProperties.NUM_OF_IOTHREADS);
         if (node != null) {
-            if (!StringUtils.isEmpty(node.innerText) && !FeatureSupported.isIoThreadsSupported(version)) {
+            if (!StringUtils.isEmpty(node.innerText)) {
                 vmBase.setNumOfIoThreads(Integer.parseInt(node.innerText));
             }
         }
