@@ -373,17 +373,6 @@ public class VmDiskPopupWidget extends AbstractModelBoundPopupWidget<AbstractDis
                     }
                 });
 
-        diskTypePanel.addRadioButton(
-                constants.cinderDisk(),
-                disk.getDisk() != null && disk.getDisk().getDiskStorageType() == DiskStorageType.CINDER,
-                disk.getIsNew(),
-                new ClickHandler() {
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        disk.getDiskStorageType().setEntity(DiskStorageType.CINDER);
-                        revealDiskPanel(disk);
-                    }
-                });
 
         if (disk.getStorageModel() == null) {
             storageModel = new StorageModel(new NewEditStorageModelBehavior());
