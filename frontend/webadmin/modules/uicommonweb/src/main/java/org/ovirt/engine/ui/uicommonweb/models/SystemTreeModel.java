@@ -588,13 +588,6 @@ public class SystemTreeModel extends SearchableListModel<Void, SystemTreeItemMod
         }
 
 
-        // add Errata node under System
-        SystemTreeItemModel errataItem = new SystemTreeItemModel();
-        errataItem.setType(SystemTreeItemType.Errata);
-        errataItem.setApplicationMode(ApplicationMode.AllModes);
-        errataItem.setTitle(ConstantsManager.getInstance().getConstants().errata());
-        systemItem.addChild(errataItem);
-
         //Add sessions node under System
         SystemTreeItemModel sessionsItem = new SystemTreeItemModel();
         sessionsItem.setType(SystemTreeItemType.Sessions);
