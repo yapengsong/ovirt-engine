@@ -1043,6 +1043,7 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         watchdogModelEditor.getParent().removeFromParent();
         rngDeviceTab.removeFromParent();
         customPropertiesTab.removeFromParent();
+        cpuPinningPanel.removeFromParent();
     }
 
     protected void populateTabMap() {
