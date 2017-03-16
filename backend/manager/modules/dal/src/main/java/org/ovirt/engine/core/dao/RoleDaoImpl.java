@@ -2,6 +2,7 @@ package org.ovirt.engine.core.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
@@ -66,7 +67,14 @@ public class RoleDaoImpl extends BaseDao implements RoleDao {
         MapSqlParameterSource parameterSource = getCustomMapSqlParameterSource()
                 .addValue("app_mode", appMode);
 
-        return getCallsHandler().executeReadList("GetAllFromRole", RolesRowMapper.instance, parameterSource);
+        List<Role> listt1= getCallsHandler().executeReadList("GetAllFromRole", RolesRowMapper.instance, parameterSource);
+        List<Role> listt2 =new ArrayList<Role>();
+        for(int i=0;i<listt1.size();i++){
+                if(listt1.get(i).getType().equals(RoleType.ADMIN)){
+                         listt2.add(listt1.get(i));
+                }
+        }
+        return listt2;
     }
 
     @Override
