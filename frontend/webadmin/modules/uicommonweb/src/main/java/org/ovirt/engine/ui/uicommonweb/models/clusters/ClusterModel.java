@@ -1241,7 +1241,13 @@ public class ClusterModel extends EntityModel<VDSGroup> implements HasValidatedT
                                                 ClusterModel clusterModel = (ClusterModel) model;
                                                 ArrayList<ClusterPolicy> list =
                                                        ((VdcQueryReturnValue) returnValue).getReturnValue();
-                                                clusterModel.getClusterPolicy().setItems(list);
+                                                ArrayList<ClusterPolicy> list2 =new ArrayList();
+                                                for(int i=0;i<list.size();i++){
+                                                        if(!list.get(i).getName().equals("InClusterUpgrade")){ //$NON-NLS-1$
+                                                               list2.add(list.get(i));
+                                                        }
+                                                }
+                                                clusterModel.getClusterPolicy().setItems(list2);
                                                 ClusterPolicy defaultClusterPolicy = null;
                                                 ClusterPolicy selectedClusterPolicy = null;
                                                 for (ClusterPolicy clusterPolicy : list) {
