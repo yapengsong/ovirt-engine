@@ -45,7 +45,7 @@ public class ChangeDiskCommand<T extends ChangeDiskCommandParameters> extends Vm
         }
 
         if (!canRunActionOnNonManagedVm()) {
-            return false;
+            return true;
         }
 
         if (!getVm().isRunningOrPaused()) {
