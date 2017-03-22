@@ -110,6 +110,7 @@ public class RolePopupView extends AbstractModelBoundTreePopupView<RoleModel> im
         localize();
         initExpandButtons();
         initRadioButtons();
+        adminRadioButtonEditor.getParent().removeFromParent();
     }
 
     private void initRadioButtons() {
