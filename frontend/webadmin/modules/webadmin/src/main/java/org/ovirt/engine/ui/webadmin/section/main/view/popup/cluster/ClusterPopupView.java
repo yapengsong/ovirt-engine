@@ -8,6 +8,7 @@ import org.ovirt.engine.core.common.businessentities.ServerCpu;
 import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.core.common.businessentities.network.Network;
 import org.ovirt.engine.core.common.mode.ApplicationMode;
+import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.core.common.scheduling.ClusterPolicy;
 import org.ovirt.engine.core.compat.Version;
 import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
@@ -481,6 +482,11 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
     protected void populateTabMap() {
         getTabNameMapping().put(TabName.GENERAL_TAB, this.generalTab);
         getTabNameMapping().put(TabName.CONSOLE_TAB, this.consoleTab);
+        String vsersion=(String) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.EayunOSVersion);
+        if(!"Enterprise".equals(vsersion)){ //$NON-NLS-1$
+            clusterPolicyTab.setVisible(false);
+        }
+
         getTabNameMapping().put(TabName.CLUSTER_POLICY_TAB, this.clusterPolicyTab);
         getTabNameMapping().put(TabName.OPTIMIZATION_TAB, this.optimizationTab);
         getTabNameMapping().put(TabName.RESILIENCE_POLICY_TAB, this.resiliencePolicyTab);

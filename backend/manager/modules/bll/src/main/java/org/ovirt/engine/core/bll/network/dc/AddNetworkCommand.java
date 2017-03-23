@@ -22,6 +22,7 @@ import org.ovirt.engine.core.common.businessentities.network.Network;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.locks.LockingGroup;
 import org.ovirt.engine.core.common.utils.Pair;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.validation.group.CreateEntity;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.core.dal.dbbroker.DbFacade;
@@ -74,6 +75,13 @@ public class AddNetworkCommand<T extends AddNetworkStoragePoolParameters> extend
 
     @Override
     protected boolean canDoAction() {
+
+        boolean isActive=VerifyLicenseStatus.getVerifyActiveState(getDbFacade());
+        boolean isTimeout=VerifyLicenseStatus.getVerifyExpiredState();
+        if(!isActive&&isTimeout){
+            return failCanDoAction(EngineMessage.ACTION_FAILED_TIMEOUT);
+        }
+
         AddNetworkValidator validator = getNetworkValidator();
         return validate(validator.dataCenterExists())
                 && validate(validator.vmNetworkSetCorrectly())

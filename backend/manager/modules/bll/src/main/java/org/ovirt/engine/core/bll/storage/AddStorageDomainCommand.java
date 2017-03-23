@@ -29,6 +29,7 @@ import org.ovirt.engine.core.common.errors.EngineError;
 import org.ovirt.engine.core.common.errors.EngineFault;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.utils.Pair;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.utils.VersionStorageFormatUtil;
 import org.ovirt.engine.core.common.validation.group.CreateEntity;
 import org.ovirt.engine.core.common.vdscommands.CreateStorageDomainVDSCommandParameters;
@@ -169,6 +170,13 @@ public abstract class AddStorageDomainCommand<T extends StorageDomainManagementP
 
     @Override
     protected boolean canDoAction() {
+
+        boolean isActive=VerifyLicenseStatus.getVerifyActiveState(getDbFacade());
+        boolean isTimeout=VerifyLicenseStatus.getVerifyExpiredState();
+        if(!isActive&&isTimeout){
+            return failCanDoAction(EngineMessage.ACTION_FAILED_TIMEOUT);
+        }
+
         if (!super.canDoAction() || !initializeVds() || !checkStorageDomainNameLengthValid()) {
             return false;
         }

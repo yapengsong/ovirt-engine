@@ -68,7 +68,7 @@ public class MultipleActionsRunner {
             if (actionType == VdcActionType.RunVm) {
                 int runningVmsCount = DbFacade.getInstance().getVmDao().getAllRunning().size();
                 String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
-                if(version.equals("BaseVersion")) {
+                if(!version.equals("Enterprise")) {
                     if (runningVmsCount > 8) {
                         returnValues.add(addEayunOSVersionValidationMsg());
                         return returnValues;

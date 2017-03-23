@@ -1183,6 +1183,13 @@ public interface AppErrors extends ConstantsWithLookup {
     @DefaultStringValue("Sorry,EayunOS base version doesn't support host device passthrough.")
     String USE_BASE_VERSION_HOSTDEV();
 
+    @DefaultStringValue("The 30 day trial period is over, please activate the system to complete the operation.")
+    String ACTION_FAILED_TIMEOUT();
+
+    @DefaultStringValue("Activation code error, please enter the correct activation code.")
+    String ACTION_ACTIVCODE_FAILED();
+
+    /*
     @DefaultStringValue("Sorry,EayunOS enterprise version only can set 8 cpus the most.")
     String USE_HIGHER_VERSION_CPU();
 
@@ -1191,6 +1198,7 @@ public interface AppErrors extends ConstantsWithLookup {
 
     @DefaultStringValue("Sorry,EayunOS enterprise version only can add 32 host the most.")
     String USE_HIGHER_VERSION_HOST();
+    */
 
     @DefaultStringValue("$type Gluster Volume")
     String VAR__TYPE__GLUSTER_VOLUME();

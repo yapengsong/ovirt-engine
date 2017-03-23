@@ -2285,6 +2285,10 @@ public interface UIConstants extends com.google.gwt.i18n.client.Constants {
     @DefaultStringValue("Console connect")
     String confirmConsoleConnect();
 
+    //activSucceeded
+    @DefaultStringValue("Activation success")
+    String activSucceeded();
+
     @DefaultStringValue("There may be users connected to the console who will not be able to reconnect. Do you want to proceed?")
     String confirmConsoleConnectMessage();
 

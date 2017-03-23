@@ -60,7 +60,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("please input a password")
     String inputpwd();
 
-    @DefaultStringValue("EayunOS 4.2 server virtualization")
+    @DefaultStringValue("EayunOS server virtualization")
     String titlefield();
 
     @DefaultStringValue("User login")

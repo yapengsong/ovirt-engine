@@ -41,6 +41,7 @@ import org.ovirt.engine.core.common.businessentities.storage.DiskImage;
 import org.ovirt.engine.core.common.businessentities.storage.DiskStorageType;
 import org.ovirt.engine.core.common.interfaces.SearchType;
 import org.ovirt.engine.core.common.mode.ApplicationMode;
+import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.core.common.queries.IdQueryParameters;
 import org.ovirt.engine.core.common.queries.SearchParameters;
 import org.ovirt.engine.core.common.queries.VdcQueryParametersBase;
@@ -493,7 +494,13 @@ public class VmListModel<E> extends VmBaseListModel<E, VM> implements ISupportSy
         list.add(permissionListModel);
         list.add(vmAffinityGroupListModel);
         list.add(vmGuestInfoModel);
+
+        String vsersion=(String) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.EayunOSVersion);
         list.add(vmHostDeviceListModel);
+        if(!"Enterprise".equals(vsersion)){ //$NON-NLS-1$
+            vmHostDeviceListModel.setIsAvailable(false);
+        }
+
         setDetailModels(list);
     }
 

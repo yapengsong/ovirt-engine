@@ -183,4 +183,13 @@ public class DbUserDaoImpl extends BaseDao implements DbUserDao {
         }
     }
 
+    @Override
+    public DbUser getIsSuperUser(DbUser user) {
+        MapSqlParameterSource parameterSource = getCustomMapSqlParameterSource()
+                .addValue("user_id", user.getId())
+                .addValue("name", "SuperUser");
+
+        return getCallsHandler().executeRead("GetIsSuperUser", DbUserRowMapper.instance, parameterSource);
+    }
+
 }

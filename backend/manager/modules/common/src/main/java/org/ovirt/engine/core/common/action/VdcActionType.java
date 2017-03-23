@@ -52,6 +52,7 @@ public enum VdcActionType {
     ChangeVMCluster(40, ActionGroup.EDIT_VM_PROPERTIES, false, QuotaDependency.NONE),
     CancelMigrateVm(41, ActionGroup.MIGRATE_VM, false, QuotaDependency.NONE),
     ActivateDeactivateVmNic(42, QuotaDependency.NONE),
+    ActivCode(43, ActionGroup.ACTIV_CODE, false, QuotaDependency.NONE),
     AddVmFromSnapshot(52, ActionGroup.CREATE_VM, QuotaDependency.BOTH),
     CloneVm(53, ActionGroup.CREATE_VM, QuotaDependency.BOTH),
     ImportVmFromConfiguration(43, ActionGroup.IMPORT_EXPORT_VM, QuotaDependency.STORAGE),

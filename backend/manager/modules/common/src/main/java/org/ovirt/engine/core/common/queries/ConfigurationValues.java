@@ -181,6 +181,8 @@ public enum ConfigurationValues {
     RefreshLunSupported,
     HostDeviceBlackList,
     HostDeviceWhiteList,
+    ActivCode,
+    InstallationTime,
     EayunOSVersion;
 
     public static enum ConfigAuthType {

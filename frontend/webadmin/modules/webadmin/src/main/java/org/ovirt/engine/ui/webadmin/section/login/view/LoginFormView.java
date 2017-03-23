@@ -50,8 +50,6 @@ public class LoginFormView extends AbstractLoginFormView implements LoginFormPre
         //passwordEditor.setPlaceHolder(constants.loginFormPasswordLabel());
         loginButton.setLabel(constants.loginButtonLabel());
         //backButton.setLabel(constants.backButtonLabel());
-        adminRoleButton.setLabel(constants.adminRole());
-        userRoleButton.setLabel(constants.userRole());
         clientButton.setLabel(constants.clientDownload());
         btn32.setText(constants.btn32());
         btn64.setText(constants.btn64());

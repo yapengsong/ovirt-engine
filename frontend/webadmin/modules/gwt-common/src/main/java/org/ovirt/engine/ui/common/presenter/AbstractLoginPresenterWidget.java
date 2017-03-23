@@ -52,10 +52,6 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
 
         HasUiCommandClickHandlers getLoginButton();
 
-        HasUiCommandClickHandlers getUserRoleButton();
-
-        HasUiCommandClickHandlers getAdminRoleButton();
-
         HasClickHandlers getBtn32();
 
         HasClickHandlers getBtn64();
@@ -119,20 +115,6 @@ public abstract class AbstractLoginPresenterWidget<T extends LoginModel, V exten
             }
 
         });
-
-        // getView().getUserRoleButton().setCommand(loginModel.getBackCommand());
-        registerHandler(getView().getUserRoleButton().addClickHandler(new ClickHandler(){
-            @Override
-            public void onClick(ClickEvent event) {
-                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunos/userportal/?locale=zh_CN");//$NON-NLS-1$ //$NON-NLS-2$
-            }}));
-
-        // getView().getAdminRoleButton().setCommand(loginModel.getBackCommand());
-        registerHandler(getView().getAdminRoleButton().addClickHandler(new ClickHandler(){
-            @Override
-            public void onClick(ClickEvent event) {
-                Window.Location.replace(Window.Location.getProtocol() + "//" +Window.Location.getHost()+"/eayunos/webadmin/?locale=zh_CN");//$NON-NLS-1$ //$NON-NLS-2$
-            }}));
 
         registerHandler(getView().getBtn32().addClickHandler(new ClickHandler(){
             @Override

@@ -12,6 +12,21 @@ public interface ApplicationConstants extends CommonApplicationConstants {
 
     @DefaultStringValue("EayunOS Version:")
     String ovirtVersionAbout();
+    //basic
+    @DefaultStringValue("Basic")
+    String basic();
+    //enterprise
+    @DefaultStringValue("Enterprise")
+    String enterprise();
+    //activeState
+    @DefaultStringValue("Status: active")
+    String activeState();
+    //pastDue
+    @DefaultStringValue("Status: 30 days trial period is over, please activate")
+    String pastDue();
+    //trialStatus
+    @DefaultStringValue("Status: 30 days trial period")
+    String trialStatus();
 
     // Widgets
 

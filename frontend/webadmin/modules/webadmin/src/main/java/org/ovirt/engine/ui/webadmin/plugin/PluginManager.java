@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import org.ovirt.engine.core.common.queries.ConfigurationValues;
 import org.ovirt.engine.ui.common.auth.CurrentUser;
+import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import org.ovirt.engine.ui.webadmin.plugin.api.ApiOptions;
 import org.ovirt.engine.ui.webadmin.plugin.api.PluginUiFunctions;
 import org.ovirt.engine.ui.webadmin.plugin.jsni.JsFunction.ErrorHandler;
+import org.slf4j.LoggerFactory;
+
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.Scheduler;
@@ -37,6 +41,7 @@ import com.google.inject.Inject;
  */
 public class PluginManager {
 
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(PluginManager.class);
     public interface PluginInvocationCondition {
 
         boolean canInvoke(Plugin plugin);
@@ -383,20 +388,25 @@ public class PluginManager {
 
         String pluginName = plugin.getName();
 
-        // Try to invoke UiInit event handler function
-        if (plugin.isInState(PluginState.READY)) {
-            logger.info("Initializing plugin [" + pluginName + "]"); //$NON-NLS-1$ //$NON-NLS-2$
-            plugin.markAsInitializing();
+        String vsersion=(String) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.EayunOSVersion);
+        if(!"VBSPlugin".equals(pluginName)||"Enterprise".equals(vsersion)){//$NON-NLS-1$ //$NON-NLS-2$
 
-            if (invokePlugin(plugin, "UiInit", null)) { //$NON-NLS-1$
-                plugin.markAsInUse();
-                logger.info("Plugin [" + pluginName + "] is initialized and in use now"); //$NON-NLS-1$ //$NON-NLS-2$
+            // Try to invoke UiInit event handler function
+            if (plugin.isInState(PluginState.READY)) {
+                logger.info("Initializing plugin [" + pluginName + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                plugin.markAsInitializing();
+
+                if (invokePlugin(plugin, "UiInit", null)) { //$NON-NLS-1$
+                    plugin.markAsInUse();
+                    logger.info("Plugin [" + pluginName + "] is initialized and in use now"); //$NON-NLS-1$ //$NON-NLS-2$
+                }
             }
-        }
 
-        // Try to invoke all event handler functions scheduled for this plugin
-        if (plugin.isInState(PluginState.IN_USE)) {
-            invokeScheduledFunctionCommands(pluginName);
+            // Try to invoke all event handler functions scheduled for this plugin
+            if (plugin.isInState(PluginState.IN_USE)) {
+                invokeScheduledFunctionCommands(pluginName);
+            }
+
         }
     }
 
