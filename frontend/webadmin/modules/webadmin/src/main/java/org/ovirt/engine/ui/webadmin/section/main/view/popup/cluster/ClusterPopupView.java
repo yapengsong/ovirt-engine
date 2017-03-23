@@ -466,6 +466,11 @@ public class ClusterPopupView extends AbstractTabbedModelBoundPopupView<ClusterM
         setVisibilities();
 
         additionalFeaturesEditor.clearAllSelections();
+        rngLabel.getParent().removeFromParent();
+        rngRandomSourceRequired.getParent().removeFromParent();
+        rngHwrngSourceRequired.getParent().removeFromParent();
+        enableTrustedServiceEditor.removeFromParent();
+        ksmPolicyForNumaEditor.removeFromParent();
     }
 
     private void setVisibilities() {

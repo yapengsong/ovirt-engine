@@ -335,7 +335,7 @@ public class RoleListModel extends ListWithSimpleDetailsModel<Void, Role> {
         setWindow(model);
         model.setIsNew(commandType != CommandType.Edit);
         if (commandType == CommandType.New) {
-            role.setType(RoleType.USER);
+            role.setType(RoleType.ADMIN);
         }
         model.getIsAdminRole().getEntityChangedEvent().addListener(this);
         model.getIsAdminRole().setEntity(RoleType.ADMIN.equals(role.getType()));

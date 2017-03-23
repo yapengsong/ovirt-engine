@@ -317,6 +317,7 @@ public class VmRunOncePopupWidget extends AbstractModelBoundPopupWidget<RunOnceM
         addStyles();
         ViewIdHandler.idHandler.generateAndSetIds(this);
         driver.initialize(this);
+        customPropertiesPanel.removeFromParent();
     }
 
     void localize() {

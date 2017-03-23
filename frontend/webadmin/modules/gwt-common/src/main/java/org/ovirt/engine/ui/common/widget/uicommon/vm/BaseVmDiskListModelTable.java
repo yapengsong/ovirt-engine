@@ -48,6 +48,7 @@ public class BaseVmDiskListModelTable<T extends VmDiskListModelBase<?>> extends 
         super(modelProvider, eventBus, clientStorage, false);
 
         disksViewRadioGroup = new DisksViewRadioGroup();
+        disksViewRadioGroup.getCinderButton().removeFromParent();
     }
 
     final ClickHandler clickHandler = new ClickHandler() {

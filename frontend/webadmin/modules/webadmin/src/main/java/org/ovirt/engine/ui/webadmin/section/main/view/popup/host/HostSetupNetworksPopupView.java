@@ -136,6 +136,7 @@ public class HostSetupNetworksPopupView extends AbstractModelBoundPopupView<Host
 
         setupNicListAutoScrolling();
         driver.initialize(this);
+        externalNetworksInfo.getParent().removeFromParent();
     }
 
     private void initUnassignedItemsPanel() {

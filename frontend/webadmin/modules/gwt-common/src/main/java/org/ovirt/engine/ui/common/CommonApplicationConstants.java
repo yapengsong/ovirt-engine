@@ -2316,6 +2316,12 @@ public interface CommonApplicationConstants extends Constants {
             "through the equipment. Please cancel.")
     String filterexplain();
 
+    @DefaultStringValue("instructions")
+    String Kdump();
+
+    @DefaultStringValue("After enabling kdump configuration, need to host maintenance, click on the \"reshipment host\" to come into force after ")
+    String KdumpInstruct();
+
     @DefaultStringValue("Specify public key for SSH authentication. Used to access guest serial console.")
     String consolePublicKeyMessage();
 }

@@ -182,7 +182,7 @@ public class NewVmModelBehavior extends VmModelBehaviorBase<UnitVmModel> {
                 }
 
                 getModel().getAllowConsoleReconnect().setEntity(template.isAllowConsoleReconnect());
-                getModel().getVmType().setSelectedItem(template.getVmType());
+                getModel().getVmType().setSelectedItem(template.getVmType().Server);
                 updateRngDevice(template.getId());
 
                 initStorageDomains();

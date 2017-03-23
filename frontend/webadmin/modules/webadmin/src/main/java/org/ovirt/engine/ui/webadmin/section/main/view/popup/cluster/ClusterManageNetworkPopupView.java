@@ -104,10 +104,6 @@ public class ClusterManageNetworkPopupView extends AbstractModelBoundPopupView<C
                         new MigrationNetworkIndicatorFieldUpdater()),
                 constants.migrationNetwork(), "105px"); //$NON-NLS-1$
 
-        networks.addColumn(
-                new GlusterNetworkIndicatorCheckboxColumn(multiCluster,
-                        new GlusterNetworkIndicatorFieldUpdater()),
-                constants.glusterNetwork(), "100px"); //$NON-NLS-1$
     }
 
     @Override

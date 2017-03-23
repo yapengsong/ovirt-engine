@@ -1687,7 +1687,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Show Report")
     String showReportHost();
 
-    @DefaultStringValue("Refresh Capabilities")
+    @DefaultStringValue("Refresh Hardware Information")
     String refreshHostCapabilities();
 
     @DefaultStringValue("Enroll Certificate")
@@ -2411,7 +2411,7 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Load")
     String loadClusterHost();
 
-    @DefaultStringValue("Sync MoM Policy")
+    @DefaultStringValue("Synchronous Memory Optimization Policy")
     String updateMomPolicyClusterHost();
 
     // Cluster service

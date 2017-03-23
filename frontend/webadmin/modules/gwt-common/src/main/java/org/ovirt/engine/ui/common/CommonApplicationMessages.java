@@ -137,7 +137,7 @@ public interface CommonApplicationMessages extends Messages {
     @DefaultMessage("{0} or {1}")
     String or(String a, String b);
 
-    @DefaultMessage("Represents maximum number of milliseconds the VM can be down during live migration. Value of 0 means that VDSM default will be used. (Current engine-wide default is {0}ms)")
+    @DefaultMessage("Represents maximum number of milliseconds the VM can be down during live migration. Value of 0 means that VDSM default will be used. (engine-wide default is {0}ms)")
     String migrationDowntimeInfo(Integer milliseconds);
 
     @DefaultMessage("When at least one of the VM activated disks use SCSI reservation, migration option is ignored and VM cannot be migrated.")
@@ -156,7 +156,7 @@ public interface CommonApplicationMessages extends Messages {
             " - Power8: 1..8 (8 for high load VMs)")
     String threadsPerCoreInfo();
 
-    @DefaultMessage("Policy of assigning serial numbers to running VMs. Can be Host''s UUID, Vm''s UUID or any custom value.")
+    @DefaultMessage("Policy of assigning serial numbers to running VMs. Can be Host''s UUID, Vm''s UUID or any custom value. To run the virtual machine host ID by default")
     String serialNumberInfo();
 
     @DefaultMessage("Changes that require Virtual Machine restart:")

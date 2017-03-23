@@ -79,6 +79,7 @@ public class MainTabDiskView extends AbstractMainTabWithDetailsTableView<Disk, D
         initTableButtons();
         initTableOverhead();
         initWidget(getTable());
+        disksViewRadioGroup.getCinderButton().removeFromParent();
     }
 
     final ClickHandler clickHandler = new ClickHandler() {
@@ -285,33 +286,6 @@ public class MainTabDiskView extends AbstractMainTabWithDetailsTableView<Disk, D
             }
         });
 
-        getTable().addActionButton(new WebAdminButtonDefinition<Disk>(constants.uploadImage()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getUploadCommand();
-            }
-        });
-
-        getTable().addActionButton(new WebAdminButtonDefinition<Disk>(constants.uploadImageCancel()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getCancelUploadCommand();
-            }
-        });
-
-        getTable().addActionButton(new WebAdminButtonDefinition<Disk>(constants.uploadImagePause()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getPauseUploadCommand();
-            }
-        });
-
-        getTable().addActionButton(new WebAdminButtonDefinition<Disk>(constants.uploadImageResume()) {
-            @Override
-            protected UICommand resolveCommand() {
-                return getMainModel().getResumeUploadCommand();
-            }
-        });
     }
 
     void searchByDiskViewType(Object diskViewType) {

@@ -587,30 +587,6 @@ public class SystemTreeModel extends SearchableListModel<Void, SystemTreeItemMod
             }
         }
 
-        // Add Providers node under System
-        SystemTreeItemModel providersItem = new SystemTreeItemModel();
-        providersItem.setType(SystemTreeItemType.Providers);
-        providersItem.setApplicationMode(ApplicationMode.VirtOnly);
-        providersItem.setTitle(ConstantsManager.getInstance().getConstants().externalProvidersTitle());
-        systemItem.addChild(providersItem);
-
-        // Populate with providers
-        for (Provider provider : getProviders()) {
-            SystemTreeItemModel providerItem = new SystemTreeItemModel();
-            providerItem.setType(SystemTreeItemType.Provider);
-            providerItem.setApplicationMode(ApplicationMode.VirtOnly);
-            providerItem.setTitle(provider.getName());
-            providerItem.setEntity(provider);
-            providersItem.addChild(providerItem);
-            treeItemById.put(provider.getId(), providerItem);
-        }
-
-        // add Errata node under System
-        SystemTreeItemModel errataItem = new SystemTreeItemModel();
-        errataItem.setType(SystemTreeItemType.Errata);
-        errataItem.setApplicationMode(ApplicationMode.AllModes);
-        errataItem.setTitle(ConstantsManager.getInstance().getConstants().errata());
-        systemItem.addChild(errataItem);
 
         //Add sessions node under System
         SystemTreeItemModel sessionsItem = new SystemTreeItemModel();

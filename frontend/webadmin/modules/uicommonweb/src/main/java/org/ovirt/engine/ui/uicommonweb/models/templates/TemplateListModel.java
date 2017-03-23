@@ -623,14 +623,22 @@ public class TemplateListModel extends VmBaseListModel<Void, VmTemplate> impleme
 
     private void createVMFromTemplate() {
         VmTemplate template = getSelectedItem();
-
-        List<UICommand> commands = new ArrayList<>();
-        commands.add(UICommand.createDefaultOkUiCommand("OnSaveVm", this)); //$NON-NLS-1$
-        commands.add(UICommand.createCancelUiCommand("Cancel", this)); //$NON-NLS-1$
-
-        setupNewVmModel(new UnitVmModel(new NewVmFromTemplateModelBehavior(template), this),
-                template.getVmType(), getSystemTreeSelectedItem(), commands);
+        AsyncQuery getVmInitQuery = new AsyncQuery();
+        getVmInitQuery.asyncCallback = new INewAsyncCallback() {
+            @Override
+            public void onSuccess(Object model, Object result) {
+               vmCreate((VmTemplate) result);
+            }
+        };
+        AsyncDataProvider.getInstance().getTemplateById(getVmInitQuery, template.getId());
     }
+
+     private void vmCreate(VmTemplate template){
+         List<UICommand> commands = new ArrayList<>();
+         commands.add(UICommand.createDefaultOkUiCommand("OnSaveVm", this)); //$NON-NLS-1$
+         commands.add(UICommand.createCancelUiCommand("Cancel", this)); //$NON-NLS-1$
+         setupNewVmModel(new UnitVmModel(new NewVmFromTemplateModelBehavior(template), this),template.getVmType(), getSystemTreeSelectedItem(), commands);
+     }
 
     private void onSaveVm() {
         UnitVmModel model = (UnitVmModel) getWindow();

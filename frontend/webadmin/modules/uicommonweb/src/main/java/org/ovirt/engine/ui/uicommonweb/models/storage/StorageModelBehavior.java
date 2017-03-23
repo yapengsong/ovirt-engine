@@ -44,6 +44,8 @@ public abstract class StorageModelBehavior extends Model {
                 storageTypeItems.remove(model.getType());
             }
         }
+        storageTypeItems.remove(StorageType.GLUSTERFS);
+        storageTypeItems.remove(StorageType.POSIXFS);
         getModel().getAvailableStorageTypeItems().setItems(storageTypeItems);
         getModel().storageItemsChanged();
     }

@@ -22,6 +22,7 @@ import org.ovirt.engine.ui.common.idhandler.ElementIdHandler;
 import org.ovirt.engine.ui.common.idhandler.WithElementId;
 import org.ovirt.engine.ui.common.view.popup.AbstractTabbedModelBoundPopupView;
 import org.ovirt.engine.ui.common.widget.Align;
+import org.ovirt.engine.ui.common.widget.WidgetWithInfo;
 import org.ovirt.engine.ui.common.widget.dialog.AdvancedParametersExpander;
 import org.ovirt.engine.ui.common.widget.dialog.InfoIcon;
 import org.ovirt.engine.ui.common.widget.dialog.SimpleDialogPanel;
@@ -72,6 +73,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.safehtml.shared.SafeHtmlUtils;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Anchor;
@@ -371,6 +373,9 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
     @Ignore
     FlowPanel expanderContent;
 
+    @UiField(provided = true)
+    WidgetWithInfo filterline;
+
     private final Driver driver = GWT.create(Driver.class);
 
     private final static ApplicationTemplates templates = AssetProvider.getTemplates();
@@ -395,6 +400,10 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
         addStyles();
         driver.initialize(this);
         applyModeCustomizations();
+        networkProviderTab.removeFromParent();
+        fingerprintLabel.removeFromParent();
+        fetchSshFingerprint.removeFromParent();
+        fetchPanel.removeFromParent();
     }
 
     private void hideEditorLabels() {
@@ -502,6 +511,9 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
         pmEnabledEditor.setUsePatternFly(true);
         pmKdumpDetectionEditor = new EntityModelCheckBoxEditor(Align.RIGHT);
         pmKdumpDetectionEditor.setUsePatternFly(true);
+        filterline = new WidgetWithInfo(pmKdumpDetectionEditor);
+        filterline.setExplanation(SafeHtmlUtils.fromTrustedString(createSpiceInvocationInfo()));
+        filterline.addInfoIconStyle("cpv_infoIcon_pfly_fix"); //$NON-NLS-1$
         disableAutomaticPowerManagementEditor = new EntityModelCheckBoxEditor(Align.RIGHT);
         disableAutomaticPowerManagementEditor.setUsePatternFly(true);
         externalHostProviderEnabledEditor = new EntityModelCheckBoxEditor(Align.RIGHT);
@@ -512,6 +524,28 @@ public class HostPopupView extends AbstractTabbedModelBoundPopupView<HostModel> 
         rbPublicKey = new RadioButton("1"); //$NON-NLS-1$
         rbDiscoveredHost = new RadioButton("2"); //$NON-NLS-1$
         rbProvisionedHost = new RadioButton("2"); //$NON-NLS-1$
+    }
+
+    private String createSpiceInvocationInfo() {
+        return new KeyValueHtmlRowMaker(constants.Kdump(), constants.KdumpInstruct()).toString();
+    }
+    private class KeyValueHtmlRowMaker {
+
+        private String html;
+
+        private KeyValueHtmlRowMaker(String key, String val) {
+            html = "" + key + ":" + val; //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        //可以在以后添加新的解释
+        public KeyValueHtmlRowMaker append(String key, String val) {
+            html += "<br/>" + new KeyValueHtmlRowMaker(key, val).toString(); //$NON-NLS-1$
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return html;
+        }
     }
 
     private ListModelTypeAheadListBoxEditor<ExternalEntityBase> getListModelTypeAheadListBoxEditor() {
