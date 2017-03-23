@@ -1947,6 +1947,40 @@ public class AsyncDataProvider {
         Frontend.getInstance().runQuery(VdcQueryType.IsVmWithSameNameExist, params, aQuery);
     }
 
+    public void getUuid(AsyncQuery aQuery) {
+        aQuery.converterCallback = new IAsyncConverter() {
+            @Override
+            public Object Convert(Object source, AsyncQuery _asyncQuery) {
+                return  source.toString();
+            }
+        };
+        NameQueryParameters params = new NameQueryParameters("UUID");//$NON-NLS-1$
+        Frontend.getInstance().runQuery(VdcQueryType.EngineUuid, params, aQuery);
+    }
+
+    public void getIsSuperUser(AsyncQuery aQuery) {
+        aQuery.converterCallback = new IAsyncConverter() {
+            @Override
+            public Object Convert(Object source, AsyncQuery _asyncQuery) {
+                return  source.toString();
+            }
+        };
+        NameQueryParameters params = new NameQueryParameters("UUID");//$NON-NLS-1$
+        Frontend.getInstance().runQuery(VdcQueryType.GetIsSuperUser, params, aQuery);
+    }
+
+    public void getSuperUser(AsyncQuery aQuery) {
+        aQuery.converterCallback = new IAsyncConverter() {
+            @Override
+            public Object Convert(Object source, AsyncQuery _asyncQuery) {
+                return  source.toString();
+            }
+        };
+        NameQueryParameters params = new NameQueryParameters("UUID");//$NON-NLS-1$
+
+        Frontend.getInstance().runQuery(VdcQueryType.EngineUuid, params, aQuery);
+    }
+
     public void getDataCentersWithPermittedActionOnClusters(AsyncQuery aQuery, ActionGroup actionGroup,
             final boolean supportsVirtService, final boolean supportsGlusterService) {
         aQuery.converterCallback = new IAsyncConverter() {

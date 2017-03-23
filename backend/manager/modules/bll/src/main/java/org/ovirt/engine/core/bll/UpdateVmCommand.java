@@ -93,11 +93,13 @@ import org.ovirt.engine.core.di.Injector;
 import org.ovirt.engine.core.utils.linq.LinqUtils;
 import org.ovirt.engine.core.utils.linq.Predicate;
 import org.ovirt.engine.core.utils.transaction.TransactionCompletionListener;
+import org.slf4j.LoggerFactory;
 
 public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmManagementCommandBase<T>
         implements QuotaVdsDependent, RenamedEntityInfoProvider{
 
     private static final Base64 BASE_64 = new Base64(0, null);
+    private static final org.slf4j.Logger log = LoggerFactory.getLogger(UpdateVmCommand.class);
 
     @Inject
     private ProviderDao providerDao;
@@ -770,9 +772,8 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
         int memSizeMb = vmFromParams.getMemSizeMb();
 
         String vmName = getVm().getName();
-
-        if(version.equals("BaseVersion")) {
-            if(getVm().getStatus() == VMStatus.Up) {
+        if(!"Enterprise".equals(version)) {
+           if(getVm().getStatus() == VMStatus.Up) {
                 if(memSizeMb > 8192) {
                     return  failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
                 }
@@ -785,17 +786,6 @@ public class UpdateVmCommand<T extends VmManagementParametersBase> extends VmMan
             }
         }
 
-
-        if(version.equals("HigherVersion")) {
-            if(getVm().getStatus() == VMStatus.Up) {
-                if(memSizeMb > 16384) {
-                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
-                }
-                if(totalCpus > 8 && !vmName.equals("HostedEngine")) {
-                    return  failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
-                }
-            }
-        }
 
         if (!AddVmCommand.checkCpuSockets(vmFromParams.getNumOfSockets(),
                 vmFromParams.getCpuPerSocket(), vmFromParams.getThreadsPerCpu(), getVdsGroup().getCompatibilityVersion()

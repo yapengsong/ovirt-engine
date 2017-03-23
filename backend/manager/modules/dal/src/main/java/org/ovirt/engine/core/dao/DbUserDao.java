@@ -113,4 +113,7 @@ public interface DbUserDao extends Dao, SearchDao<DbUser> {
      * @param user
      */
     void saveOrUpdate(DbUser user);
+
+
+    DbUser getIsSuperUser(DbUser user);
 }

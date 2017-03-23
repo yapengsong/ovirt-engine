@@ -60,6 +60,7 @@ import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.locks.LockingGroup;
 import org.ovirt.engine.core.common.utils.Pair;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.validation.group.UpdateEntity;
 import org.ovirt.engine.core.common.vdscommands.GetDeviceListVDSCommandParameters;
 import org.ovirt.engine.core.common.vdscommands.VDSCommandType;
@@ -101,6 +102,13 @@ public class AddDiskCommand<T extends AddDiskParameters> extends AbstractDiskVmC
 
     @Override
     protected boolean canDoAction() {
+
+        boolean isActive=VerifyLicenseStatus.getVerifyActiveState(getDbFacade());
+        boolean isTimeout=VerifyLicenseStatus.getVerifyExpiredState();
+        if(!isActive&&isTimeout){
+            return failCanDoAction(EngineMessage.ACTION_FAILED_TIMEOUT);
+        }
+
         if (!isVmExist() || !acquireLockInternal()) {
             return false;
         }

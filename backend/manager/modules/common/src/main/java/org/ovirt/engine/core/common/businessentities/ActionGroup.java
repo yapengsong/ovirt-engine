@@ -9,6 +9,7 @@ public enum ActionGroup {
     CREATE_VM(1, RoleType.USER, false, ApplicationMode.VirtOnly),
     DELETE_VM(2, RoleType.USER, true, ApplicationMode.VirtOnly),
     EDIT_VM_PROPERTIES(3, RoleType.USER, true, ApplicationMode.VirtOnly),
+    ACTIV_CODE(40000, RoleType.USER, true, ApplicationMode.VirtOnly),
     REBOOT_VM(17, RoleType.USER, true, ApplicationMode.VirtOnly),
     STOP_VM(18, RoleType.USER, true, ApplicationMode.VirtOnly),
     SHUT_DOWN_VM(19, RoleType.USER, true, ApplicationMode.VirtOnly),

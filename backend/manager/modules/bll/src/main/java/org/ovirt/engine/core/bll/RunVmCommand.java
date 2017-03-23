@@ -989,24 +989,15 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
 
         int vmMemSize = vm.getVmMemSizeMb();
 
-        if(version.equals("BaseVersion")) {
+        if(!"Enterprise".equals(version)) {
             if(cpuNums > 2 && !vmName.equals("HostedEngine")) {
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_CPU);
             }
-
             if(vmMemSize > 8192) {
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
             }
             if (getVmDao().getAllRunning().size() >= 8) {
                 return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
-            }
-        } else if(version.equals("HigherVersion")) {
-            if(cpuNums > 8 && !vmName.equals("HostedEngine")) {
-                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_CPU);
-            }
-
-            if(vmMemSize > 16384) {
-                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_MEM);
             }
         }
 

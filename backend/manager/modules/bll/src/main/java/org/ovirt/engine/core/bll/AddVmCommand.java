@@ -102,6 +102,7 @@ import org.ovirt.engine.core.common.osinfo.OsRepository;
 import org.ovirt.engine.core.common.queries.VmIconIdSizePair;
 import org.ovirt.engine.core.common.utils.Pair;
 import org.ovirt.engine.core.common.utils.SimpleDependecyInjector;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.utils.VmDeviceType;
 import org.ovirt.engine.core.common.utils.customprop.VmPropertiesUtils;
 import org.ovirt.engine.core.common.validation.group.CreateVm;
@@ -116,8 +117,7 @@ import org.ovirt.engine.core.utils.transaction.TransactionMethod;
 import org.ovirt.engine.core.utils.transaction.TransactionSupport;
 
 /**
- * This class adds a thinly provisioned VM over a template
- */
+ * This class adds a thinly provisioned VM over a template */
 @DisableInPrepareMode
 @NonTransactiveCommandAttribute(forceCompensation = true)
 public class AddVmCommand<T extends AddVmParameters> extends VmManagementCommandBase<T>
@@ -510,6 +510,19 @@ public class AddVmCommand<T extends AddVmParameters> extends VmManagementCommand
 
     @Override
     protected boolean canDoAction() {
+        VM vmFromDB = getVm();
+        VM vmFromParams = getParameters().getVm();
+
+        boolean isActive=VerifyLicenseStatus.getVerifyActiveState(getDbFacade());
+        boolean isTimeout=VerifyLicenseStatus.getVerifyExpiredState();
+        if(!isActive&&isTimeout){
+            return failCanDoAction(EngineMessage.ACTION_FAILED_TIMEOUT);
+        }
+
+        if (getVdsGroup() == null) {
+            return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_CLUSTER_CAN_NOT_BE_EMPTY);
+        }
+
         if (getVdsGroup() == null) {
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_CLUSTER_CAN_NOT_BE_EMPTY);
         }
@@ -566,7 +579,7 @@ public class AddVmCommand<T extends AddVmParameters> extends VmManagementCommand
             return false;
         }
 
-        VM vmFromParams = getParameters().getVm();
+
 
         // check if the selected template is compatible with Cluster architecture.
         if (!getVmTemplate().getId().equals(VmTemplateHandler.BLANK_VM_TEMPLATE_ID)

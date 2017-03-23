@@ -2372,6 +2372,14 @@ public enum ConfigValues {
     @DefaultValueAttribute("true")
     CheckMixedRhelVersions,
 
+    @TypeConverterAttribute(String.class)
+    @DefaultValueAttribute("")
+    ActivCode,
+
+    @TypeConverterAttribute(String.class)
+    @DefaultValueAttribute("")
+    InstallationTime,
+
     Invalid
 
 }

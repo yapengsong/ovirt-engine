@@ -50,6 +50,7 @@ import org.ovirt.engine.core.common.errors.EngineException;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.job.Step;
 import org.ovirt.engine.core.common.job.StepEnum;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.validation.group.CreateEntity;
 import org.ovirt.engine.core.common.validation.group.PowerManagementCheck;
 import org.ovirt.engine.core.compat.Guid;
@@ -320,26 +321,27 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
 
     @Override
     protected boolean canDoAction() {
+
+        boolean isActive=VerifyLicenseStatus.getVerifyActiveState(getDbFacade());
+        boolean isTimeout=VerifyLicenseStatus.getVerifyExpiredState();
+        if(!isActive&&isTimeout){
+            return failCanDoAction(EngineMessage.ACTION_FAILED_TIMEOUT);
+        }
+
+
         T params = getParameters();
         setVdsGroupId(params.getVdsStaticData().getVdsGroupId());
         params.setVdsForUniqueId(null);
         // Check if this is a valid cluster
         boolean returnValue = validateVdsGroup();
 
-        List<VDS> hosts = getVdsDao().getAll();
+        List<VDS> hosts=getVdsDao().getAllForVdsGroup(params.getVdsStaticData().getVdsGroupId());
 
         String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
-        if(version.equals("BaseVersion")){
+        if(!"Enterprise".equals(version)){
             if(hosts.size() > 3){
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
-            }
-        }
-
-
-        if(version.equals("HigherVersion")){
-            if(hosts.size() > 32){
-                return failCanDoAction(EngineMessage.USE_HIGHER_VERSION_HOST);
             }
         }
 
@@ -594,20 +596,24 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
         }
     }
 
+    @Override
     protected VdcReturnValueBase createReturnValue() {
         return super.createReturnValue();
     }
 
+    @Override
     protected boolean isPowerManagementLegal(boolean pmEnabled,
                                              List<FenceAgent> fenceAgents,
                                              String clusterCompatibilityVersion) {
         return super.isPowerManagementLegal(pmEnabled, fenceAgents, clusterCompatibilityVersion);
     }
 
+    @Override
     protected void addCanDoActionMessage(EngineMessage message) {
         super.addCanDoActionMessage(message);
     }
 
+    @Override
     protected boolean validate(ValidationResult validationResult) {
         return super.validate(validationResult);
     }

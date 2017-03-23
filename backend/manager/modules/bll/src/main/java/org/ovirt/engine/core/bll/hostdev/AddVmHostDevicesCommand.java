@@ -22,7 +22,7 @@ public class AddVmHostDevicesCommand extends AbstractVmHostDevicesCommand<VmHost
 
     @Override
     protected boolean canDoAction() {
-        if("BaseVersion".equals(Config.<String> getValue(ConfigValues.EayunOSVersion))) {
+        if(!"Enterprise".equals(Config.<String> getValue(ConfigValues.EayunOSVersion))) {
             return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOSTDEV);
             }
         return super.canDoAction();

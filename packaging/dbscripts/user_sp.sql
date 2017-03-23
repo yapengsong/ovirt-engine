@@ -158,6 +158,19 @@ LANGUAGE plpgsql;
 
 
 
+Create or replace FUNCTION GetIsSuperUser(v_user_id UUID, v_name VARCHAR(255)) RETURNS SETOF users STABLE
+   AS $procedure$
+BEGIN
+      RETURN QUERY SELECT users.*
+      FROM users
+      WHERE user_id = v_user_id AND (
+                                     EXISTS (SELECT 1 FROM  users u, permissions p, roles r
+                                             WHERE  u.user_id = v_user_id AND u.user_id = p.ad_element_id AND p.role_id=r.id AND r.name='SuperUser'));
+END; $procedure$
+LANGUAGE plpgsql;
+
+
+
 
 Create or replace FUNCTION GetUserByExternalId(v_domain VARCHAR(255), v_external_id TEXT) RETURNS SETOF users STABLE
    AS $procedure$
