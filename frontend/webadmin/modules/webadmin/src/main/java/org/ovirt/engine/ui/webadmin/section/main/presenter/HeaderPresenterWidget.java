@@ -5,11 +5,7 @@ import org.ovirt.engine.ui.common.presenter.AbstractHeaderPresenterWidget;
 import org.ovirt.engine.ui.common.presenter.ScrollableTabBarPresenterWidget;
 import org.ovirt.engine.ui.common.system.HeaderOffsetChangeEvent;
 import org.ovirt.engine.ui.common.uicommon.model.OptionsProvider;
-import org.ovirt.engine.ui.common.utils.WebUtils;
 import org.ovirt.engine.ui.common.widget.tab.TabWidgetHandler;
-import org.ovirt.engine.ui.frontend.AsyncQuery;
-import org.ovirt.engine.ui.frontend.INewAsyncCallback;
-import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
 import org.ovirt.engine.ui.webadmin.ApplicationDynamicMessages;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.configure.ConfigurePopupPresenterWidget;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,9 +28,6 @@ public class HeaderPresenterWidget extends AbstractHeaderPresenterWidget<HeaderP
 
         HasClickHandlers getAboutLink();
 
-        HasClickHandlers getFeedbackLink();
-
-        void setFeedbackText(String feedbackText, String feedbackTitle);
     }
 
     @ContentSlot
@@ -114,28 +107,5 @@ public class HeaderPresenterWidget extends AbstractHeaderPresenterWidget<HeaderP
 
         setInSlot(TYPE_SetSearchPanel, searchPanel);
         setInSlot(TYPE_SetTabBar, tabBar);
-        configureFeedbackUrl();
-    }
-
-    private void configureFeedbackUrl() {
-        AsyncQuery _asyncQuery = new AsyncQuery();
-        _asyncQuery.setModel(this);
-        _asyncQuery.asyncCallback = new INewAsyncCallback() {
-            @Override
-            public void onSuccess(Object model, Object result) {
-                String version = (String) result;
-                feedbackUrl = dynamicMessages.feedbackUrl(version);
-                if (feedbackUrl != null && feedbackUrl.length() > 0) {
-                    getView().setFeedbackText(feedbackLinkLabel, dynamicMessages.feedbackLinkTooltip());
-                    registerHandler(getView().getFeedbackLink().addClickHandler(new ClickHandler() {
-                        @Override
-                        public void onClick(ClickEvent event) {
-                            WebUtils.openUrlInNewWindow(feedbackLinkLabel, feedbackUrl);
-                        }
-                    }));
-                }
-            }
-        };
-        AsyncDataProvider.getInstance().getRpmVersion(_asyncQuery);
     }
 }

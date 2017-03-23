@@ -7,6 +7,7 @@ import org.ovirt.engine.ui.webadmin.ApplicationConstants;
 import org.ovirt.engine.ui.webadmin.ApplicationDynamicMessages;
 import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.HeaderPresenterWidget;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -30,10 +31,6 @@ public class HeaderView extends AbstractHeaderView implements HeaderPresenterWid
     @UiField(provided = true)
     @WithElementId
     Anchor configureLink;
-
-    @UiField
-    @WithElementId
-    Anchor feedbackLink;
 
     @UiField
     SimplePanel searchPanelContainer;
@@ -68,19 +65,6 @@ public class HeaderView extends AbstractHeaderView implements HeaderPresenterWid
     @Override
     public HasClickHandlers getConfigureLink() {
         return configureLink;
-    }
-
-    @Override
-    public HasClickHandlers getFeedbackLink() {
-        return feedbackLink;
-    }
-
-    @Override
-    public void setFeedbackText(String feedbackText, String feedbackTitle) {
-        feedbackLink.setText(feedbackText);
-        if (feedbackTitle != null) {
-            feedbackLink.setTitle(feedbackTitle);
-        }
     }
 
 }
