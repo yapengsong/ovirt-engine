@@ -10,11 +10,9 @@ import org.ovirt.engine.core.common.utils.SecretKey;
 import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.utils.transaction.TransactionMethod;
 import org.ovirt.engine.core.utils.transaction.TransactionSupport;
-import org.slf4j.LoggerFactory;
 
 public class ActivCodeCommand<T extends ActivCodeParameters> extends VmCommand<T> {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ActivCodeCommand.class);
     private boolean dedicatedHostWasCleared;
 
     @Inject

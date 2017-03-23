@@ -47,8 +47,7 @@ public class VerifyLicenseStatus {
             date.setDate(date.getDate()+addDay);
             isTimeout=currentDate.after(date);
         } catch (ParseException e) {
-            log.info("Time conversion failed！");
-            e.printStackTrace();
+            log.info("Time conversion failed!");
         }
         return isTimeout;
     }
@@ -65,8 +64,7 @@ public class VerifyLicenseStatus {
                 log.info("Cannot find the specified file");
             }
         } catch (Exception e) {
-            log.info("Error getting UUID");
-            e.printStackTrace();
+            log.info("An exception occurred when UUID was obtained");
         }
         return UUID;
     }

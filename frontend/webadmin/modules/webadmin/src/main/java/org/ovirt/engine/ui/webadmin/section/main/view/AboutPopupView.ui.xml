@@ -48,13 +48,13 @@
 								<g:HTMLPanel ui:field="superUser">
 								<div>
 								    <g:Label  />
-									<g:InlineLabel>注册码</g:InlineLabel>
+									<g:InlineLabel ui:field="pollText" />
 									<g:InlineLabel ui:field="pollCode" />
 								</div>
 								<div>
-									<g:InlineLabel>激活码</g:InlineLabel>
+									<g:InlineLabel ui:field="activText" />
 									<ge:StringEntityModelTextArea ui:field="activeCode"  addStyleNames="{style.publicKeyEditor}" />
-									<w:UiCommandButton ui:field="activatButton"  label="激活" addStyleNames="{style.buttonStyle}"/>
+									<w:UiCommandButton ui:field="activatButton"   addStyleNames="{style.buttonStyle}"/>
 								</div>
 								</g:HTMLPanel>
 							</g:HTMLPanel>

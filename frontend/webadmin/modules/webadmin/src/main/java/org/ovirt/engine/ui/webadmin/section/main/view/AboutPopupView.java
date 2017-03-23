@@ -59,7 +59,11 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
     @UiField
     Label licenseNotice;
 
+    @UiField
+    InlineLabel pollText;
 
+    @UiField
+    InlineLabel activText;
 
     private final ApplicationDynamicMessages dynamicMessages;
 
@@ -83,6 +87,9 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
         closeButton.setText(constants.closeButtonLabel());
         titleLabel.setText(constants.aboutPopupCaption());
         copyrightNotice.setText(dynamicMessages.copyRightNotice());
+        activatButton.setTitle(constants.activation());
+        pollText.setText(constants.pollCode());
+        activText.setText(constants.activCode());
         //
     }
 
