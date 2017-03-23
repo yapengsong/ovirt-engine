@@ -47,7 +47,7 @@ public class VerifyLicenseStatus {
             date.setDate(date.getDate()+addDay);
             isTimeout=currentDate.after(date);
         } catch (ParseException e) {
-            log.info("时间转换失败！");
+            log.info("Time conversion failed！");
             e.printStackTrace();
         }
         return isTimeout;
@@ -62,10 +62,10 @@ public class VerifyLicenseStatus {
                 BufferedReader bufferedReader = new BufferedReader(read);
                 UUID = bufferedReader.readLine();
             } else {
-                log.info("找不到指定的文件");
+                log.info("Cannot find the specified file");
             }
         } catch (Exception e) {
-            log.info("异常出现");
+            log.info("Error getting UUID");
             e.printStackTrace();
         }
         return UUID;
