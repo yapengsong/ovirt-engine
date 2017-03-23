@@ -458,10 +458,7 @@ public class CommonModel extends ListModel<SearchableListModel> {
                 || type == SystemTreeItemType.VMs
                 || type == SystemTreeItemType.System);
 
-        getPoolList().setIsAvailable(type == SystemTreeItemType.System
-                || type == SystemTreeItemType.DataCenter
-                || type == SystemTreeItemType.Cluster
-                || type == SystemTreeItemType.Cluster_Gluster);
+        getPoolList().setIsAvailable(false);
 
         getTemplateList().setIsAvailable(type == SystemTreeItemType.DataCenter
                 || type == SystemTreeItemType.Cluster
