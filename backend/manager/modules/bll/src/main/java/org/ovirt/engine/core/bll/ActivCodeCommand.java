@@ -49,7 +49,6 @@ public class ActivCodeCommand<T extends ActivCodeParameters> extends VmCommand<T
             }
 
         } catch (Exception e) {
-            log.info("异常出现");
             return failCanDoAction(EngineMessage.ACTION_ACTIVCODE_FAILED);
         }
 
