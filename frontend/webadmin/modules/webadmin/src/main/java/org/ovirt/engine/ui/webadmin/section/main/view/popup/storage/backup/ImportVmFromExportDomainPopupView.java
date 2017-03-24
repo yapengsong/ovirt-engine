@@ -228,7 +228,6 @@ public class ImportVmFromExportDomainPopupView extends AbstractModelBoundPopupVi
 
         ScrollPanel appPanel = new ScrollPanel();
         appPanel.add(appTable);
-        subTabLayoutPanel.add(appPanel, constants.importVmApplicationslSubTabLabel());
     }
 
     protected void initMainTable() {
