@@ -27,6 +27,7 @@ import org.ovirt.engine.core.common.businessentities.VDSStatus;
 import org.ovirt.engine.core.common.businessentities.storage.StorageType;
 import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineMessage;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.compat.Guid;
 import org.ovirt.engine.core.compat.Version;
 import org.ovirt.engine.core.dao.StorageDomainDao;
@@ -105,6 +106,7 @@ public class AddStorageDomainCommonTest {
         doReturn(sdsDao).when(cmd).getStorageDomainStaticDao();
         doReturn(spDao).when(cmd).getStoragePoolDao();
         doReturn(sscDao).when(cmd).getStorageServerConnectionDao();
+        doReturn(false).when(cmd).licenseValidateFalied();
     }
 
     @Test

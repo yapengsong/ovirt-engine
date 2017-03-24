@@ -76,6 +76,7 @@ import org.ovirt.engine.core.common.queries.VdcQueryReturnValue;
 import org.ovirt.engine.core.common.queries.VdcQueryType;
 import org.ovirt.engine.core.common.utils.Pair;
 import org.ovirt.engine.core.common.utils.ValidationUtils;
+import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.common.vdscommands.VDSCommandType;
 import org.ovirt.engine.core.common.vdscommands.VDSParametersBase;
 import org.ovirt.engine.core.common.vdscommands.VDSReturnValue;
@@ -2526,5 +2527,12 @@ public abstract class CommandBase<T extends VdcActionParametersBase>
             cancelTasks();
         }
 
+    }
+
+    public boolean licenseValidateFalied() {
+        VerifyLicenseStatus verifyLicenseStatus=VerifyLicenseStatus.getInstance();
+        boolean isActive = verifyLicenseStatus.getVerifyActiveState();
+        boolean isTimeout = verifyLicenseStatus.getVerifyExpiredState();
+        return !isActive&&isTimeout;
     }
 }
