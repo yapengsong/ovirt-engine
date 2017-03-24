@@ -10,11 +10,9 @@ import org.ovirt.engine.core.common.utils.SecretKey;
 import org.ovirt.engine.core.common.utils.VerifyLicenseStatus;
 import org.ovirt.engine.core.utils.transaction.TransactionMethod;
 import org.ovirt.engine.core.utils.transaction.TransactionSupport;
-import org.slf4j.LoggerFactory;
 
 public class ActivCodeCommand<T extends ActivCodeParameters> extends VmCommand<T> {
 
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ActivCodeCommand.class);
     private boolean dedicatedHostWasCleared;
 
     @Inject
@@ -27,12 +25,11 @@ public class ActivCodeCommand<T extends ActivCodeParameters> extends VmCommand<T
     @Override
     protected boolean canDoAction() {
 
-        if (getParameters().getActivCode() == null) {
-            return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_CLUSTER_CAN_NOT_BE_EMPTY);
-        }
-
 
         String activCode= getParameters().getActivCode();
+        if (activCode==null||"".equals(activCode)){
+            return failCanDoAction(EngineMessage.ACTION_ACTIVCODE_FAILED);
+        }
         try {
             activCode=SecretKey.decode(activCode);
             activCode=SecretKey.to16String(activCode);

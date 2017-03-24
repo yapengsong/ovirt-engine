@@ -1006,6 +1006,15 @@ public interface CommonApplicationConstants extends Constants {
     @DefaultStringValue("Active")
     String active();
 
+    @DefaultStringValue("activation")
+    String activation();
+
+    @DefaultStringValue("Registration code")
+    String pollCode();
+
+    @DefaultStringValue("Activation code")
+    String activCode();
+
     @DefaultStringValue("Inactive")
     String inactive();
 
