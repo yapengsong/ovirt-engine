@@ -637,7 +637,7 @@ public class TemplateListModel extends VmBaseListModel<Void, VmTemplate> impleme
          List<UICommand> commands = new ArrayList<>();
          commands.add(UICommand.createDefaultOkUiCommand("OnSaveVm", this)); //$NON-NLS-1$
          commands.add(UICommand.createCancelUiCommand("Cancel", this)); //$NON-NLS-1$
-         setupNewVmModel(new UnitVmModel(new NewVmFromTemplateModelBehavior(template), this),template.getVmType(), getSystemTreeSelectedItem(), commands);
+         setupNewVmModel(new UnitVmModel(new NewVmFromTemplateModelBehavior(template), this), template.getVmType(), getSystemTreeSelectedItem(), commands);
      }
 
     private void onSaveVm() {

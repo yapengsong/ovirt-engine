@@ -142,6 +142,8 @@ public interface LocalizedEnums extends ConstantsWithLookup {
 
     String ActionGroup___CONFIGURE_VM_STORAGE();
 
+    String ActionGroup___ACTIV_CODE();
+
     String ActionGroup___REBOOT_VM();
 
     String ActionGroup___STOP_VM();

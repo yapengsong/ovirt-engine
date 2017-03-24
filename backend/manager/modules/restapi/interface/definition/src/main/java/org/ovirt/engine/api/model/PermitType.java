@@ -28,6 +28,7 @@ public enum PermitType {
      */
     @Deprecated
     VM_BASIC_OPERATIONS,
+    ACTIV_CODE,
     REBOOT_VM,
     STOP_VM,
     SHUT_DOWN_VM,
