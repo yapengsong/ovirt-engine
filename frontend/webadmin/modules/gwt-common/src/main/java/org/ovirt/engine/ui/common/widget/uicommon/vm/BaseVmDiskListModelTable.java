@@ -124,9 +124,6 @@ public class BaseVmDiskListModelTable<T extends VmDiskListModelBase<?>> extends 
                 actualSizeColumn, constants.sizeDisk(), images, "110px"); //$NON-NLS-1$
 
         getTable().ensureColumnPresent(
-                allocationColumn, constants.allocationDisk(), images, "125px"); //$NON-NLS-1$
-
-        getTable().ensureColumnPresent(
                 DisksViewColumns.storageDomainsColumn, constants.storageDomainDisk(), images || cinder, "125px"); //$NON-NLS-1$
 
         getTable().ensureColumnPresent(
