@@ -762,6 +762,16 @@ public class HostGeneralModel extends EntityModel<VDS> {
         setGoToEventsCommand(new UICommand("GoToEvents", this)); //$NON-NLS-1$
     }
 
+    private String osPrettyName;
+
+    public void setOsPrettyName(String osPrettyName) {
+        this.osPrettyName = osPrettyName;
+    }
+
+    public String getOsPrettyName() {
+        return osPrettyName;
+    }
+
     public void saveNICsConfig() {
         Frontend.getInstance().runMultipleAction(VdcActionType.CommitNetworkChanges,
                 new ArrayList<VdcActionParametersBase>(Arrays.asList(new VdcActionParametersBase[] {new VdsActionParameters(getEntity().getId())})),
@@ -818,6 +828,7 @@ public class HostGeneralModel extends EntityModel<VDS> {
         VDS vds = getEntity();
 
         setOS(vds.getHostOs());
+        setOsPrettyName(vds.getPrettyName());
         setKernelVersion(vds.getKernelVersion());
         setKvmVersion(vds.getKvmVersion());
         setLibvirtVersion(vds.getLibvirtVersion());

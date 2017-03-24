@@ -114,6 +114,8 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
 
     private boolean liveMergeSupport;
 
+    private String prettyName;
+
     private VdsTransparentHugePagesState transparentHugePagesState;
 
     @Size(max = BusinessEntitiesDefinitions.GENERAL_NAME_SIZE)
@@ -219,6 +221,14 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
         liveSnapshotSupport = true;  // usually supported, exceptional case if it isn't.
         liveMergeSupport = true;
         additionalFeatures = new HashSet<>();
+    }
+
+    public void setPrettyName(String prettyName) {
+        this.prettyName = prettyName;
+    }
+
+    public String getPrettyName() {
+        return prettyName;
     }
 
     public Integer getCpuCores() {
@@ -847,6 +857,7 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
         result = prime * result + (maintenanceReason == null ? 0 : maintenanceReason.hashCode());
         result = prime * result + (updateAvailable ? 0 : 1);
         result = prime * result + (hostDevicePassthroughEnabled ? 0 : 1);
+        result = prime * result + (prettyName == null ? 0 : prettyName.hashCode());
 
         return result;
     }
@@ -923,6 +934,7 @@ public class VdsDynamic implements BusinessEntityWithStatus<Guid, VDSStatus> {
                 && ObjectUtils.objectsEqual(maintenanceReason, other.maintenanceReason)
                 && updateAvailable == other.updateAvailable
                 && ObjectUtils.objectsEqual(additionalFeatures, other.additionalFeatures)
-                && ObjectUtils.objectsEqual(hostDevicePassthroughEnabled, other.hostDevicePassthroughEnabled);
+                && ObjectUtils.objectsEqual(hostDevicePassthroughEnabled, other.hostDevicePassthroughEnabled)
+                && ObjectUtils.objectsEqual(prettyName, other.getPrettyName());
     }
 }
