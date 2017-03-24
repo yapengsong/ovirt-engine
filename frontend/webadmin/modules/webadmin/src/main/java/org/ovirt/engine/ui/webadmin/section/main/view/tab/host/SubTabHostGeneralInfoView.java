@@ -65,6 +65,7 @@ public class SubTabHostGeneralInfoView extends AbstractSubTabFormView<VDS, HostL
     FullDateTimeLabel bootTime = new FullDateTimeLabel();
     StringValueLabel kdumpStatus = new StringValueLabel();
     StringValueLabel selinuxEnforceMode = new StringValueLabel();
+    StringValueLabel osPrettyName = new StringValueLabel();
 
     MemorySizeTextBoxLabel<Integer> physicalMemory = new MemorySizeTextBoxLabel<Integer>();
     MemorySizeTextBoxLabel<Integer> usedMemory = new MemorySizeTextBoxLabel<Integer>();
@@ -137,13 +138,12 @@ public class SubTabHostGeneralInfoView extends AbstractSubTabFormView<VDS, HostL
         formBuilder.setRelativeColumnWidth(1, 4);
         formBuilder.setRelativeColumnWidth(2, 5);
 
-        formBuilder.addFormItem(new FormItem(constants.spmPriority(), spmPriority, 0, 0, virtSupported).withAutoPlacement());
+        formBuilder.addFormItem(new FormItem(constants.osVersionHostGeneral(), osPrettyName, 0, 0, virtSupported).withAutoPlacement());
+        formBuilder.addFormItem(new FormItem(constants.spmPriority(), spmPriority, 0, virtSupported).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.activeVmsHostGeneral(), activeVms, 0, virtSupported).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.logicalCores(), logicalCores, 0).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.onlineCores(), onlineCores, 0).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.bootTimeHostGeneral(), bootTime, 0).withAutoPlacement());
-        formBuilder.addFormItem(new FormItem(constants.hostedEngineHaHostGeneral(), hostedEngineHa, 0,
-                virtSupported).withAutoPlacement());
 
         formBuilder.addFormItem(new FormItem(constants.isciInitNameHostGeneral(), iScsiInitiatorName, 0, 1,
                 virtSupported).withAutoPlacement());
@@ -158,6 +158,8 @@ public class SubTabHostGeneralInfoView extends AbstractSubTabFormView<VDS, HostL
         formBuilder.addFormItem(new FormItem(constants.autoLargePagesHostGeneral(), automaticLargePage, 2).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.selinuxModeGeneral(), selinuxEnforceMode, 2).withAutoPlacement());
         formBuilder.addFormItem(new FormItem(constants.liveSnapshotSupportHostGeneral(), liveSnapshotSupport, 2).withAutoPlacement());
+        formBuilder.addFormItem(new FormItem(constants.hostedEngineHaHostGeneral(), hostedEngineHa, 2,
+                virtSupported).withAutoPlacement());
     }
 
     @Override

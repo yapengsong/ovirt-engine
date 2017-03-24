@@ -254,6 +254,7 @@ public class VdsDynamicDaoImpl extends MassOperationsGenericDao<VdsDynamic, Guid
                 .addValue("glusterfs_cli_version", vds.getGlusterfsCliVersion().getRpmName())
                 .addValue("kernel_version", vds.getKernelVersion())
                 .addValue("iscsi_initiator_name", vds.getIScsiInitiatorName())
+                .addValue("pretty_name", vds.getPrettyName())
                 .addValue("transparent_hugepages_state",
                         vds.getTransparentHugePagesState().getValue())
                 .addValue("hooks", vds.getHooksStr())

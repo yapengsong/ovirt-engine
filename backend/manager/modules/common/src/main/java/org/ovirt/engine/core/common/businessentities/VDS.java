@@ -1421,6 +1421,14 @@ public class VDS implements IVdcQueryable, BusinessEntityWithStatus<Guid, VDSSta
         return vdsDynamic.isHostDevicePassthroughEnabled();
     }
 
+    public String getPrettyName() {
+        return vdsDynamic.getPrettyName();
+    }
+
+    public void setPrettyName(String prettyName) {
+        vdsDynamic.setPrettyName(prettyName);
+    }
+
     public boolean shouldVdsBeFenced() {
         boolean result = false;
 

@@ -158,6 +158,7 @@ public final class VdsProperties {
     public static final String emulatedMachines = "emulatedMachines";
     public static final String rngSources = "rngSources";
     public static final String host_os = "operatingSystem";
+    public static final String pretty_name = "prettyName";
     public static final String packages = "packages";
     public static final String packages2 = "packages2";
     public static final String package_name = "name";

@@ -2,7 +2,6 @@ package org.ovirt.engine.ui.webadmin.section.main.view.popup.storage.backup;
 
 import java.util.ArrayList;
 import java.util.Date;
-
 import org.ovirt.engine.core.common.businessentities.OriginType;
 import org.ovirt.engine.core.common.businessentities.Quota;
 import org.ovirt.engine.core.common.businessentities.StorageDomain;
@@ -51,7 +50,6 @@ import org.ovirt.engine.ui.webadmin.gin.AssetProvider;
 import org.ovirt.engine.ui.webadmin.section.main.presenter.popup.storage.backup.ImportVmFromExportDomainPopupPresenterWidget;
 import org.ovirt.engine.ui.webadmin.widget.table.cell.CustomSelectionCell;
 import org.ovirt.engine.ui.webadmin.widget.table.column.VmTypeColumn;
-
 import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style.Position;
@@ -230,7 +228,6 @@ public class ImportVmFromExportDomainPopupView extends AbstractModelBoundPopupVi
 
         ScrollPanel appPanel = new ScrollPanel();
         appPanel.add(appTable);
-        subTabLayoutPanel.add(appPanel, constants.importVmApplicationslSubTabLabel());
     }
 
     protected void initMainTable() {
@@ -561,8 +558,6 @@ public class ImportVmFromExportDomainPopupView extends AbstractModelBoundPopupVi
                 }
             }
         });
-
-        diskTable.addColumn(allocationColumn, constants.allocationDisk(), "150px"); //$NON-NLS-1$
     }
 
     private void addStorageDomainsColumn() {
