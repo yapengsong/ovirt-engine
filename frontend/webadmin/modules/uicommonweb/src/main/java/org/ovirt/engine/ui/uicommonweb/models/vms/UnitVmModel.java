@@ -26,6 +26,7 @@ import org.ovirt.engine.core.common.businessentities.QuotaEnforcementTypeEnum;
 import org.ovirt.engine.core.common.businessentities.SerialNumberPolicy;
 import org.ovirt.engine.core.common.businessentities.SsoMethod;
 import org.ovirt.engine.core.common.businessentities.StorageDomain;
+import org.ovirt.engine.core.common.businessentities.StorageDomainStatus;
 import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.core.common.businessentities.UsbPolicy;
 import org.ovirt.engine.core.common.businessentities.VDS;
@@ -2714,7 +2715,7 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
 
         if (templateWithVersionRequired) {
             getTemplateWithVersion().validateSelectedItem(
-                    new IValidation[] { new NotEmptyValidation(), createEachDiskAHasStorageDomainValidation() });
+                    new IValidation[] { new NotEmptyValidation(), createEachDiskAHasStorageDomainActiveValidation() });
         }
         getDisksAllocationModel().validateEntity(new IValidation[]{});
 
@@ -2966,13 +2967,16 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
      * a missing permission on storage domain that causes diskModel.getStorageDomain().getSelectedItem() to be null and
      * consequently a frontend NPE.
      */
-    private IValidation createEachDiskAHasStorageDomainValidation() {
+    private IValidation createEachDiskAHasStorageDomainActiveValidation() {
         return new IValidation() {
             @Override
             public ValidationResult validate(Object value) {
+                if (getDisksAllocationModel().getDisks() == null) {
+                    return ValidationResult.ok();
+                }
                 for (DiskModel diskModel : getDisksAllocationModel().getDisks()) {
                     final StorageDomain storageDomain = diskModel.getStorageDomain().getSelectedItem();
-                    if (storageDomain == null) {
+                    if (storageDomain == null || storageDomain.getStatus() != StorageDomainStatus.Active) {
                         final String diskName = diskModel.getDisk().getDiskAlias();
                         final String errorMessage = ConstantsManager.getInstance()
                                 .getMessages()
