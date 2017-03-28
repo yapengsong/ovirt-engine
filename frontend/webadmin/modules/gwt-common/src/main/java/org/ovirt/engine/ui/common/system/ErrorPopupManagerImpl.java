@@ -2,6 +2,7 @@ package org.ovirt.engine.ui.common.system;
 
 import org.ovirt.engine.ui.common.presenter.popup.ErrorPopupPresenterWidget;
 import org.ovirt.engine.ui.uicommonweb.ErrorPopupManager;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.GwtEvent;
 import com.google.gwt.event.shared.HasHandlers;
@@ -31,6 +32,11 @@ public class ErrorPopupManagerImpl implements HasHandlers, ErrorPopupManager {
     public void show(String errorMessage) {
         errorPopup.prepare(errorMessage);
         RevealRootPopupContentEvent.fire(this, errorPopup);
+    }
+
+    @Override
+    public void setTitleName(String title){
+        errorPopup.setTitleName(title);
     }
 
     @Override

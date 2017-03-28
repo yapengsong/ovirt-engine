@@ -19,14 +19,23 @@ public interface ApplicationConstants extends CommonApplicationConstants {
     @DefaultStringValue("Enterprise")
     String enterprise();
     //activeState
-    @DefaultStringValue("Status: active")
+    @DefaultStringValue("Welcome to the EayunOS Enterprise Edition, you have successfully activated the normal use of this product")
     String activeState();
     //pastDue
     @DefaultStringValue("Status: 30 days trial period is over, please activate")
     String pastDue();
     //trialStatus
-    @DefaultStringValue("Status: 30 days trial period")
+    @DefaultStringValue("Welcome to the EayunOS server virtualization software, you do not have to import registered License. system provides 30 day period for you now, please within 30 days to cloud JNC (Beijing) Technology Co., an official License, otherwise it will affect the normal use of your!")
     String trialStatus();
+    //basicInfo
+    @DefaultStringValue("Welcome to the EayunOS foundation, the basic version is only limited in terms of functionality and performance for testing and learning")
+    String basicInfo();
+    //opeSuccess
+    @DefaultStringValue("Successful operation")
+    String opeSuccess();
+    //welSuccess
+    @DefaultStringValue("Congratulations on success!")
+    String welSuccess();
 
     // Widgets
 

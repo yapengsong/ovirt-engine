@@ -15,7 +15,6 @@ import org.ovirt.engine.ui.frontend.INewAsyncCallback;
 import org.ovirt.engine.ui.uicommonweb.ErrorPopupManager;
 import org.ovirt.engine.ui.uicommonweb.TypeResolver;
 import org.ovirt.engine.ui.uicommonweb.dataprovider.AsyncDataProvider;
-import org.ovirt.engine.ui.uicompat.ConstantsManager;
 import org.ovirt.engine.ui.uicompat.FrontendActionAsyncResult;
 import org.ovirt.engine.ui.uicompat.IFrontendActionAsyncCallback;
 import org.ovirt.engine.ui.webadmin.ApplicationConstants;
@@ -49,6 +48,8 @@ public class AboutPopupPresenterWidget extends AbstractPopupPresenterWidget<Abou
 
         HTMLPanel getSuperUser();
 
+        void setCnterpriseVisible(boolean b);
+
     }
 
     @Inject
@@ -70,10 +71,10 @@ public class AboutPopupPresenterWidget extends AbstractPopupPresenterWidget<Abou
                 String version = (String) result;
 
                 getView().setVersion(version);
+                getView().setLicenseNotice(constants.basicInfo());
 
             }
         };
-
         AsyncDataProvider.getInstance().getRpmVersion(_asyncQuery);
 
         if("Enterprise".equals(vsersion)){//$NON-NLS-1$
@@ -103,17 +104,21 @@ public class AboutPopupPresenterWidget extends AbstractPopupPresenterWidget<Abou
                     }
 
                     if("true".equals(isActive)){//$NON-NLS-1$
-                        getView().setLicenseNotice(constants.activeState());//$NON-NLS-1$
+                        getView().setLicenseNotice(constants.activeState());
+                        getView().getSuperUser().setVisible(false);
+
                     }else if("true".equals(timeOut)){//$NON-NLS-1$
-                        getView().setLicenseNotice(constants.pastDue());//$NON-NLS-1$
+                        getView().setLicenseNotice(constants.pastDue());
                     }else{
-                        getView().setLicenseNotice(constants.trialStatus());//$NON-NLS-1$
+                        getView().setLicenseNotice(constants.trialStatus());
                     }
-                    getView().setPollCode(code);//$NON-NLS-1$
+                    getView().setPollCode(code);
 
                 }
             };
             AsyncDataProvider.getInstance().getUuid(_asyncQuery2);
+
+        }else{
 
         }
 
@@ -127,7 +132,6 @@ public class AboutPopupPresenterWidget extends AbstractPopupPresenterWidget<Abou
             @Override
             public void onClick(ClickEvent event) {
 
-                getView().getActiveCode().getValue();
                 ActivCodeParameters parameters=new ActivCodeParameters(getView().getActiveCode().getValue());
 
                 Frontend.getInstance().runAction(VdcActionType.ActivCode,
@@ -137,14 +141,13 @@ public class AboutPopupPresenterWidget extends AbstractPopupPresenterWidget<Abou
                             public void executed(FrontendActionAsyncResult result) {
                                 result.getState();
                                 VdcReturnValueBase vrvb = result.getReturnValue();
-                                if (vrvb.getSucceeded()) {// 激活成功与否
-                                    getView().setLicenseNotice(constants.activeState());//$NON-NLS-1$
+                                if (vrvb.getSucceeded()) {
+                                    getView().setLicenseNotice(constants.activeState());
+                                    getView().getSuperUser().setVisible(false);
                                     final ErrorPopupManager popupManager = (ErrorPopupManager) TypeResolver
                                     .getInstance().resolve(ErrorPopupManager.class);
-                                    popupManager.show(ConstantsManager.getInstance()
-                                    .getConstants()
-                                    .activSucceeded());
-
+                                    popupManager.setTitleName(constants.opeSuccess());
+                                    popupManager.show(constants.welSuccess());
                                 }
                             }
                         },
