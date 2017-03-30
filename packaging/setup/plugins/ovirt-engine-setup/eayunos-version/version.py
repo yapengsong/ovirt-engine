@@ -7,6 +7,9 @@ from otopi import plugin, util
 
 from ovirt_engine_setup import constants as osetupcons
 from ovirt_engine_setup.engine import constants as oenginecons
+from ovirt_engine_setup.engine import vdcoption
+from ovirt_engine_setup.engine_common import constants as oengcommcons
+from ovirt_engine_setup.engine_common import database
 
 
 @util.export
@@ -26,36 +29,37 @@ class Plugin(plugin.PluginBase):
         ),
     )
     def _customization(self):
-        version = self.environment.get(
+        self.version = self.environment.get(
             oenginecons.ConfigEnv.EAYUNOS_VERSION
         )
-        if version == 'BaseVersion':
-            self.base_version_setup()
-            self.dialog.note(text="EayunOS version: Basic")
-        elif version == 'HigherVersion':
+        if self.version == 'Enterprise':
             self.enterprise_version_setup()
             self.dialog.note(text="EayunOS version: Enterprise")
-        else:
-            self.adv_enterprise_version_setup()
-            self.dialog.note(text="EayunOS version: Advanced Enterprise")
-
-    def base_version_setup(self):
-        os.system("sed -i 's/{4\.2}/4\.2 Basic/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
-        os.system("sed -i 's/{4\.2}/4\.2 \\\u57fa\\\u7840\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
-        os.system("sed -i 's/EayunOS_top_logo\.png/EayunOS_top_logo_basic\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
-        os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_add_config_value('EayunOSVersion','BaseVersion','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
 
     def enterprise_version_setup(self):
-        os.system("sed -i 's/{4\.2}/4\.2 Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
-        os.system("sed -i 's/{4\.2}/4\.2 \\\u4f01\\\u4e1a\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
+        os.system("sed -i 's/4\.2 Basic/4\.2 Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
+        os.system("sed -i 's/4\.2 \\\u57FA\\\u7840\\\u7248/4\.2 \\\u4f01\\\u4e1a\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
         os.system("sed -i 's/EayunOS_top_logo\.png/EayunOS_top_logo_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
-        os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_add_config_value('EayunOSVersion','HigherVersion','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
 
-    def adv_enterprise_version_setup(self):
-        os.system("sed -i 's/{4\.2}/4\.2 Advanced Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
-        os.system("sed -i 's/{4\.2}/4\.2 \\\u9ad8\\\u7ea7\\\u4f01\\\u4e1a\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
-        os.system("sed -i 's/EayunOS_top_logo\.png/EayunOS_top_logo_adv_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
-        os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_add_config_value('EayunOSVersion','AdvancedVersion','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+    @plugin.event(
+        stage=plugin.Stages.STAGE_VALIDATION,
+        after=(
+            oengcommcons.Stages.DB_CREDENTIALS_AVAILABLE_EARLY,
+        ),
+    )
+    def update_vdc_option(self):
+        statement = database.Statement(
+            dbenvkeys=oenginecons.Const.ENGINE_DB_ENV_KEYS,
+            environment=self.environment,
+        )
+        vdcoption.VdcOption(
+            statement=statement,
+        ).updateVdcOptions(
+            options=(
+                {
+                    'name': 'EayunOSVersion',
+                    'value': self.version,
+                },
+            ),
+            ownConnection=True,
+        )
