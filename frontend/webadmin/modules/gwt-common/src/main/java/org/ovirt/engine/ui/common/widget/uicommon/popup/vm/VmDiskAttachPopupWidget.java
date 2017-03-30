@@ -514,18 +514,6 @@ public class VmDiskAttachPopupWidget extends AbstractModelBoundPopupWidget<Attac
                     }
                 });
 
-        diskTypePanel.addRadioButton(
-                constants.cinderDisk(),
-                !disk.getIsNew() && disk.getDisk().getDiskStorageType() == DiskStorageType.CINDER,
-                disk.getIsNew(),
-                new ClickHandler() {
-                    @Override
-                    public void onClick(ClickEvent event) {
-                        disk.getDiskStorageType().setEntity(DiskStorageType.CINDER);
-                        revealDiskPanel(disk);
-                    }
-                });
-
         // Add event handlers
         disk.getPropertyChangedEvent().addListener(new IEventListener<PropertyChangedEventArgs>() {
             @Override
