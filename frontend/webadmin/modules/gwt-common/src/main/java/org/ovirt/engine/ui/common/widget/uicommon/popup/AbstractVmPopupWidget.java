@@ -1044,6 +1044,7 @@ public abstract class AbstractVmPopupWidget extends AbstractModeSwitchingPopupWi
         rngDeviceTab.removeFromParent();
         customPropertiesTab.removeFromParent();
         cpuPinningPanel.removeFromParent();
+        hostCpuEditor.removeFromParent();
     }
 
     protected void populateTabMap() {
