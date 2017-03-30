@@ -18,6 +18,7 @@ import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.InlineLabel;
 import com.google.gwt.user.client.ui.Label;
@@ -60,6 +61,12 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
     Label licenseNotice;
 
     @UiField
+    Label aNotice;
+
+    @UiField
+    HTML toNotice;
+
+    @UiField
     InlineLabel pollText;
 
     @UiField
@@ -77,7 +84,8 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
         this.dynamicMessages = dynamicMessages;
         String vsersion=(String) AsyncDataProvider.getInstance().getConfigValuePreConverted(ConfigurationValues.EayunOSVersion);
         if(!"Enterprise".equals(vsersion)){//$NON-NLS-1$
-            cnterprise.setVisible(false);
+            //cnterprise.setVisible(false);
+            superUser.setVisible(false);
         }
 
         localize();
@@ -88,8 +96,9 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
         titleLabel.setText(constants.aboutPopupCaption());
         copyrightNotice.setText(dynamicMessages.copyRightNotice());
         pollText.setText(constants.pollCode());
+        aNotice.setText(constants.toComMail());
+        toNotice.setHTML(constants.toArtisan());
         activText.setText(constants.activCode());
-        //
     }
 
     @Override
@@ -130,13 +139,18 @@ public class AboutPopupView extends AbstractPopupView<SimpleDialogPanel> impleme
     }
 
     @Override
-    public StringEntityModelTextArea getActiveCode() {
-        return activeCode;
+    public HTMLPanel getSuperUser() {
+        return superUser;
     }
 
     @Override
-    public HTMLPanel getSuperUser() {
-        return superUser;
+    public void setCnterpriseVisible(boolean b) {
+        cnterprise .setVisible(b);
+    }
+
+    @Override
+    public StringEntityModelTextArea getActiveCode() {
+        return activeCode;
     }
 
 }

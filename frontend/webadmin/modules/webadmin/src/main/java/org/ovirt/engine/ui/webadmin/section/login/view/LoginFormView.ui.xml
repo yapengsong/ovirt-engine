@@ -83,7 +83,7 @@
 								
 									<w:PatternflyUiCommandButton ui:field="loginButton" addStyleNames="lg_btn" />
 						</htl:Div>	
-						<htl:Paragraph  styleName="version">v4.2.0</htl:Paragraph>
+						<htl:Paragraph  styleName="version"></htl:Paragraph>
 				
 						
 				</htl:Div>		

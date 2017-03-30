@@ -1,6 +1,7 @@
 package org.ovirt.engine.ui.common.presenter.popup;
 
 import org.ovirt.engine.ui.common.presenter.AbstractPopupPresenterWidget;
+
 import com.google.gwt.event.shared.EventBus;
 import com.google.inject.Inject;
 
@@ -12,6 +13,7 @@ public class ErrorPopupPresenterWidget extends AbstractPopupPresenterWidget<Erro
     public interface ViewDef extends AbstractPopupPresenterWidget.ViewDef {
 
         void setErrorMessage(String errorMessage);
+        void setTitleName(String title);
 
     }
 
@@ -31,5 +33,9 @@ public class ErrorPopupPresenterWidget extends AbstractPopupPresenterWidget<Erro
     @Override
     protected void handleEnterKey() {
         onClose();
+    }
+
+    public void setTitleName(String title) {
+        getView().setTitleName(title);
     }
 }

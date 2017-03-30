@@ -7,4 +7,5 @@ public interface ErrorPopupManager {
     public void fireEvent(GwtEvent<?> event);
     public void show(String errorMessage);
     public void hide();
+    public void setTitleName(String title);
 }

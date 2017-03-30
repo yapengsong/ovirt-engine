@@ -21,6 +21,7 @@
     </ui:style>
 
     <d:SimpleDialogPanel width="500px" height="400px">
+    	
         <d:header>
             <g:Label ui:field="titleLabel" addStyleNames="epv_titleLabel_pfly_fix"/>
         </d:header>
@@ -30,11 +31,15 @@
         </d:logo>
 
         <d:content>
+        	<g:VerticalPanel verticalAlignment="ALIGN_MIDDLE" addStyleNames="{style.content}">
+			<g:HorizontalPanel horizontalAlignment="ALIGN_CENTER" width="100%">
             <g:SimplePanel addStyleNames="{style.content}">
                 <g:HTML ui:field="messageLabel" />
             </g:SimplePanel>
+            </g:HorizontalPanel>
+        	</g:VerticalPanel>
         </d:content>
-
+        
         <d:footerButton>
             <g:PushButton ui:field="closeButton" addStyleNames="epv_closeButton_pfly_fix"/>
         </d:footerButton>

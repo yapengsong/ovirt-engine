@@ -1009,8 +1009,15 @@ public interface CommonApplicationConstants extends Constants {
     @DefaultStringValue("activation")
     String activation();
 
-    @DefaultStringValue("Registration code")
+    @DefaultStringValue("The License registration code for this system is:")
     String pollCode();
+
+    @DefaultStringValue("Please send the above registration code together with the enterprise information via email to license@eayun.com. we will give you feedback on the official License.")
+    String toComMail();
+
+    @DefaultStringValue("If you have any questions, please contact our technical support staff: <br/> contact: XXXXXX<br/> contact email: Service@eayun.com<br/>")
+    String toArtisan();
+
 
     @DefaultStringValue("Activation code")
     String activCode();
