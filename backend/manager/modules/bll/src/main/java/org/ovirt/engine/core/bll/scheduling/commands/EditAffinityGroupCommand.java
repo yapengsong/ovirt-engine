@@ -1,12 +1,11 @@
 package org.ovirt.engine.core.bll.scheduling.commands;
 
 import java.util.List;
-import org.apache.commons.collections.ListUtils;
 import org.ovirt.engine.core.common.AuditLogType;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.scheduling.AffinityGroup;
 import org.ovirt.engine.core.common.scheduling.parameters.AffinityGroupCRUDParameters;
-import org.ovirt.engine.core.compat.Guid;
+import org.ovirt.engine.core.common.utils.ListUtils;
 
 
 public class EditAffinityGroupCommand extends AffinityGroupCRUDCommand {
@@ -27,15 +26,8 @@ public class EditAffinityGroupCommand extends AffinityGroupCRUDCommand {
                 getAffinityGroupDao().getByName(getParameters().getAffinityGroup().getName()) != null) {
             return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_AFFINITY_GROUP_NAME_EXISTS);
         }
-        List<Guid> vmIdList = getAffinityGroup().getEntityIds();
-        boolean isEnforcing = getAffinityGroup().isEnforcing();
-        boolean isPositive = getAffinityGroup().isPositive();
-        for(AffinityGroup ag : getAffinityGroupDao().getAllAffinityGroupsByClusterId(getAffinityGroup().getClusterId())) {
-            List<Guid> list1 = ListUtils.subtract(vmIdList, ag.getEntityIds());
-            List<Guid> list2 = ListUtils.subtract(ag.getEntityIds(), vmIdList);
-            if (list1.isEmpty() && list2.isEmpty() && isEnforcing == ag.isEnforcing() && isPositive == ag.isPositive()) {
-                return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_AFFINITY_GROUP_CONTENT_REPETITION);
-            }
+        if (!detailCompare()) {
+            return failCanDoAction(EngineMessage.ACTION_TYPE_FAILED_AFFINITY_GROUP_CONTENT_REPETITION);
         }
         return validateParameters();
     }
@@ -56,5 +48,28 @@ public class EditAffinityGroupCommand extends AffinityGroupCRUDCommand {
     protected void setActionMessageParameters() {
         super.setActionMessageParameters();
         addCanDoActionMessage(EngineMessage.VAR__ACTION__UPDATE);
+    }
+
+    private boolean detailCompare() {
+        List<AffinityGroup> res = getAffinityGroupDao().getAllAffinityGroupsByClusterId(getClusterId());
+        if (res == null) {
+            return true;
+        } else {
+            for (AffinityGroup ag : res) {
+                if (compare(getParameters().getAffinityGroup(), ag)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    private boolean compare(AffinityGroup a, AffinityGroup b) {
+        if ((a.isEnforcing() == b.isEnforcing()) && (a.isPositive() == b.isPositive())
+                && ListUtils.listsEqual(a.getEntityIds(), b.getEntityIds())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
