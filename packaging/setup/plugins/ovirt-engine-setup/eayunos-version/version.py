@@ -7,6 +7,7 @@ from otopi import plugin, util
 
 from ovirt_engine_setup import constants as osetupcons
 from ovirt_engine_setup.engine import constants as oenginecons
+from ovirt_engine_setup.engine_common import constants as oengcommcons
 
 
 @util.export
@@ -17,12 +18,9 @@ class Plugin(plugin.PluginBase):
         super(Plugin, self).__init__(context=context)
 
     @plugin.event(
-        stage=plugin.Stages.STAGE_CUSTOMIZATION,
+        stage=plugin.Stages.STAGE_MISC,
         before=(
-            osetupcons.Stages.DIALOG_TITLES_E_PRODUCT_OPTIONS,
-        ),
-        after=(
-            osetupcons.Stages.DIALOG_TITLES_S_PRODUCT_OPTIONS,
+            oengcommcons.Stages.DB_SCHEMA,
         ),
     )
     def _customization(self):
@@ -36,7 +34,7 @@ class Plugin(plugin.PluginBase):
     def enterprise_version_setup(self):
         os.system("sed -i 's/4\.2 Basic/4\.2 Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
         os.system("sed -i 's/4\.2 \\\u57FA\\\u7840\\\u7248/4\.2 \\\u4f01\\\u4e1a\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
-        os.system("sed -i 's/EayunOS_top_logo\.png/EayunOS_top_logo_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
+        os.system("sed -i 's/EayunOS_top_logo_basic\.png/EayunOS_top_logo_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
         os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
         os.system("echo \"select fn_db_add_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
         os.system("echo \"select fn_db_update_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
