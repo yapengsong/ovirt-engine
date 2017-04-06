@@ -29,13 +29,22 @@ class Plugin(plugin.PluginBase):
         )
         if version == 'Enterprise':
             self.enterprise_version_setup()
+            system_operations()
             self.dialog.note(text="EayunOS version: Enterprise")
 
     def enterprise_version_setup(self):
+        # update ovirt-engine files
         os.system("sed -i 's/4\.2 Basic/4\.2 Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
-        os.system("sed -i 's/4\.2 \\\u57FA\\\u7840\\\u7248/4\.2 \\\u4f01\\\u4e1a\\\u7248/' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
+        os.system("sed -i 's/\\\u57FA\\\u7840\\\u7248/\\\u4f01\\\u4e1a\\\u7248/g' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
         os.system("sed -i 's/EayunOS_top_logo_basic\.png/EayunOS_top_logo_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
         os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
         os.system("echo \"select fn_db_add_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
         os.system("echo \"select fn_db_update_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+        # make product uuid readable
+        os.system("echo \"#! /bin/bash\" > /etc/init.d/systemuuid")
+        os.system("echo \"# chkconfig: 2345 10 90\" >> /etc/init.d/systemuuid")
+        os.system("echo \"chmod a+r /sys/class/dmi/id/product_uuid\" >> /etc/init.d/systemuuid")
+        os.system("chmod a+x /etc/init.d/systemuuid")
+        os.system("chkconfig systemuuid on")
+        os.system("chmod a+r /sys/class/dmi/id/product_uuid")
 
