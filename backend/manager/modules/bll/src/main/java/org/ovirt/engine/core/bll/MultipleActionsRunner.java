@@ -72,7 +72,7 @@ public class MultipleActionsRunner {
                     if (runningVmsCount > 8) {
                         returnValues.add(addEayunOSVersionValidationMsg());
                         return returnValues;
-                    } else if (runningVmsCount+parameters.size() >= 8) {
+                    } else if (runningVmsCount+parameters.size() > 8) {
                         returnValues.add(addEayunOSVersionValidationMsg());
                         delTialNfromParameters(runningVmsCount + parameters.size() - 8);
                     }

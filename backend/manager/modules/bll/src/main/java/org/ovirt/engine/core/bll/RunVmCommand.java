@@ -996,7 +996,7 @@ public class RunVmCommand<T extends RunVmParams> extends RunVmCommandBase<T>
             if(vmMemSize > 8192) {
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_MEM);
             }
-            if (getVmDao().getAllRunning().size() >= 8) {
+            if (getVmDao().getAllRunning().size() > 8) {
                 return  failCanDoAction(EngineMessage.USE_BASE_VERSION);
             }
         }
