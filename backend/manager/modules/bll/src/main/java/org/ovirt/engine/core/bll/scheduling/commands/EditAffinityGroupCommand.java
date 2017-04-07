@@ -1,6 +1,7 @@
 package org.ovirt.engine.core.bll.scheduling.commands;
 
 import java.util.List;
+
 import org.ovirt.engine.core.common.AuditLogType;
 import org.ovirt.engine.core.common.errors.EngineMessage;
 import org.ovirt.engine.core.common.scheduling.AffinityGroup;
@@ -56,7 +57,8 @@ public class EditAffinityGroupCommand extends AffinityGroupCRUDCommand {
             return true;
         } else {
             for (AffinityGroup ag : res) {
-                if (compare(getParameters().getAffinityGroup(), ag)) {
+                if (!ag.getId().equals(getParameters().getAffinityGroupId())
+                        && compare(getParameters().getAffinityGroup(), ag)) {
                     return false;
                 }
             }

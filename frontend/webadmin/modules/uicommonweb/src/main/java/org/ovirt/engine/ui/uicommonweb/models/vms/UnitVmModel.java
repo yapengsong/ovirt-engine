@@ -1868,6 +1868,7 @@ public class UnitVmModel extends Model implements HasValidatedTabs {
                 behavior.updateCpuPinningVisibility();
                 behavior.updateHaAvailability();
                 behavior.updateNumaEnabled();
+                behavior.updateMigrationAvailability();
             }
             else if (sender == getCpuSharesAmountSelection()) {
                 behavior.updateCpuSharesAmountChangeability();
