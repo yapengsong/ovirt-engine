@@ -332,7 +332,7 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
         // Check if this is a valid cluster
         boolean returnValue = validateVdsGroup();
 
-        List<VDS> hosts=getVdsDao().getAllForVdsGroup(params.getVdsStaticData().getVdsGroupId());
+        List<VDS> hosts=getVdsDao().getAll();
 
         String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
