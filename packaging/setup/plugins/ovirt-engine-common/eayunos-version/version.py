@@ -29,7 +29,6 @@ class Plugin(plugin.PluginBase):
         )
         if version == 'Enterprise':
             self.enterprise_version_setup()
-            system_operations()
             self.dialog.note(text="EayunOS version: Enterprise")
 
     def enterprise_version_setup(self):
