@@ -1,4 +1,3 @@
-select fn_db_add_config_value('InstallationTime',to_char(current_timestamp,'yyyy-MM-dd HH24:mm:ss'),'general');
 
 delete from roles_groups where action_group_id=40000;
 
