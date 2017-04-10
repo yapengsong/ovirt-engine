@@ -36,9 +36,8 @@ class Plugin(plugin.PluginBase):
         os.system("sed -i 's/4\.2 Basic/4\.2 Enterprise/' /usr/share/ovirt-engine/branding/ovirt.brand/messages.properties")
         os.system("sed -i 's/\\\u57FA\\\u7840\\\u7248/\\\u4f01\\\u4e1a\\\u7248/g' /usr/share/ovirt-engine/branding/ovirt.brand/messages_zh_CN.properties")
         os.system("sed -i 's/EayunOS_top_logo_basic\.png/EayunOS_top_logo_enterprise\.png/' /usr/share/ovirt-engine/branding/ovirt.brand/common.css")
-        os.system("sed -i '/EayunOSVersion/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_add_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_update_config_value('EayunOSVersion','Enterprise','general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+        os.system("sudo -u postgres psql -d engine -c \"select fn_db_add_config_value('EayunOSVersion','Enterprise','general');\"")
+        os.system("sudo -u postgres psql -d engine -c \"select fn_db_update_config_value('EayunOSVersion','Enterprise','general');\"")
         # make product uuid readable
         os.system("echo \"#! /bin/bash\" > /etc/init.d/systemuuid")
         os.system("echo \"# chkconfig: 2345 10 90\" >> /etc/init.d/systemuuid")
@@ -57,6 +56,5 @@ class Plugin(plugin.PluginBase):
         ),
     )
     def _setup_installation_time(self):
-        os.system("sed -i '/InstallationTime/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
-        os.system("echo \"select fn_db_add_config_value('InstallationTime',to_char(current_timestamp,'yyyy-MM-dd HH24:mm:ss'),'general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+        os.system("sudo -u postgres psql -d engine -c \"select fn_db_add_config_value('InstallationTime',to_char(current_timestamp,'yyyy-MM-dd HH24:mm:ss'),'general');\"")
 
