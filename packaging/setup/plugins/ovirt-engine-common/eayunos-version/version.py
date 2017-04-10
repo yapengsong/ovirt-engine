@@ -48,3 +48,16 @@ class Plugin(plugin.PluginBase):
         os.system("chkconfig systemuuid on")
         os.system("chmod a+r /sys/class/dmi/id/product_uuid")
 
+    @plugin.event(
+        stage=plugin.Stages.STAGE_MISC,
+        before=(
+            oengcommcons.Stages.DB_SCHEMA,
+        ),
+        condition=lambda self: (
+            not self.environment[oenginecons.EngineDBEnv.NEW_DATABASE]
+        ),
+    )
+    def _setup_installation_time(self):
+        os.system("sed -i '/InstallationTime/d' /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+        os.system("echo \"select fn_db_add_config_value('InstallationTime',to_char(current_timestamp,'yyyy-MM-dd HH24:mm:ss'),'general');\" >> /usr/share/ovirt-engine/dbscripts/upgrade/pre_upgrade/0000_config.sql")
+
