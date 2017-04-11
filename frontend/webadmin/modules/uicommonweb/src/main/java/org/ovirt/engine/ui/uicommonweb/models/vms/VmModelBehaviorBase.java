@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
-
 import org.ovirt.engine.core.common.TimeZoneType;
 import org.ovirt.engine.core.common.businessentities.ActionGroup;
 import org.ovirt.engine.core.common.businessentities.ArchitectureType;
@@ -1003,14 +1002,9 @@ public abstract class VmModelBehaviorBase<TModel extends UnitVmModel> {
                 && !isHighlyAvailable) {
             getModel().getIsHighlyAvailable().setChangeProhibitionReason(constants.vmNonMigratable());
             getModel().getIsHighlyAvailable().setEntity(false);
-            isHighlyAvailable = false;
         }
 
-        getModel().getIsHighlyAvailable().setIsChangeable(isHighlyAvailable
-                || automaticMigrationAllowed
-                || (isAutoAssign && presentHosts.size() >= 2)
-                || pinToHostSize >= 2
-                || (pinToHostSize == 0 && presentHosts.size() >= 2));
+        getModel().getIsHighlyAvailable().setIsChangeable(automaticMigrationAllowed);
     }
 
     public void updateMigrationAvailability() {
