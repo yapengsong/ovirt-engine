@@ -19,8 +19,8 @@ class Plugin(plugin.PluginBase):
 
     @plugin.event(
         stage=plugin.Stages.STAGE_MISC,
-        before=(
-            oengcommcons.Stages.DB_SCHEMA,
+        after=(
+            oengcommcons.Stages.DB_CONNECTION_AVAILABLE,
         ),
     )
     def _customization(self):
@@ -48,8 +48,8 @@ class Plugin(plugin.PluginBase):
 
     @plugin.event(
         stage=plugin.Stages.STAGE_MISC,
-        before=(
-            oengcommcons.Stages.DB_SCHEMA,
+        after=(
+            oengcommcons.Stages.DB_CONNECTION_AVAILABLE,
         ),
         condition=lambda self: (
             not self.environment[oenginecons.EngineDBEnv.NEW_DATABASE]
