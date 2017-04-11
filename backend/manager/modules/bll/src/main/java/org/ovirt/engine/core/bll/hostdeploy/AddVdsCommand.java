@@ -337,7 +337,7 @@ public class AddVdsCommand<T extends AddVdsActionParameters> extends VdsCommand<
         String version = Config.<String> getValue(ConfigValues.EayunOSVersion);
 
         if(!"Enterprise".equals(version)){
-            if(hosts.size() > 3){
+            if(hosts.size() >= 3){
                 return failCanDoAction(EngineMessage.USE_BASE_VERSION_HOST);
             }
         }
