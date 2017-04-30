@@ -65,6 +65,8 @@ import org.ovirt.engine.core.common.businessentities.IVdsAsyncCommand;
 import org.ovirt.engine.core.common.businessentities.QuotaEnforcementTypeEnum;
 import org.ovirt.engine.core.common.businessentities.StoragePool;
 import org.ovirt.engine.core.common.businessentities.aaa.DbUser;
+import org.ovirt.engine.core.common.config.Config;
+import org.ovirt.engine.core.common.config.ConfigValues;
 import org.ovirt.engine.core.common.errors.EngineError;
 import org.ovirt.engine.core.common.errors.EngineException;
 import org.ovirt.engine.core.common.errors.EngineFault;
@@ -2536,6 +2538,12 @@ public abstract class CommandBase<T extends VdcActionParametersBase>
         VerifyLicenseStatus verifyLicenseStatus=VerifyLicenseStatus.getInstance();
         boolean isActive = verifyLicenseStatus.getVerifyActiveState();
         boolean isTimeout = verifyLicenseStatus.getVerifyExpiredState();
-        return !isActive&&isTimeout;
+        String vsersion=Config.<String> getValue(ConfigValues.EayunOSVersion);
+        boolean isEnterprise=false;
+        if(vsersion!=null&&!"".equals(vsersion)){
+            isEnterprise="Enterprise".equals(vsersion);
+        }
+
+        return !isActive&&isTimeout&&isEnterprise;
     }
 }
